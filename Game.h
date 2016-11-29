@@ -21,8 +21,8 @@ class Game {
 		Game();
     ~Game();
     static std::string defaultFloorFile;
-		void init(std::string);
-    static Game getCurrentGame();
+		// void init(std::string);
+    // static Game getCurrentGame();
     void start(char);
     void nextFloor();
     void attack(Direction);

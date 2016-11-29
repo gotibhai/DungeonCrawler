@@ -9,12 +9,12 @@ Game::Game() {
 Game::~Game() {
 
 }
-void Game::init(std::string fileName) {
-  defaultFloorFile = fileName;
-}
-Game Game::getCurrentGame() {
-  return currentGame;
-}
+// void Game::init(std::string fileName) {
+//   defaultFloorFile = fileName;
+// }
+// Game Game::getCurrentGame() {
+//   return currentGame;
+// }
 void Game::start(char raceType){
   // player = new Race(raceType);
   floorNum = 1;
