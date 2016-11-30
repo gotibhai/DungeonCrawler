@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int maxHp, int hp, int atk, int def): Character{maxHp, hp, atk, def} {}
+Enemy::Enemy(int maxHp, int atk, int def, CellType cellType, bool isHostile = true): Character{maxHp, atk, def, cellType}, isHostile{isHostile} {}
 
 void Enemy::setIsHostile(bool hostility) {
   isHostile = hostility;

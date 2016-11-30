@@ -6,7 +6,7 @@ class Enemy: public Character {
 private:
   bool isHostile;
 public:
-  Enemy(int, int, int, int);
+  Enemy(int, int, int, CellType, bool);
   void setIsHostile(bool);
   bool getIsHostile();
 };

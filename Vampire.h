@@ -7,7 +7,7 @@
 
 class Vampire: public Race {
 public:
-  Vampire(CellType);
+  Vampire();
   bool attack(Character*) override;
 
 };

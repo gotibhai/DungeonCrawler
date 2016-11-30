@@ -6,7 +6,7 @@
 
 class Goblin: public Race {
 public:
-  Goblin(CellType);
+  Goblin();
   void winBattle() override;
 };
 

@@ -23,15 +23,15 @@ Game::~Game() {
 // }
 void Game::start(char raceType){
   if(raceType == 's') {
-    player = new class Shade(CellType::Shade);
+      player = new class Shade();
   } else if(raceType == 'd') {
-    player = new class Drow(CellType::Drow);
+      player = new class Drow();
   } else if(raceType == 'v') {
-    player = new class Vampire(CellType::Vampire);
+      player = new class Vampire();
   } else if(raceType == 't') {
-    player = new class Troll(CellType::Troll);
+      player = new class Troll();
   } else if(raceType == 'g') {
-    player = new class Goblin(CellType::Goblin);
+      player = new class Goblin();
   }
   floorNum = 1;
 }

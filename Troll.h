@@ -8,7 +8,7 @@
 
 class Troll: public Race {
 public:
-  Troll(CellType);
+  Troll();
   bool move(Direction) override;
 };
 

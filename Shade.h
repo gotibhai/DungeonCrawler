@@ -6,7 +6,7 @@
 
 class Shade: public Race {
 public:
-  Shade(CellType);
+  Shade();
 };
 
 #endif

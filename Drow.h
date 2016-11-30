@@ -7,7 +7,7 @@
 
 class Drow: public Race {
 public:
-  Drow(CellType);
+  Drow();
   void use(Potion) override;
 };
 
