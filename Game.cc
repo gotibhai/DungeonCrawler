@@ -1,7 +1,13 @@
 #include <iostream>
 #include <string>
 #include "Game.h"
-#include "Race.h"
+#include "Shade.h"
+#include "Shade.h"
+#include "Drow.h"
+#include "Vampire.h"
+#include "Troll.h"
+#include "Goblin.h"
+#include "CellType.cc"
 
 Game::Game() {
 
@@ -16,7 +22,17 @@ Game::~Game() {
 //   return currentGame;
 // }
 void Game::start(char raceType){
-  // player = new Race(raceType);
+  if(raceType == 's') {
+    player = new class Shade(CellType::Shade);
+  } else if(raceType == 'd') {
+    player = new class Drow(CellType::Drow);
+  } else if(raceType == 'v') {
+    player = new class Vampire(CellType::Vampire);
+  } else if(raceType == 't') {
+    player = new class Troll(CellType::Troll);
+  } else if(raceType == 'g') {
+    player = new class Goblin(CellType::Goblin);
+  }
   floorNum = 1;
 }
 void Game::nextFloor() {
@@ -49,7 +65,7 @@ void Game::freeze() {
 }
 
 
-// std::ostream &operator<<(std::ostream &out) {
-// 	// out << currentGrid;
-// 	return out;
-// };
+std::ostream &operator<<(std::ostream &out, const Game &g) {
+  out << "HELLO MATEY";
+  return out;
+}

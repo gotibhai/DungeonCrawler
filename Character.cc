@@ -1,17 +1,16 @@
 #include "Character.h"
+// #include "Direction.cc"
+// #include "CellType.cc"
 
-Character:Character(int maxHp, int hp, int atk, int def) {
-  this->maxHp = maxHp;
-  this->hp = hp;
-  this->atk = atk;
-  this->def = def;
+Character::Character(int hp, int atk, int def, CellType cellType): Cell{cellType}, hp{hp}, atk{atk}, def{def}{
+
 }
 
 bool Character::move(Direction) {
-  return false
+  return false;
 }
 bool Character::attack(Character*) {
-  return false
+  return false;
 }
 void Character::die() {
 

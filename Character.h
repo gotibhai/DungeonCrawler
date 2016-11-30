@@ -2,6 +2,8 @@
 #define __Character_H__
 
 #include "Cell.h"
+#include "Direction.cc"
+// #include "CellType.cc"
 
 class Character: public Cell {
 private:
@@ -10,14 +12,14 @@ private:
   int atk;
   int def;
 public:
-  Character(int, int, int, int);
-  bool move(Direction);
-  bool attack(Character*);
+  Character(int, int, int, CellType);
+  virtual bool move(Direction);
+  virtual bool attack(Character*);
   void die();
-  void winBattle();
+  virtual void winBattle();
   int getHp();
-  int getAtk();
-  int getDef();
+  virtual int getAtk();
+  virtual int getDef();
   void setHp(int);
 };
 

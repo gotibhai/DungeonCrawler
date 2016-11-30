@@ -10,7 +10,7 @@ class Cell {
 	    int col;
 	    CellType type;
 	public:
-		Cell(CellType );
+		Cell(CellType);
 		// bool canMoveOnm(Character* character);
 		void setCoords(int row, int col);
 		char getSymbol() const;

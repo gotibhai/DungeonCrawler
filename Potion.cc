@@ -1,17 +1,17 @@
 #include "Potion.h"
 
-int getHp() {
+int Potion::getHp() {
   return 0;
 }
 
-int getDef() {
+int Potion::getDef() {
   return 0;
 }
 
-int getAtk() {
+int Potion::getAtk() {
   return 0;
 }
 
-void setValue(int) {
-
+void Potion::setValue(int value) {
+   this->value = value;
 }

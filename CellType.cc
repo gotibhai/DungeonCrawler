@@ -1,3 +1,6 @@
+#ifndef __CELLTYPE_CC__
+#define __CELLTYPE_CC__
+
 enum CellType {
 	Empty,
 	BorderHorizontal,
@@ -20,3 +23,5 @@ enum CellType {
 	Troll,
 	Goblin
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __DIRECTION_CC__
+#define __DIRECTION_CC__
+
 enum Direction {
 	NO,
 	SO,
@@ -8,3 +11,5 @@ enum Direction {
 	SE,
 	SW
 };
+
+#endif

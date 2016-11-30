@@ -34,8 +34,7 @@ class Game {
     void finish();
     void freeze();
 
-    //std::ostream &operator<<(std::ostream &out);
+  friend std::ostream &operator<<(std::ostream &out, const Game &g);
 };
-
 
 #endif
