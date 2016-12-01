@@ -6,6 +6,8 @@
 #include "Cell.h"
 #include "Enemy.h"
 
+class Cell;
+
 class Grid {
 	private:
 		const static int GRID_WIDTH = 79;

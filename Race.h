@@ -9,11 +9,11 @@
 class Race: public Character {
 private:
   int totalGold;
-  std::vector<Potion> potions;
+  std::vector<class Potion> potions;
 public:
   Race(int, int , int, CellType);
   int getTotalGold();
-  virtual void use(Potion);
+  virtual void use(class Potion);
   // void use(Gold);
   int getDef() override;
   int getAtk() override;

@@ -19,6 +19,7 @@ class Cell {
 		int getCol();
 		CellType getType();
 		void reset();
+		void setType();
 		friend std::ostream &operator<<(std::ostream &out, const Cell &g);
 };
 

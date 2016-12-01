@@ -6,8 +6,8 @@ Race::Race(int hp, int atk, int def, CellType cellType): Character{hp, atk, def,
 int Race::getTotalGold() {
   return totalGold;
 }
-void Race::use(Potion) {
-
+void Race::use(class Potion) {
+ //hi
 }
 // void use(Gold);
 int Race::getDef(){

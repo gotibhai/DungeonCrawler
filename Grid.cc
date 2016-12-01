@@ -9,7 +9,13 @@
 
 using namespace std;
 
-Grid::Grid() {};
+#include <iostream>
+using namespace std;
+
+Grid::Grid(){
+	// Constructor for Grid
+};
+
 Grid::~Grid() {
 	// Destroy cells and enemies
 };

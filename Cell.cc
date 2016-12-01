@@ -12,6 +12,8 @@ int Cell::getRow() { return row; };
 int Cell::getCol() { return col; };
 void Cell::reset() {};
 
+
+
 std::ostream &operator<<(std::ostream &out, const Cell &g) {
 	out << g.getSymbol();
 	return out;

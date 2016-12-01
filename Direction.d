@@ -1,1 +1,0 @@
-Direction.o: Direction.cc

@@ -22,7 +22,6 @@ class Game {
     	Game();
         ~Game();
         static const std::string DEFAULT_FLOOR_FILE;
-
 		// void init(std::string);
     static Game getCurrentGame();
 
@@ -30,7 +29,7 @@ class Game {
     void nextFloor();
     void attack(Direction);
     void move(Direction);
-    void usePotion(Potion);
+    void usePotion(class Potion);
     Grid getCurrentGrid();
     Race* getPlayer();
     void restart();

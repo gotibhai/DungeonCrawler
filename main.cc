@@ -2,9 +2,13 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <ctime>
+#include <cstdlib>
+
 #include "Grid.h"
 #include "Game.h"
 #include "CellType.cc"
+#include "CellFactory.h"
 
 using namespace std;
 
@@ -80,4 +84,5 @@ int main () {
       // TODO: print the grid wherever necessary
     }
   }
+
 };

@@ -1,17 +1,38 @@
 #include "Potion.h"
 
-int Potion::getHp() {
-  return 0;
+Potion::Potion(PotionType p){
+	potionType = p;
+	value = p;
+}
+
+int Potion::getHp(){
+	if(this->potionType == PotionType::RH || this->potionType == PotionType::PH){
+		return this->potionType;
+	} else {
+		return 0;
+	}
 }
 
 int Potion::getDef() {
-  return 0;
+	if(this->potionType == PotionType::BD || this->potionType == PotionType::WD){
+		return this->potionType;
+	} else {
+		return 0;
+	}
 }
 
 int Potion::getAtk() {
-  return 0;
+	if(this->potionType == PotionType::BA || this->potionType == PotionType::WA){
+		return this->potionType;
+	} else {
+		return 0;
+	}
 }
 
-void Potion::setValue(int value) {
-   this->value = value;
+void Potion::setValue(int val) {
+	this->value = val;
+}
+
+int Potion::getValue() {
+	return this->value;
 }
