@@ -6,9 +6,6 @@
 #include <vector>
 #include <cstdlib>
 #include <algorithm>
-
-using namespace std;
-
 #include <iostream>
 using namespace std;
 
@@ -21,22 +18,22 @@ Grid::~Grid() {
 };
 
 void Grid::setCell(Cell *cell) { grid[cell->getRow()][cell->getCol()] = cell; };
-void Grid::setEnemies(Enemy** enemies) { this->enemies = enemies; };
+void Grid::setEnemies(std::vector<Enemy*> enemy_vector ) { this->enemies = enemy_vector ;};
 
 bool Grid::move(Character *character, Direction direction) {
 	int row = character->getRow();
 	int col = character->getCol();
 
-	if (direction == NO || direction == NE || direction == NW) {
-		row += 1;
-	}
-	if (direction == SO || direction == SE || direction == SW) {
+	if (direction == Direction::NO || direction == Direction::NE || direction == Direction::NW) {
 		row -= 1;
 	}
-	if (direction == WE || direction == SW || direction == NW) {
+	if (direction == Direction::SO || direction == Direction::SE || direction == Direction::SW) {
+		row += 1;
+	}
+	if (direction == Direction::WE || direction == Direction::SW || direction == Direction::NW) {
 		col -= 1;
 	}
-	if (direction == EA || direction == SE || direction == NE) {
+	if (direction == Direction::EA || direction == Direction::SE || direction == Direction::NE) {
 		col += 1;
 	}
 
@@ -56,10 +53,19 @@ bool Grid::move(Character *character, Direction direction) {
 		}
 	}
 
+	Cell *emptyCell = new Cell(CellType::Ground);
+	emptyCell->setCoords(character->getRow(), character->getCol());
+	character->setCoords(row, col);
 	
+	setCell(emptyCell);
+	setCell(character);	
 
 	return true;
+
 };
+Cell* Grid::getCell(int r, int c) {
+	return grid[r][c];
+}
 
 // bool Grid::attack(Character *character, Direction direction) {
 // 	return true;
@@ -81,16 +87,20 @@ void Grid::moveEnemies() {
 	for (int i = 0; i < Grid::MAX_ENEMIES; i++) {
 		bool isMoved = false;
 		vector<Direction> directions;
+		Direction direction;
 		while (!isMoved) {
 			Direction direction;
+			int dir = rand() % (totalDirections);
+			direction = (Direction)dir;
 			while (std::find(directions.begin(), directions.end(), direction) != directions.end()) {
 				direction = static_cast<Direction>(rand() % totalDirections);
 			}
-
 			isMoved = move(enemies[i], direction);
 			directions.push_back(direction);
 		}
 	}
+
+	cout<<"moved enemies"<<endl;
 }
 
 std::ostream &operator<<(std::ostream &out, const Grid &g) {

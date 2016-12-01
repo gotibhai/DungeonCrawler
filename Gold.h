@@ -3,13 +3,15 @@
 
 #include "GoldType.cc"
 #include "Cell.h"
-//#include "ActionItem.h"
+#include "ActionItem.h"
 
-class Gold : public Cell {
+class Gold : virtual public ActionItem {
 	GoldType goldtype;
 	bool isCollectible;
 	public: 
-		Gold(GoldType g): Cell(CellType::Gold) { goldtype = g; }
+		Gold(GoldType g): Cell{CellType::Gold} { 
+			goldtype = g; 
+		}
 		void use();
 		void setIsCollectible(bool);
 };

@@ -1,6 +1,6 @@
 #include "ActionItem.h"
 
-ActionItem::ActionItem(CellType cellType): Cell{cellType} {}
+ActionItem::ActionItem(){}
 bool ActionItem::canMoveOn(Character* cell) {
 	return false;
 }

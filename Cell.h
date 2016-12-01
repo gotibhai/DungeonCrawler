@@ -11,6 +11,7 @@ class Cell {
 	    int col;
 	    CellType type;
 	public:
+		Cell();
 		Cell(CellType);
 		virtual bool canMoveOn(Character* character);
 		void setCoords(int row, int col);

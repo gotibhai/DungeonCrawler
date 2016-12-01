@@ -5,8 +5,8 @@
 
 class Merchant: public Enemy, public Gold {
 public:
-  Merchant(int, int, int, int);
-  void reset() override;
+  Merchant();
+  void reset();
 };
 
 #endif

@@ -1,3 +1,3 @@
 #include "Dwarf.h"
 
-Dwarf::Dwarf(int maxHp, int hp, int atk, int def): Enemy{maxHp, hp, atk, def} {}
+Dwarf::Dwarf(): Enemy{100,20,30} , Character{140, 30, 10}, Cell{CellType::Dwarf} {}

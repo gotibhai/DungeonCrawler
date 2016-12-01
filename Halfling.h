@@ -3,7 +3,7 @@
 #include "Enemy.h"
 class Halfling: public Enemy {
 public:
-    Halfling(int, int, int, int);
+    Halfling();
 };
 
 #endif

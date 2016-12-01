@@ -5,9 +5,9 @@
 #include "Character.h"
 #include "CellType.cc"
 
-class ActionItem: public Cell {
+class ActionItem: virtual public Cell {
 public:
-  ActionItem(CellType);
+  ActionItem();
   virtual bool canMoveOn(Character*) override;
   virtual void use() = 0;
 };

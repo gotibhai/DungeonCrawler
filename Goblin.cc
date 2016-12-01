@@ -1,6 +1,6 @@
 #include "Goblin.h"
 
-Goblin::Goblin(): Race{110, 15, 20, CellType::Goblin} {
+Goblin::Goblin(): Race{110, 15, 20}, Cell{CellType::Goblin} {
 
 }
 

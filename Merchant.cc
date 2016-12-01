@@ -1,6 +1,8 @@
 #include "Merchant.h"
+#include "Gold.h"
+#include "ActionItem.h"
 
-Merchant::Merchant(int maxHp, int hp, int atk, int def): Enemy{maxHp, hp, atk, def} {}
+Merchant::Merchant(): Enemy{30,70,5,false}, Character{30, 70, 5}, Cell{CellType::Merchant}, Gold{GoldType::MerchantGold}{}
 
 void Merchant::reset() {
 

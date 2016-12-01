@@ -1,17 +1,23 @@
 #include "Character.h"
 // #include "Direction.cc"
-// #include "CellType.cc"
+#include "CellType.cc"
+#include <math.h>
 
-Character::Character(int hp, int atk, int def, CellType cellType): Cell{cellType}, hp{hp}, atk{atk}, def{def}{
-
-}
+Character::Character(int hp, int atk, int def): hp{hp}, atk{atk}, def{def}, Cell{CellType::Empty} { }
 
 bool Character::move(Direction) {
   return false;
 }
-bool Character::attack(Character*) {
-  return false;
+
+bool Character::attack(Character* defender) {
+  int damage = ceil((100/(100+defender->getDef()))*this->atk);
+  defender->setHp(defender->getHp()-damage);
+  if(defender->getHp() <= 0) {
+    defender->die();
+  }
+  return true;
 }
+
 void Character::die() {
 
 }

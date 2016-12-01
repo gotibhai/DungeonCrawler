@@ -2,12 +2,13 @@
 #define __DRAGON_H__
 #include "Enemy.h"
 #include "Gold.h"
+#include "Cell.h"
 
 class Dragon: public Enemy {
 private:
-  Gold *gold;
+  class Gold *gold;
 public:
-  Dragon(int, int, int, int);
+  Dragon();
   bool move(Direction) override;
 };
 

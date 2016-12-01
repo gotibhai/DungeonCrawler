@@ -1,6 +1,7 @@
 #include "Drow.h"
+#include "Cell.h"
 
-Drow::Drow(): Race{150, 25, 15, CellType::Drow} {
+Drow::Drow(): Race{150, 25, 15}, Cell{CellType::Drow} {
 
 }
 

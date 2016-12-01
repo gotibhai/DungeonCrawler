@@ -5,8 +5,8 @@
 
 class Human: public Enemy, public Gold {
 public:
-  Human(int, int, int, int);
-  void reset() override;
+  Human();
+  void reset();
 };
 
 #endif

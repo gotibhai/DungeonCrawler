@@ -1,6 +1,6 @@
 #include "Human.h"
 
-Human::Human(int maxHp, int hp, int atk, int def): Enemy{maxHp, hp, atk, def} {}
+Human::Human():Enemy{140,20,20} , Character{140, 20, 20}, Gold{GoldType::SmallGold}, Cell{CellType::Human} {}
 
 void Human::reset() {
 

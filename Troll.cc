@@ -1,6 +1,6 @@
 #include "Troll.h"
 
-Troll::Troll(): Race{120, 25, 15, CellType::Troll} {
+Troll::Troll(): Race{120, 25, 15}, Cell{CellType::Troll} {
 
 }
 

@@ -5,7 +5,7 @@
 
 class Elf: public Enemy {
 public:
-  Elf(int, int, int, int);
+  Elf();
   bool attack(Character*) override;
 };
 

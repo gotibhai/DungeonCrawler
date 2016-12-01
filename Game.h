@@ -13,13 +13,13 @@ class Game {
         static Game* instance;
         std::vector<std::string> floorFileNames;
         int score;
-        Grid currentGrid;
+        Grid* currentGrid;
         Race* player;
         int floorNum;
         std::string displayAction;
         std::string floorFile;
     public:
-        Game();
+         Game();
         ~Game();
         static const std::string DEFAULT_FLOOR_FILE;
 		// void init(std::string);
@@ -27,16 +27,16 @@ class Game {
 
     void start(char);
     void nextFloor();
-    void attack(Direction);
-    void move(Direction);
+    bool attack(Direction);
+    bool move(Direction);
     void usePotion(class Potion);
-    Grid getCurrentGrid();
+    Grid* getCurrentGrid();
     Race* getPlayer();
     void restart();
     void finish();
     void freeze();
 
-  friend std::ostream &operator<<(std::ostream &out, const Game &g);
+  friend std::ostream &operator<<(std::ostream &out , Game *g);
 };
 
 

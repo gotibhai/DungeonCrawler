@@ -1,3 +1,3 @@
 #include "Halfling.h"
 
-Halfling::Halfling(int maxHp, int hp, int atk, int def): Enemy{maxHp, hp, atk, def} {}
+Halfling::Halfling():Enemy{100,15,20}, Character{100, 15, 20}, Cell{CellType::Halfling} {}

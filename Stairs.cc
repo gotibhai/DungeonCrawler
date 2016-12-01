@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "CellType.cc"
 
-Stairs::Stairs(): ActionItem(CellType::Stairs) {};
+Stairs::Stairs(){};
 void Stairs::use() {
 	Game::getInstance()->nextFloor();
 };

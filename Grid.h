@@ -4,6 +4,7 @@
 #include <string>
 #include "Direction.cc"
 #include "Cell.h"
+#include <vector>
 #include "Enemy.h"
 
 class Cell;
@@ -15,16 +16,17 @@ class Grid {
 		const static int MAX_ENEMIES = 20;
 
 	    Cell* grid[GRID_HEIGHT][GRID_WIDTH];
-	    Enemy** enemies;
+	    std::vector<Enemy*> enemies;
 	    bool isFrozen;
 	public:
 		Grid();
 		~Grid();
 		void setCell(Cell *cell);
-		void setEnemies(Enemy** enemies);
+		void setEnemies(std::vector<Enemy*>);
 		bool move(Character *character, Direction direction);
 		// bool attack(Character *character, Direction direction);
 		// void start(Race *player);
+		Cell* getCell(int r, int c);
 		void moveEnemies();
 		friend std::ostream &operator<<(std::ostream &out, const Grid &g);
 };

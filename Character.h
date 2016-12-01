@@ -5,14 +5,14 @@
 #include "Direction.cc"
 // #include "CellType.cc"
 
-class Character: public Cell {
+class Character: virtual public Cell {
 private:
   int maxHp;
   int hp;
   int atk;
   int def;
 public:
-  Character(int, int, int, CellType);
+  Character(int, int, int);
   virtual bool move(Direction);
   virtual bool attack(Character*);
   void die();

@@ -5,6 +5,8 @@
 #include "Grid.h"
 #include "Game.h"
 #include "CellType.cc"
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
@@ -12,7 +14,20 @@ bool isDirection(string dir) {
   return dir == "no" || dir == "so" || dir == "ea" || dir == "we" || dir == "nw" || dir == "ne" || dir == "sw" || dir == "se";
 }
 
+Direction translateDirection(string type) {
+
+      if (type ==  "no") return Direction::NO;
+      else if (type ==  "so") return Direction::SO;
+      else if (type ==  "ea") return Direction::EA;
+      else if (type ==  "we") return Direction::WE;
+      else if (type ==  "ne") return Direction::NE;
+      else if (type ==  "nw") return Direction::NW;
+      else if (type ==  "se") return Direction::SE;
+      else if (type ==  "sw") return Direction::SW;
+  }
+
 int main () {
+  srand(time(0));
   cin.exceptions(ios::eofbit|ios::failbit);
   Grid grid();
 
@@ -46,12 +61,14 @@ int main () {
             string direction;
             cin >> direction;
             // attack enemy
+            cout<<game;
             break; // only if the attack succeed
         }
         else if(action == "u") {
             string direction;
             cin >> direction;
             // use potion
+            cout<<game;
             break; // only if able to use the potion
         }
         else if(action == "r") {
@@ -63,13 +80,20 @@ int main () {
             break;
         }
         else if(isDirection(action)) { // for moving playercx
-            // move
-            break; // only if move successful
+
+            if(game->move(translateDirection(action))) {
+              cout<<game;
+              break; // only if move successful
+            } else {
+              cout<< "Cannot move there. Try again." << endl;
+            }
         }
         else {
             cout << "Invalid command, please try again: ";
         }
       }
+      game->getCurrentGrid()->moveEnemies();
+      cout<<game;
       // check if won
       // check if lost
       // check if new floor

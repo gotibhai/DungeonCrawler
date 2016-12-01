@@ -6,7 +6,7 @@
 #include "Vampire.h"
 #include "Troll.h"
 #include "Goblin.h"
-#include "CellType.cc"
+#include "CellFactory.h"
 using namespace std;
 
 Game::Game() {
@@ -29,24 +29,29 @@ void Game::start(char raceType){
   } else if(raceType == 'g') {
       player = new class Goblin();
   }
-  floorNum = 1;
+  floorNum = 0;
+  nextFloor();
 }
 void Game::nextFloor() {
+  CellFactory c;
+  currentGrid = c.GenerateGridFromFile(DEFAULT_FLOOR_FILE , player);
+  cout<<*currentGrid<<endl;
   floorNum++;
 }
-void Game::attack(Direction direction) {
-  //player.attack(direction);
+bool Game::attack(Direction direction) {
+  // return player->attack(character);
+  return false;
 }
 
 
-void Game::move(Direction direction) {
-  //player.move(direction);
+bool Game::move(Direction direction) {
+  return currentGrid->move(player , direction);
 }
 void Game::usePotion(class Potion potion) {
   //player.use(potion);
 }
 
-Grid Game::getCurrentGrid() {
+Grid* Game::getCurrentGrid() {
   return currentGrid;
 }
 
@@ -64,11 +69,27 @@ void Game::freeze() {
 
 }
 
+string translateRace(CellType type) {
+  switch (type) 
+   {
+      case Shade: return "Shade";
+      case Drow: return "Drow";
+      case Vampire: return "Vampire";
+      case Troll: return "Troll";
+      case Goblin: return "Goblin";
+      default: return "Race";
+   }
+}
 
-std::ostream &operator<<(std::ostream &out, const Game &g) {
-  out << "HELLO MATEY";
+
+std::ostream &operator<<(std::ostream &out , Game *g) {
+   out<<*(g->getCurrentGrid());
+   out<<"Race: " << translateRace(g->getPlayer()->getType())<<endl;
+   out<<"HP: "<<g->getPlayer()->getHp()<<endl;
+   out<<"Atk: "<<g->getPlayer()->getDef()<<endl;
+   out<<"Def: "<<g->getPlayer()->getAtk()<<endl;
   return out;
 }
 
-const std::string Game::DEFAULT_FLOOR_FILE = "default_floor.txt";
+const std::string Game::DEFAULT_FLOOR_FILE = "df.txt";
 Game* Game::instance = new Game();
