@@ -1,5 +1,5 @@
-#ifndef __Character_H__
-#define __Character_H__
+#ifndef __GOLD_H__
+#define __GOLD_H__
 
 #include "ActionItem.h"
 #include "GoldType.cc"

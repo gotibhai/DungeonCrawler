@@ -10,19 +10,22 @@
 
 class Game {
 	private:
-    static Game currentGame;
-    std::vector<std::string> floorFileNames;
-	  int score;
-    Grid currentGrid;
-    Race* player;
-    int floorNum;
-    std::string displayAction;
-	public:
-		Game();
-    ~Game();
-    static std::string defaultFloorFile;
+        static Game currentGame;
+        std::vector<std::string> floorFileNames;
+        int score;
+        Grid currentGrid;
+        Race* player;
+        int floorNum;
+        std::string displayAction;
+        std::string floorFile;
+    public:
+    	Game();
+        ~Game();
+        static const std::string DEFAULT_FLOOR_FILE;
+
 		// void init(std::string);
-    // static Game getCurrentGame();
+    static Game getCurrentGame();
+
     void start(char);
     void nextFloor();
     void attack(Direction);
@@ -36,5 +39,8 @@ class Game {
 
   friend std::ostream &operator<<(std::ostream &out, const Game &g);
 };
+
+const std::string Game::DEFAULT_FLOOR_FILE = "default_floor.txt";
+
 
 #endif

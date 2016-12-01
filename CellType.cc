@@ -21,7 +21,8 @@ enum CellType {
 	Vampire,
 	Shade,
 	Troll,
-	Goblin
+	Goblin,
+	Stairs
 };
 
 #endif

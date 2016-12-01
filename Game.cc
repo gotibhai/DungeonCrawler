@@ -9,18 +9,17 @@
 #include "Goblin.h"
 #include "CellType.cc"
 
-Game::Game() {
-
+Game::Game(std::string fileName = DEFAULT_FLOOR_FILE): floorFile{fileName} {
+    currentGame = this;
 }
 Game::~Game() {
 
 }
-// void Game::init(std::string fileName) {
-//   defaultFloorFile = fileName;
-// }
-// Game Game::getCurrentGame() {
-//   return currentGame;
-// }
+
+
+Game Game::getCurrentGame() {
+  return currentGame;
+}
 void Game::start(char raceType){
   if(raceType == 's') {
       player = new class Shade();

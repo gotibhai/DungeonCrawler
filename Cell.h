@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include "CellType.cc"
+class Character;
 
 class Cell {
 	private:
@@ -11,11 +12,12 @@ class Cell {
 	    CellType type;
 	public:
 		Cell(CellType);
-		// bool canMoveOnm(Character* character);
+		virtual bool canMoveOn(Character* character);
 		void setCoords(int row, int col);
 		char getSymbol() const;
 		int getRow();
 		int getCol();
+		CellType getType();
 		void reset();
 		friend std::ostream &operator<<(std::ostream &out, const Cell &g);
 };
