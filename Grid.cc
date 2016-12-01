@@ -56,7 +56,12 @@ bool Grid::move(Character *character, Direction direction) {
 		}
 	}
 
+	Cell *emptyCell = new Cell(CellType::Empty);
+	emptyCell->setCoords(character->getRow(), character->getCol());
+	character->setCoords(row, col);
 	
+	setCell(emptyCell);
+	setCell(character);	
 
 	return true;
 };
