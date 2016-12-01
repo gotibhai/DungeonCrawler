@@ -1,11 +1,19 @@
 #include "Grid.h"
 
-Grid::Grid() {};
+#include <iostream>
+using namespace std;
+
+Grid::Grid(){
+	// Constructor for Grid
+};
+
 Grid::~Grid() {
 	// Destroy cells and enemies
 };
 
-void Grid::setCell(Cell *cell) { grid[cell->getRow()][cell->getCol()] = cell; };
+void Grid::setCell(Cell *cell) { 
+	grid[cell->getRow()][cell->getCol()] = cell; 
+};
 // void Grid::setEnemies(Enemy** enemies) { this->enemies = enemies };
 
 // bool Grid::move(Character *character, Direction direction) {

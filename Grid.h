@@ -5,6 +5,8 @@
 #include "Direction.cc"
 #include "Cell.h"
 
+class Cell;
+
 class Grid {
 	private:
 		const static int GRID_WIDTH = 79;
