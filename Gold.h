@@ -1,16 +1,17 @@
-#ifndef __Character_H__
-#define __Character_H__
+#ifndef __GOLD_H__
+#define __GOLD_H__
 
-#include "ActionItem.h"
 #include "GoldType.cc"
+#include "Cell.h"
+#include "ActionItem.h"
 
-class Gold: public ActionItem {
-private:
-  GoldType type;
-  bool isCollectible;
-public:
-  bool use() override;
-  void setIsCollectible(bool);
+class Gold : public Cell {
+	GoldType goldtype;
+	bool isCollectible;
+	public: 
+		Gold(GoldType g): Cell(CellType::Gold) { goldtype = g; }
+		bool use();
+		void setIsCollectible(bool);
 };
 
 #endif
