@@ -83,11 +83,12 @@ void Grid::moveEnemies() {
 		vector<Direction> directions;
 		while (!isMoved) {
 			Direction direction;
-			while (std::find(directions.begin(), directions.end(), item) != directions.end()) {
-				direction = rand() % totalDirections;
+			while (std::find(directions.begin(), directions.end(), direction) != directions.end()) {
+				direction = static_cast<Direction>(rand() % totalDirections);
 			}
 
-			isMoved = move(enemy, direction);
+			isMoved = move(enemies[i], direction);
+			directions.push_back(direction);
 		}
 	}
 }

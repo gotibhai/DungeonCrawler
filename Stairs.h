@@ -1,9 +1,7 @@
 #ifndef __STAIR_H__
 #define __STAIR_H__
 
-#include "Cell.h"
-#include "Direction.cc"
-#include "ActionItem.cc"
+#include "ActionItem.h"
 // #include "CellType.cc"
 
 class Stairs: public ActionItem {

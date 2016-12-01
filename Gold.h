@@ -10,7 +10,7 @@ class Gold : public Cell {
 	bool isCollectible;
 	public: 
 		Gold(GoldType g): Cell(CellType::Gold) { goldtype = g; }
-		bool use();
+		void use();
 		void setIsCollectible(bool);
 };
 

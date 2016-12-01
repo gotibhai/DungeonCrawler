@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
 #include "Cell.h"
-#include "CellType.cc"
+// #include "CellType.cc"
 
 Cell::Cell(CellType type): type{type} {};
-bool Cell::canMoveOn(Character* character) { return false };
+bool Cell::canMoveOn(Character* character) { return false; };
 void Cell::setCoords(int row, int col) {this->row = row; this->col = col;};
 char Cell::getSymbol() const { return (char) type; };
 CellType Cell::getType() const { return type; };

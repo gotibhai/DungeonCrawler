@@ -2,13 +2,9 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <ctime>
-#include <cstdlib>
-
 #include "Grid.h"
 #include "Game.h"
 #include "CellType.cc"
-#include "CellFactory.h"
 
 using namespace std;
 
@@ -32,10 +28,10 @@ int main () {
     cout<<"[g]oblin"<<endl;
 
     char race;
-    cin>>race;
+    cin >> race;
 
-    Game game = Game();
-    game.start(race);
+    Game* game = Game::getInstance();
+    game->start(race);
     // create the grid and shit here (maybe game.start will do that stuff)
     bool quit = false;
     while(!(quit || restart)) {
@@ -84,5 +80,4 @@ int main () {
       // TODO: print the grid wherever necessary
     }
   }
-
 };

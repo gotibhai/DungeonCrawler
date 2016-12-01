@@ -1,8 +1,8 @@
 #include "Gold.h"
 
 void Gold::use() {
-  return false;
+  
 }
-void Gold::setIsCollectible(bool collectibility) {
-  isCollectible = collectiblity;
+void Gold::setIsCollectible(bool isCollectible) {
+  this->isCollectible = isCollectible;
 }

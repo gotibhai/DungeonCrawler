@@ -17,7 +17,7 @@ class Cell {
 		char getSymbol() const;
 		int getRow();
 		int getCol();
-		CellType getType();
+		CellType getType() const;
 		void reset();
 		void setType();
 		friend std::ostream &operator<<(std::ostream &out, const Cell &g);

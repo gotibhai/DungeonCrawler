@@ -2,11 +2,9 @@
 #include "Game.h"
 #include "CellType.cc"
 
-class Stairs: public ActionItem {
-  public:
-    Stairs::Stairs() ActionItem{CellType::Stairs}{};
-    void use() {
-    	Game.getCurrentGame().nextFloor();
-    };
+Stairs::Stairs(): ActionItem(CellType::Stairs) {};
+void Stairs::use() {
+	Game::getInstance()->nextFloor();
 };
+
 
