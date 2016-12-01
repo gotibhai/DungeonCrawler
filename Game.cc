@@ -44,7 +44,7 @@ void Game::attack(Direction direction) {
 void Game::move(Direction direction) {
   //player.move(direction);
 }
-void Game::usePotion(Potion potion) {
+void Game::usePotion(class Potion potion) {
   //player.use(potion);
 }
 

@@ -3,7 +3,7 @@
 
 #include "GoldType.cc"
 #include "Cell.h"
-#include "ActionItem.h"
+//#include "ActionItem.h"
 
 class Gold : public Cell {
 	GoldType goldtype;

@@ -8,7 +8,7 @@
 class Drow: public Race {
 public:
   Drow();
-  void use(Potion) override;
+  void use(class Potion) override;
 };
 
 #endif

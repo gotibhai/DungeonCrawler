@@ -12,13 +12,13 @@ class Game {
 	private:
     static Game currentGame;
     std::vector<std::string> floorFileNames;
-	  int score;
+	int score;
     Grid currentGrid;
     Race* player;
     int floorNum;
     std::string displayAction;
 	public:
-		Game();
+	Game();
     ~Game();
     static std::string defaultFloorFile;
 		// void init(std::string);
@@ -27,7 +27,7 @@ class Game {
     void nextFloor();
     void attack(Direction);
     void move(Direction);
-    void usePotion(Potion);
+    void usePotion(class Potion);
     Grid getCurrentGrid();
     Race* getPlayer();
     void restart();
