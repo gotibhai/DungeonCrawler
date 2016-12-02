@@ -10,7 +10,7 @@ bool Character::move(Direction) {
 }
 
 bool Character::attack(Character* defender) {
-  int damage = ceil((100/(100+defender->getDef()))*this->atk);
+  int damage = ceil((100.0/(100.0+defender->getDef()))*this->atk);
   defender->setHp(defender->getHp()-damage);
   if(defender->getHp() <= 0) {
     defender->die();

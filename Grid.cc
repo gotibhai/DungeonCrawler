@@ -66,9 +66,11 @@ bool Grid::move(Character *character, Direction direction) {
 	setCell(coveredCell);
 	setCell(character);	
 
+
 	return true;
 
 };
+
 Cell* Grid::getCell(int r, int c) {
 	return grid[r][c];
 }

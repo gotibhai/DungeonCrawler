@@ -1,3 +1,4 @@
 #include "Dwarf.h"
 
-Dwarf::Dwarf(): Character{140, 30, 10}, Cell{CellType::Dwarf} {}
+Dwarf::Dwarf(): Character{100,20,30}, Cell{CellType::Dwarf} {}
+
