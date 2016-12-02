@@ -66,8 +66,6 @@ int main () {
             } else {
               cout<<"Cannot attack there. Try again."<<endl;
             }
-            cout<<game;
-            break; // only if the attack succeed
         }
         else if(action == "u") {
             string direction;
