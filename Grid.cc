@@ -20,6 +20,8 @@ Grid::~Grid() {
 void Grid::setCell(Cell *cell) { grid[cell->getRow()][cell->getCol()] = cell; };
 void Grid::setEnemies(std::vector<Enemy*> enemy_vector ) { this->enemies = enemy_vector ;};
 
+bool firstTime = true;
+
 bool Grid::move(Character *character, Direction direction) {
 	int row = character->getRow();
 	int col = character->getCol();
@@ -38,6 +40,7 @@ bool Grid::move(Character *character, Direction direction) {
 	}
 
 	Cell *cell = grid[row][col];
+	CellType type = cell->getType();
 	if (!cell->canMoveOn(character)) {
 		return false;
 	}
@@ -53,13 +56,14 @@ bool Grid::move(Character *character, Direction direction) {
 		}
 	}
 
-
-	Cell *emptyCell = new Cell(CellType::Empty);
-	// cout << "move "
-	emptyCell->setCoords(character->getRow(), character->getCol());
+	Cell *coveredCell = new Cell(character->getCellTypeCovered());
+	coveredCell->setCoords(character->getRow(), character->getCol());
+	
+	character->setCellTypeCovered(cell->getType());
 	character->setCoords(row, col);
 	
-	setCell(emptyCell);
+	// bridge
+	setCell(coveredCell);
 	setCell(character);	
 
 	return true;
@@ -101,8 +105,6 @@ void Grid::moveEnemies() {
 			directions.push_back(direction);
 		}
 	}
-
-	cout<<"moved enemies"<<endl;
 }
 
 std::ostream &operator<<(std::ostream &out, const Grid &g) {

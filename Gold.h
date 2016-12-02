@@ -13,6 +13,8 @@ class Gold : virtual public ActionItem {
 			goldtype = g; 
 		}
 		void use();
+		GoldType getType();
+		bool getIsCollectible();
 		void setIsCollectible(bool);
 };
 

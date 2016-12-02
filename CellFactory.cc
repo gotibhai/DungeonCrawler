@@ -7,6 +7,7 @@
 #include "Dwarf.h"
 #include "Orc.h"
 #include "Elf.h"
+#include "Stairs.h"
 #include "Merchant.h"
 #include "Dragon.h"
 #include "CellType.cc"
@@ -70,6 +71,7 @@ std::vector<Cell *> CellFactory::getRandomGoldCell(){
 		for(int i = 0; i < 10; i++){
 			int random_number =  rand() % 8;
 			Cell *newcell;
+
 			if(random_number >= 0 && random_number < 5){
 				newcell = new class Gold(GoldType::NormalGold);
 			} else if (random_number == 5){
@@ -77,12 +79,11 @@ std::vector<Cell *> CellFactory::getRandomGoldCell(){
 			} else if (random_number > 5 && random_number < 8){
 				newcell = new class Gold(GoldType::DragonGold);
 			}
+
 			my_gold_vector.push_back(newcell);
 		}
 		return my_gold_vector;
 }
-
-
 
 Cell* CellFactory::getPotionCell(int characters){
 	Cell *newcell;
@@ -142,6 +143,7 @@ std::vector<Enemy *> CellFactory::generateEnemies(){
 	return my_cell_vector;
 }
 
+
 void CellFactory::place(Cell* cell) {
 	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;
 	
@@ -150,6 +152,9 @@ void CellFactory::place(Cell* cell) {
 	while(true) {
 		int pos = rand() % (chamber->size());
 		cout << "pos " << pos;
+
+		// Cell *dragoncell = new class Dragon();
+
 
 		if(chamber->at(pos)->getType() == CellType::Ground){
 			cell->setCoords(chamber->at(pos)->getRow(), chamber->at(pos)->getCol());
@@ -210,9 +215,12 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 			}
 			row++;	
 		}
+
 		cout << "works2 \n";
 		place(player);
 
+		place(new class Stairs());
+		
 		for (int i=0; i < gold_vector.size(); i++) {
 			place(gold_vector[i]);
 		}

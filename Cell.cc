@@ -3,7 +3,7 @@
 #include "Cell.h"
 #include "CellType.cc"
 
-Cell::Cell(): type{CellType::Empty} {};
+Cell::Cell(): type{CellType::Empty}, cellTypeCovered{CellType::Ground} {};
 Cell::Cell(CellType type): type{type} {};
 void Cell::setCoords(int row, int col) {this->row = row; this->col = col;};
 CellType Cell::getType() const { return type; };
@@ -21,8 +21,11 @@ char Cell::getSymbol() const {
 };
 
 bool Cell::canMoveOn(Character* character) { 
-	return this->getType() == CellType::Ground; 
+	return (this->getType() == CellType::Ground || this->getType() == CellType::Bridge || this->getType() == CellType::BridgeEnter);
 }
+
+void Cell::setCellTypeCovered(CellType cellType) { cellTypeCovered = cellType; }
+CellType Cell::getCellTypeCovered() {return cellTypeCovered;}
 
 
 
