@@ -39,8 +39,48 @@ void Game::nextFloor() {
   floorNum++;
 }
 bool Game::attack(Direction direction) {
-  // return player->attack(character);
-  return false;
+  Cell* cell;
+  switch(direction) {
+    case(Direction::NO):
+      cell = currentGrid->getCell(player->getRow() -1, player->getCol());
+      break;
+    case(Direction::SO):
+      cell = currentGrid->getCell(player->getRow() +1, player->getCol());
+      break;
+    case(Direction::EA):
+      cell = currentGrid->getCell(player->getRow(), player->getCol() +1);
+      break;
+    case(Direction::WE):
+      cell = currentGrid->getCell(player->getRow(), player->getCol() -1);
+      break;
+    case(Direction::NE):
+      cell = currentGrid->getCell(player->getRow() -1, player->getCol() +1);
+      break;
+    case(Direction::NW):
+      cell = currentGrid->getCell(player->getRow() -1, player->getCol() -1);
+      break;
+    case(Direction::SE):
+      cell = currentGrid->getCell(player->getRow() +1, player->getCol() +1);
+      break;
+    case(Direction::SW):
+      cell = currentGrid->getCell(player->getRow() +1, player->getCol() -1);
+      break;
+  }
+  if(cell->getType() != CellType::Halfling && cell->getType() != CellType::Dwarf &&
+     cell->getType() != CellType::Elf && cell->getType() != CellType::Orc &&
+     cell->getType() != CellType::Human && cell->getType() != CellType::Merchant) {
+    return false;
+  }
+
+  player->attack(dynamic_cast<class Character*>(cell));
+  cout<<"DAMAGING: "<<dynamic_cast<class Character*>(cell)->getHp()<<endl;
+  return true;
+  // if(direction == Direction::NO) {
+  //   Cell* cell = currentGrid->getCell(player->getRow() -1, player->getCol());
+  // } else if (direction ==)
+  // player->attack(dynamic_cast<class Character*>(currentGrid->getCell(player->getRow() -1, player->getCol())));
+  // // return player->attack(character);
+  // return false;
 }
 
 
@@ -70,7 +110,7 @@ void Game::freeze() {
 }
 
 string translateRace(CellType type) {
-  switch (type) 
+  switch (type)
    {
       case Shade: return "Shade";
       case Drow: return "Drow";

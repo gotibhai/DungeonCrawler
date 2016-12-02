@@ -15,7 +15,6 @@ bool isDirection(string dir) {
 }
 
 Direction translateDirection(string type) {
-
       if (type ==  "no") return Direction::NO;
       else if (type ==  "so") return Direction::SO;
       else if (type ==  "ea") return Direction::EA;
@@ -24,7 +23,7 @@ Direction translateDirection(string type) {
       else if (type ==  "nw") return Direction::NW;
       else if (type ==  "se") return Direction::SE;
       else if (type ==  "sw") return Direction::SW;
-  }
+}
 
 int main () {
   srand(time(0));
@@ -61,6 +60,12 @@ int main () {
             string direction;
             cin >> direction;
             // attack enemy
+            if(game->attack(translateDirection(direction))) {
+              cout<<"SUCCESSFUL ATTACK"<<endl;
+              break;
+            } else {
+              cout<<"Cannot attack there. Try again."<<endl;
+            }
             cout<<game;
             break; // only if the attack succeed
         }
