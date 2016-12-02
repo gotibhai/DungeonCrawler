@@ -4,7 +4,7 @@
 #include "CellType.cc"
 
 Cell::Cell(): type{CellType::Empty}, cellTypeCovered{CellType::Ground} {};
-Cell::Cell(CellType type): type{type} {};
+Cell::Cell(CellType type): type{type}, cellTypeCovered{CellType::Ground} {};
 void Cell::setCoords(int row, int col) {this->row = row; this->col = col;};
 CellType Cell::getType() const { return type; };
 int Cell::getRow() { return row; };

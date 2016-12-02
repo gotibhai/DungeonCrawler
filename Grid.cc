@@ -56,16 +56,15 @@ bool Grid::move(Character *character, Direction direction) {
 		}
 	}
 
-	Cell *coveredCell = new Cell(character->getCellTypeCovered());
-	coveredCell->setCoords(character->getRow(), character->getCol());
+	Cell *prevCell = new Cell(character->getCellTypeCovered());
+	prevCell->setCoords(character->getRow(), character->getCol());
 	
 	character->setCellTypeCovered(cell->getType());
 	character->setCoords(row, col);
 	
 	// bridge
-	setCell(coveredCell);
-	setCell(character);	
-
+	setCell(character);
+	setCell(prevCell);
 
 	return true;
 

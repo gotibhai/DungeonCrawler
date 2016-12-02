@@ -127,15 +127,15 @@ std::vector<Enemy *> CellFactory::generateEnemies(){
 		Enemy *mycell;
 		if(random_number >= 0 && random_number < 4){
 			mycell = new class Human();
-		} else if (random_number > 4 && random_number < 7){
+		} else if (random_number >= 4 && random_number < 7){
 			mycell = new class Dwarf();
-		} else if (random_number > 7 && random_number < 12){
+		} else if (random_number >= 7 && random_number < 12){
 			mycell = new class Halfling();
-		} else if (random_number > 12 && random_number < 14){
+		} else if (random_number >= 12 && random_number < 14){
 			mycell = new class Elf();
-		} else if (random_number > 14 && random_number < 16){
+		} else if (random_number >= 14 && random_number < 16){
 			mycell = new class Orc();
-		} else if (random_number > 16 && random_number < 18){
+		} else if (random_number >= 16 && random_number < 18){
 			mycell = new class Merchant();
 		}
 		my_cell_vector.push_back(mycell);
@@ -151,13 +151,11 @@ void CellFactory::place(Cell* cell) {
 		
 	while(true) {
 		int pos = rand() % (chamber->size());
-		cout << "pos " << pos;
-
-		// Cell *dragoncell = new class Dragon();
-
 
 		if(chamber->at(pos)->getType() == CellType::Ground){
-			cell->setCoords(chamber->at(pos)->getRow(), chamber->at(pos)->getCol());
+			int row = chamber->at(pos)->getRow();
+			int col = chamber->at(pos)->getCol();
+			cell->setCoords(row, col);
 			grid->setCell(cell);
 			chamber->at(pos) = cell;
 			return;
@@ -177,11 +175,7 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 			chambers.push_back(vector<Cell*>());
 		}
 		cout << "works1 \n";
-		// std::vector<Cell*> Chamber1;
-		// std::vector<Cell*> Chamber2;
-		// std::vector<Cell*> Chamber3;
-		// std::vector<Cell*> Chamber4;
-		// std::vector<Cell*> Chamber5;
+
 		std::vector<Enemy*> enemy_vector = generateEnemies();
 		std::vector<Cell*> potion_vector = generateRandPotions();
 		std::vector<Cell*> gold_vector = getRandomGoldCell();
@@ -216,24 +210,26 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 			row++;	
 		}
 
-		cout << "works2 \n";
 		place(player);
 
-		place(new class Stairs());
-		
+		class Stairs* stairs = new class Stairs();
+
+		place(stairs);
+
 		for (int i=0; i < gold_vector.size(); i++) {
 			place(gold_vector[i]);
 		}
+
 
 		for (int i=0; i < potion_vector.size(); i++) {
 			place(potion_vector[i]);
 		}
 
+
 		for (int i=0; i < enemy_vector.size(); i++) {
 			place(enemy_vector[i]);
 		}
 
-		cout << "works3 \n";
 		// int goldCount = 0;
 		// int potionCount = 0;
 		// for(int i = 0; i<25; i++) {
