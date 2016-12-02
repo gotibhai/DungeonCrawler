@@ -1,7 +1,7 @@
 #include "Elf.h"
 #include "Character.h"
 
-Elf::Elf(): Enemy{140,30,10}, Character{140, 30, 10}, Cell{CellType::Elf}{ }
+Elf::Elf(): Character{140, 30, 10}, Cell{CellType::Elf}{ }
 
 bool Elf::attack(Character* defender) {
   int chance = rand() % 2;

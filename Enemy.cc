@@ -2,7 +2,7 @@
 #include "CellType.cc"
 #include <stdlib.h>
 
-Enemy::Enemy(int maxHp, int atk, int def, bool isHostile): Character{maxHp, atk, def}, Cell{CellType::Empty}, isHostile{isHostile} {}
+Enemy::Enemy(bool isHostile): Character{0, 0, 0}, Cell{CellType::Empty}, isHostile{isHostile} {}
 
 void Enemy::setIsHostile(bool hostility) {
   isHostile = hostility;

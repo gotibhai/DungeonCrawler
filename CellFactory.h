@@ -7,10 +7,14 @@
 #include <vector>
 
 
-class CellFactory{
+class CellFactory {
+	const static int TOTAL_CHAMBERS;
+	std::vector<std::vector<Cell*>> chambers;
+	Grid* grid;
 	Cell* getCell(char);
 	Cell* getGoldCell(int);
 	Cell* getPotionCell(int);
+	void place(Cell*);
 	std::vector<Enemy *> generateEnemies();
 	std::vector<Cell> generateCells();
 	std::vector<Cell *> generateRandPotions();
@@ -22,5 +26,8 @@ public:
 	Grid* GenerateGridFromFile(std::string filename , Race* player);
 	//Race* getRace(char racetype);
 };
+
+
+
 
 #endif

@@ -6,10 +6,10 @@ class Enemy: virtual public Character {
 private:
   bool isHostile;
 public:
-  Enemy(int, int, int, bool isHostile = true);
+  Enemy(bool isHostile = true);
   void setIsHostile(bool);
   bool getIsHostile();
-  bool attack(Character*) override;
+  virtual bool attack(Character*) override;
 };
 
 #endif

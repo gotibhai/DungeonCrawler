@@ -33,8 +33,7 @@ void Game::start(char raceType){
   nextFloor();
 }
 void Game::nextFloor() {
-  CellFactory c;
-  currentGrid = c.GenerateGridFromFile(DEFAULT_FLOOR_FILE , player);
+  currentGrid = CellFactory().GenerateGridFromFile(DEFAULT_FLOOR_FILE , player);
   cout<<*currentGrid<<endl;
   floorNum++;
 }

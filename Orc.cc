@@ -4,7 +4,7 @@
 #include <math.h>
 
 
-Orc::Orc(): Enemy{180, 30, 25}, Character{180, 30, 25}, Cell{CellType::Orc} {}
+Orc::Orc(): Character{180, 30, 25}, Cell{CellType::Orc} {}
 
 bool Orc::attack(Character* defender) {
   int chance = rand() % 2;

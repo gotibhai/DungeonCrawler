@@ -9,6 +9,8 @@
 #include "Elf.h"
 #include "Merchant.h"
 #include "Dragon.h"
+#include "CellType.cc"
+#include "Game.h"
 #include <sstream>
 #include <fstream>
 #include <string>
@@ -51,38 +53,31 @@ Cell* CellFactory::getGoldCell(int characters){
 	Cell *newcell;
 	if(characters == 6){
 		newcell = new class Gold(GoldType::NormalGold);
-		return newcell;
-
 	} else if (characters == 7){
 		newcell = new class Gold(GoldType::SmallGold);
-		return newcell;
-
 	} else if(characters == 8){
 		newcell = new class Gold(GoldType::MerchantGold);
-		return newcell;
-
 	} else if(characters == 9){
 		newcell = new class Gold(GoldType::DragonGold);
-		return newcell;
 	}
+
+	return newcell;
 }
 
 
 std::vector<Cell *> CellFactory::getRandomGoldCell(){
 	std::vector<Cell*> my_gold_vector;
 		for(int i = 0; i < 10; i++){
-			int random_number =  rand() % (8) + 1;
+			int random_number =  rand() % 8;
 			Cell *newcell;
-			if(random_number >= 1 && random_number <= 5){
+			if(random_number >= 0 && random_number < 5){
 				newcell = new class Gold(GoldType::NormalGold);
-				my_gold_vector.push_back(newcell);
-			} else if (random_number == 6){
+			} else if (random_number == 5){
 				newcell = new class Gold(GoldType::SmallGold);
-				my_gold_vector.push_back(newcell);
-			} else if (random_number > 6 && random_number <= 8){
+			} else if (random_number > 5 && random_number < 8){
 				newcell = new class Gold(GoldType::DragonGold);
-				my_gold_vector.push_back(newcell);
 			}
+			my_gold_vector.push_back(newcell);
 		}
 		return my_gold_vector;
 }
@@ -94,66 +89,31 @@ Cell* CellFactory::getPotionCell(int characters){
 	class Potion *mypotion;
 	if(characters == 0){
 		mypotion = new class Potion(PotionType::RH);
-		newcell = new class PotionCell(mypotion);
-		return newcell;
 	} else if(characters == 1){
 		mypotion = new class Potion(PotionType::BA);
-		newcell = new class PotionCell(mypotion);
-		return newcell;
-
 	} else if(characters == 2){
 		mypotion = new class Potion(PotionType::BD);
-		newcell = new class PotionCell(mypotion);
-		return newcell;
-
 	} else if(characters == 3){
 		mypotion = new class Potion(PotionType::PH);
-		newcell = new class PotionCell(mypotion);
-		return newcell;
-
-	}else if (characters == 4){
+	} else if (characters == 4){
 		mypotion = new class Potion(PotionType::WA);
-		newcell = new class PotionCell(mypotion);
-		return newcell;
-
 	} else {
 		mypotion = new class Potion(PotionType::WD);
-		newcell = new class PotionCell(mypotion);
-		return newcell;
 	}
+	newcell = new class PotionCell(mypotion);
+	return newcell;
 } 
 
 std::vector<Cell *> CellFactory::generateRandPotions(){
 		std::vector<Cell*> my_potion_vector;
 		class Potion *mypotion;
+
 		for(int i = 0; i < 10; i++){
-			int random_number =  rand() % (7 - 1) + 1;
+			int random_number = rand() % 6;
 			Cell *newcell;
-			if(random_number == 1){
-				mypotion = new class Potion(PotionType::RH);
-				newcell = new class PotionCell(mypotion);
-				my_potion_vector.push_back(newcell);
-			} else if (random_number == 2 ){
-				mypotion = new class Potion(PotionType::BA);
-				newcell = new class PotionCell(mypotion);
-				my_potion_vector.push_back(newcell);
-			} else if (random_number == 3){
-				mypotion = new class Potion(PotionType::BD);
-				newcell = new class PotionCell(mypotion);
-				my_potion_vector.push_back(newcell);
-			} else if (random_number == 4){
-				mypotion = new class Potion(PotionType::PH);
-				newcell = new class PotionCell(mypotion);
-				my_potion_vector.push_back(newcell);
-			} else if (random_number == 5){
-				mypotion = new class Potion(PotionType::WA);
-				newcell = new class PotionCell(mypotion);
-				my_potion_vector.push_back(newcell);
-			} else if (random_number == 6){
-				mypotion = new class Potion(PotionType::WD);
-				newcell = new class PotionCell(mypotion);
-				my_potion_vector.push_back(newcell);
-			}
+			mypotion = new class Potion((PotionType) random_number);
+			newcell = new class PotionCell(mypotion);
+			my_potion_vector.push_back(newcell);
 		}
 
 		return my_potion_vector;
@@ -162,75 +122,66 @@ std::vector<Cell *> CellFactory::generateRandPotions(){
 std::vector<Enemy *> CellFactory::generateEnemies(){
 	std::vector<Enemy*> my_cell_vector;
 	for(int i = 0; i < 20; i++){
-		int random_number =  rand() % (19 - 1) + 1;
+		int random_number =  rand() % 18;
 		Enemy *mycell;
-		if(random_number >= 1 && random_number <= 4){
+		if(random_number >= 0 && random_number < 4){
 			mycell = new class Human();
-			my_cell_vector.push_back(mycell);
-		} else if (random_number > 4 && random_number <= 7){
+		} else if (random_number > 4 && random_number < 7){
 			mycell = new class Dwarf();
-			my_cell_vector.push_back(mycell);
-		} else if (random_number > 7 && random_number <=12){
+		} else if (random_number > 7 && random_number < 12){
 			mycell = new class Halfling();
-			my_cell_vector.push_back(mycell);
-		} else if (random_number > 12 && random_number <=14){
+		} else if (random_number > 12 && random_number < 14){
 			mycell = new class Elf();
-			my_cell_vector.push_back(mycell);
-		} else if (random_number > 14 && random_number <=16){
+		} else if (random_number > 14 && random_number < 16){
 			mycell = new class Orc();
-			my_cell_vector.push_back(mycell);
-		} else if (random_number > 16 && random_number <=18){
+		} else if (random_number > 16 && random_number < 18){
 			mycell = new class Merchant();
-			my_cell_vector.push_back(mycell);
 		}
+		my_cell_vector.push_back(mycell);
 	}
 	return my_cell_vector;
 }
 
-void placer(Grid* mygrid, std::vector<Cell*> &Chamber1, std::vector<Cell*> &Chamber2, std::vector<Cell*> &Chamber3, std::vector<Cell*> &Chamber4, std::vector<Cell*> &Chamber5, Cell* cell) {
-	int chamberNum = rand() % (6 - 1) + 1;
+void CellFactory::place(Cell* cell) {
+	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;
+	
+	std::vector<Cell*> *chamber = &chambers[chamberNum];
+		
 	while(true) {
-		std::vector<Cell*> *chamber;
-		if(chamberNum == 1) {
-			chamber = &Chamber1;
-		} else if (chamberNum == 2) {
-			chamber = &Chamber2;
-		} else if (chamberNum == 3) {
-			chamber = &Chamber3;
-		} else if (chamberNum == 4) {
-			chamber = &Chamber4;
-		} else if (chamberNum == 5) {
-			chamber = &Chamber5;
-		} 
-		int temp =  rand() % (chamber->size());
-		//cout<<chamber->at(temp)->getSymbol();
-		if(mygrid->getCell(chamber->at(temp)->getRow() ,chamber->at(temp)->getCol())->getSymbol() == '.'){
-			//cout<<++go<<endl;
-			cell->setCoords(chamber->at(temp)->getRow() ,chamber->at(temp)->getCol());
-			//chamber->insert(chamber->begin()+temp, cell);
-			mygrid->setCell(cell);
-			break;
+		int pos = rand() % (chamber->size());
+		cout << "pos " << pos;
+
+		if(chamber->at(pos)->getType() == CellType::Ground){
+			cell->setCoords(chamber->at(pos)->getRow(), chamber->at(pos)->getCol());
+			grid->setCell(cell);
+			chamber->at(pos) = cell;
+			return;
 		}
 	}
 }
 
 Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
-	Grid *mygrid =  new Grid();
-	if(filename == "df.txt"){
+	grid = new Grid();
+	if(filename == Game::DEFAULT_FLOOR_FILE){
 		std::ifstream file{filename};
 		std::string str;
 		char chars;
 		int row = 0;
 		int col = 0;
-		std::vector<Cell*> Chamber1;
-		std::vector<Cell*> Chamber2;
-		std::vector<Cell*> Chamber3;
-		std::vector<Cell*> Chamber4;
-		std::vector<Cell*> Chamber5;
+		for (int i = 0; i < CellFactory::TOTAL_CHAMBERS; i++) {
+			chambers.push_back(vector<Cell*>());
+		}
+		cout << "works1 \n";
+		// std::vector<Cell*> Chamber1;
+		// std::vector<Cell*> Chamber2;
+		// std::vector<Cell*> Chamber3;
+		// std::vector<Cell*> Chamber4;
+		// std::vector<Cell*> Chamber5;
 		std::vector<Enemy*> enemy_vector = generateEnemies();
-		mygrid->setEnemies(enemy_vector);
-		std::vector<Cell*> potion_vector =generateRandPotions();
+		std::vector<Cell*> potion_vector = generateRandPotions();
 		std::vector<Cell*> gold_vector = getRandomGoldCell();
+
+		grid->setEnemies(enemy_vector);
 
 		while(std::getline(file,str)){		
 			Cell *cell;
@@ -239,63 +190,59 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 			for(int k=0; k < len; k++){
 				cell = getCell(str[k]);
 				cell->setCoords(row,col);
-				mygrid->setCell(cell);
+				grid->setCell(cell);
+
 				if (str[k] =='.') {
 					if(row >= 3 && row <=6 && col>=3 && col <= 28 ){
-						Chamber1.push_back(cell);
+						chambers[0].push_back(cell);
 					} else if (((row >= 3 && row <=6 && col>=39 && col <62) || (row == 5 && col >= 62 && col <70) 
 						       || (row == 6 && col >=62 && col <73) || (row >= 7 && row <=12 && col>=61 && col < 76))) {
-						Chamber2.push_back(cell);
+						chambers[1].push_back(cell);
 					} else if (row >= 10 && row <=12 && col>=38 && col < 50){
-						Chamber3.push_back(cell);
+						chambers[2].push_back(cell);
 					} else if (row >= 15 && row <=21 && col>=4 && col <25){
-						Chamber4.push_back(cell);
+						chambers[3].push_back(cell);
 					} else {
-						Chamber5.push_back(cell);
+						chambers[4].push_back(cell);
 					}
 				}
 				col++;
 			}
 			row++;	
 		}
-		placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, player);
+		cout << "works2 \n";
+		place(player);
 
-		int glength = gold_vector.size();
-
-		for (int i=0; i < glength; i++) {
-			placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, gold_vector[i]);
+		for (int i=0; i < gold_vector.size(); i++) {
+			place(gold_vector[i]);
 		}
 
-		int plength = potion_vector.size();
-
-		for (int i=0; i < plength; i++) {
-			placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, potion_vector[i] );
+		for (int i=0; i < potion_vector.size(); i++) {
+			place(potion_vector[i]);
 		}
 
-		int length = enemy_vector.size();
-
-		for (int i=0; i < length; i++) {
-			placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, enemy_vector[i] );
+		for (int i=0; i < enemy_vector.size(); i++) {
+			place(enemy_vector[i]);
 		}
 
+		cout << "works3 \n";
+		// int goldCount = 0;
+		// int potionCount = 0;
+		// for(int i = 0; i<25; i++) {
 
-		int goldCount = 0;
-		int potionCount = 0;
-		for(int i = 0; i<25; i++) {
-
-			for(int j = 0; j<79; j++) {
-				if(mygrid->getCell(i, j)->getSymbol() == 'G') {
-					goldCount++;
-				}
-				else if(mygrid->getCell(i, j)->getSymbol() == 'P') {
-					potionCount++;
-				}
-			}
-		}
+		// 	for(int j = 0; j<79; j++) {
+		// 		if(mygrid->getCell(i, j)->getSymbol() == 'G') {
+		// 			goldCount++;
+		// 		}
+		// 		else if(mygrid->getCell(i, j)->getSymbol() == 'P') {
+		// 			potionCount++;
+		// 		}
+		// 	}
+		// }
 		// cout<<"Gold: "<< goldCount << endl;
 		// cout<<"Potion: "<< potionCount << endl;
 
-		return mygrid;
+		
 	} else {
 		std::ifstream file{filename};
 		std::string str;
@@ -323,14 +270,18 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 					cell = getCell(chars);
 				}
 				cell->setCoords(row,col);
-				mygrid->setCell(cell);
+				grid->setCell(cell);
 				col++;
 			}
 			row++;
 			std::cout<<str<<std::endl;
 		}
 	}
+	return grid;
 }
+
+const int CellFactory::TOTAL_CHAMBERS = 5;
+
 
 
 
