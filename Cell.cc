@@ -21,7 +21,7 @@ char Cell::getSymbol() const {
 };
 
 bool Cell::canMoveOn(Character* character) { 
-	return this->getType() == CellType::Ground; 
+	return (this->getType() == CellType::Ground || this->getType() == CellType::Bridge || this->getType() == CellType::BridgeEnter);
 }
 
 

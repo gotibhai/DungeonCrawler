@@ -7,6 +7,7 @@
 #include "Dwarf.h"
 #include "Orc.h"
 #include "Elf.h"
+#include "Stairs.h"
 #include "Merchant.h"
 #include "Dragon.h"
 #include <sstream>
@@ -82,6 +83,8 @@ std::vector<Cell *> CellFactory::getRandomGoldCell(){
 			} else if (random_number > 6 && random_number <= 8){
 				newcell = new class Gold(GoldType::DragonGold);
 				my_gold_vector.push_back(newcell);
+				Cell *dragoncell = new class Dragon();
+				my_gold_vector.push_back(dragoncell);
 			}
 		}
 		return my_gold_vector;
@@ -187,29 +190,63 @@ std::vector<Enemy *> CellFactory::generateEnemies(){
 	return my_cell_vector;
 }
 
-void placer(Grid* mygrid, std::vector<Cell*> &Chamber1, std::vector<Cell*> &Chamber2, std::vector<Cell*> &Chamber3, std::vector<Cell*> &Chamber4, std::vector<Cell*> &Chamber5, Cell* cell) {
-	int chamberNum = rand() % (6 - 1) + 1;
-	while(true) {
-		std::vector<Cell*> *chamber;
-		if(chamberNum == 1) {
-			chamber = &Chamber1;
-		} else if (chamberNum == 2) {
-			chamber = &Chamber2;
-		} else if (chamberNum == 3) {
-			chamber = &Chamber3;
-		} else if (chamberNum == 4) {
-			chamber = &Chamber4;
-		} else if (chamberNum == 5) {
-			chamber = &Chamber5;
-		} 
-		int temp =  rand() % (chamber->size());
-		//cout<<chamber->at(temp)->getSymbol();
-		if(mygrid->getCell(chamber->at(temp)->getRow() ,chamber->at(temp)->getCol())->getSymbol() == '.'){
-			//cout<<++go<<endl;
-			cell->setCoords(chamber->at(temp)->getRow() ,chamber->at(temp)->getCol());
-			//chamber->insert(chamber->begin()+temp, cell);
-			mygrid->setCell(cell);
-			break;
+int remember_row;
+int remember_col;
+
+void placer(Grid* mygrid, std::vector<Cell*> &Chamber1, std::vector<Cell*> &Chamber2, std::vector<Cell*> &Chamber3, std::vector<Cell*> &Chamber4, std::vector<Cell*> &Chamber5, Cell* cell , bool Dragon = false) {
+	if(Dragon){
+		int const total_dir = 8;
+		int row = remember_row;
+		int col = remember_col;
+		while (true){
+
+			int rand_dir = rand() % (total_dir) + 1;
+			Direction direction = (Direction)rand_dir;
+			if (direction == Direction::NO || direction == Direction::NE || direction == Direction::NW) {
+			row -= 1;
+			}
+			if (direction == Direction::SO || direction == Direction::SE || direction == Direction::SW) {
+				row += 1;
+			}
+			if (direction == Direction::WE || direction == Direction::SW || direction == Direction::NW) {
+				col -= 1;
+			}
+			if (direction == Direction::EA || direction == Direction::SE || direction == Direction::NE) {
+				col += 1;
+			}
+			if(mygrid->getCell(row,col)->getSymbol() == '.'){
+				remember_row = row;
+				remember_col = col;
+				cout<<remember_row<<" "<<remember_col<<endl;
+				cell->setCoords(remember_row,remember_col);
+				mygrid->setCell(cell);
+				break;
+			}
+		}
+	} else {
+
+		int chamberNum = rand() % (6 - 1) + 1;
+		while(true) {
+			std::vector<Cell*> *chamber;
+			if(chamberNum == 1) {
+				chamber = &Chamber1;
+			} else if (chamberNum == 2) {
+				chamber = &Chamber2;
+			} else if (chamberNum == 3) {
+				chamber = &Chamber3;
+			} else if (chamberNum == 4) {
+				chamber = &Chamber4;
+			} else if (chamberNum == 5) {
+				chamber = &Chamber5;
+			} 
+			int temp =  rand() % (chamber->size());
+			if(mygrid->getCell(chamber->at(temp)->getRow() ,chamber->at(temp)->getCol())->getSymbol() == '.'){
+				remember_row = chamber->at(temp)->getRow();
+				remember_col = chamber->at(temp)->getCol();
+				cell->setCoords(remember_row ,remember_col);
+				mygrid->setCell(cell);
+				break;
+			}
 		}
 	}
 }
@@ -229,7 +266,7 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 		std::vector<Cell*> Chamber5;
 		std::vector<Enemy*> enemy_vector = generateEnemies();
 		mygrid->setEnemies(enemy_vector);
-		std::vector<Cell*> potion_vector =generateRandPotions();
+		std::vector<Cell*> potion_vector = generateRandPotions();
 		std::vector<Cell*> gold_vector = getRandomGoldCell();
 
 		while(std::getline(file,str)){		
@@ -260,9 +297,17 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 		}
 		placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, player);
 
+		Cell *newcell = new class Stairs();
+
+		placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, newcell);
+
 		int glength = gold_vector.size();
 
-		for (int i=0; i < glength; i++) {
+		for (int i=0; i < glength-1; i++) {
+			if((char)gold_vector[i+1]->getType() == 'D' && i < glength-1){
+				placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, gold_vector[i]);
+				placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, gold_vector[i+1], true);
+			}
 			placer(mygrid, Chamber1, Chamber2, Chamber3, Chamber4, Chamber5, gold_vector[i]);
 		}
 
