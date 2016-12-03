@@ -46,12 +46,15 @@ Cell* Grid::getCellByDirection(Cell *cell, Direction direction) {
 
 bool Grid::move(Character *character, Direction direction) {
 	Cell *cell = getCellByDirection(character, direction);
-
+	cout << "Grid::move character" << (char) character->getType() << endl;
+	cout << "Grid::move cell" << (char) cell->getType() << endl;
 	if (!cell->canMoveOn(character)) {
 		return false;
 	}
 
-	if (character->getType() == CellType::Player) {
+	cout << "Grid::move 2" << (char) character->getType() << endl;
+	
+	if (dynamic_cast<class Race*>(character)) {
 		switch(cell->getType()) {
 			case(CellType::Stairs):
 			case(CellType::Gold):
@@ -106,7 +109,7 @@ bool Grid::attack(Race *character, Direction direction) {
 	Cell *cell = getCellByDirection(character, direction);
 
 	isFrozen = true;
-	
+
 	if (dynamic_cast<class Enemy*>(cell)) {
 		attack(character, dynamic_cast<class Enemy*>(cell));
 		return true;

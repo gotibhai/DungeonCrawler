@@ -24,7 +24,7 @@ char Cell::getSymbol() const {
 };
 
 bool Cell::canMoveOn(Character* character) { 
-	cout << "canMoveOn " << (char) this->getType() << endl;
+	cout << "can " << (char) character->getType() << " MoveOn " << (char) this->getType() << endl;
 	return (this->getType() == CellType::Ground || 
 		(dynamic_cast<class Race*>(character) && (this->getType() == CellType::Bridge || this->getType() == CellType::BridgeEnter)));
 }

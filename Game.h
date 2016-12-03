@@ -14,11 +14,10 @@ class Game {
 	private:
         static Game* instance;
         std::vector<std::string> floorFileNames;
-        int score;
         Grid* currentGrid;
         Race* player;
         int floorNum;
-        std::string displayAction;
+        std::string actionDisplay;
         std::string floorFile;
 
         bool toRestart;
@@ -44,6 +43,7 @@ class Game {
     bool isQuit();
     bool isPlayerMoved();
     void startMove();
+    void addActionDisplay(std::string actionDisplay);
 
   friend std::ostream &operator<<(std::ostream &out , Game *g);
 };

@@ -46,6 +46,11 @@ void Game::nextFloor() {
 
 void Game::startMove() {
   isMoved = false;
+  actionDisplay = "";
+}
+
+void Game::addActionDisplay(std::string actionDisplay) {
+  this->actionDisplay += actionDisplay;
 }
 
 void Game::action(Action action) {
@@ -125,6 +130,7 @@ std::ostream &operator<<(std::ostream &out , Game *g) {
    out<<"HP: "<<g->player->getHp()<<endl;
    out<<"Atk: "<<g->player->getDef()<<endl;
    out<<"Def: "<<g->player->getAtk()<<endl;
+   out<<"Action: " << g->actionDisplay<<endl;
   return out;
 }
 
