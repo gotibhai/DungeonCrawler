@@ -7,7 +7,6 @@
 class Stairs: public ActionItem {
   public:
     Stairs(): Cell{CellType::Stairs} { };
-    void use();
 };
 
 #endif

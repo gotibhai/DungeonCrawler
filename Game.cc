@@ -6,10 +6,14 @@
 #include "Vampire.h"
 #include "Troll.h"
 #include "Goblin.h"
+#include "Gold.h"
 #include "CellFactory.h"
+#include "GoldType.cc"
+#include "PotionCell.h"
 using namespace std;
 
-Game::Game() {
+Game::Game(): toRestart{false}, toQuit{false} {
+
 }
 
 Game* Game::getInstance(string fileName) {
@@ -31,81 +35,75 @@ void Game::start(char raceType){
   }
   floorNum = 0;
   nextFloor();
+
+  toRestart = false;
 }
 void Game::nextFloor() {
-  currentGrid = CellFactory().GenerateGridFromFile(DEFAULT_FLOOR_FILE , player);
+  currentGrid = CellFactory().GenerateGridFromFile(DEFAULT_FLOOR_FILE, player);
   cout<<*currentGrid<<endl;
   floorNum++;
 }
-bool Game::attack(Direction direction) {
-  Cell* cell;
-  switch(direction) {
-    case(Direction::NO):
-      cell = currentGrid->getCell(player->getRow() -1, player->getCol());
+
+void Game::startMove() {
+  isMoved = false;
+}
+
+void Game::action(Action action) {
+  switch (action) {
+    case Action::FREEZE:
+      currentGrid->setIsFrozen(true);
+      return;
       break;
-    case(Direction::SO):
-      cell = currentGrid->getCell(player->getRow() +1, player->getCol());
+    case Action::RESTART:
+      toRestart = true;
+      return;
       break;
-    case(Direction::EA):
-      cell = currentGrid->getCell(player->getRow(), player->getCol() +1);
+    case Action::QUIT:
+      toQuit = true;
+      return;
       break;
-    case(Direction::WE):
-      cell = currentGrid->getCell(player->getRow(), player->getCol() -1);
-      break;
-    case(Direction::NE):
-      cell = currentGrid->getCell(player->getRow() -1, player->getCol() +1);
-      break;
-    case(Direction::NW):
-      cell = currentGrid->getCell(player->getRow() -1, player->getCol() -1);
-      break;
-    case(Direction::SE):
-      cell = currentGrid->getCell(player->getRow() +1, player->getCol() +1);
-      break;
-    case(Direction::SW):
-      cell = currentGrid->getCell(player->getRow() +1, player->getCol() -1);
-      break;
+    default:
+      return;
   }
-  if(cell->getType() != CellType::Halfling && cell->getType() != CellType::Dwarf &&
-     cell->getType() != CellType::Elf && cell->getType() != CellType::Orc &&
-     cell->getType() != CellType::Human && cell->getType() != CellType::Merchant) {
-    return false;
+  this->isMoved = true;
+}
+
+
+void Game::action(Action action, Direction direction) {
+  cout << "action1 " << action << "\n";
+
+  isMoved = currentGrid->action(action, player, direction);
+  cout << "action2 " << action << "\n";
+  cout << "isMoved " << isMoved << "\n";
+
+  if (isMoved) {
+    currentGrid->enemiesMove();
+    cout << this;
   }
-
-  player->attack(dynamic_cast<class Character*>(cell));
-  cout<<"DAMAGING: "<<dynamic_cast<class Character*>(cell)->getHp()<<endl;
-  return true;
-  // if(direction == Direction::NO) {
-  //   Cell* cell = currentGrid->getCell(player->getRow() -1, player->getCol());
-  // } else if (direction ==)
-  // player->attack(dynamic_cast<class Character*>(currentGrid->getCell(player->getRow() -1, player->getCol())));
-  // // return player->attack(character);
-  // return false;
 }
 
-
-bool Game::move(Direction direction) {
-  return currentGrid->move(player , direction);
-}
-void Game::usePotion(class Potion potion) {
-  //player.use(potion);
-}
-
-Grid* Game::getCurrentGrid() {
-  return currentGrid;
-}
-
-Race* Game::getPlayer() {
-  return player;
+void Game::use(ActionItem* actionItem) {
+  if (actionItem->getType() == CellType::Stairs) {
+    nextFloor();
+  } 
+  if (actionItem->getType() == CellType::Potion) {
+    player->use(*dynamic_cast<class PotionCell*>(actionItem)->getPotion());
+  } 
+  if (actionItem->getType() == CellType::Gold) {
+    player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
+  }  
 }
 
-void Game::restart() {
-
+bool Game::isRestart() {
+  return toRestart;
 }
-void Game::finish() {
 
+bool Game::isQuit() {
+  return toQuit;
 }
-void Game::freeze() {
 
+bool Game::isPlayerMoved() {
+  return isMoved;
 }
 
 string translateRace(CellType type) {
@@ -122,11 +120,11 @@ string translateRace(CellType type) {
 
 
 std::ostream &operator<<(std::ostream &out , Game *g) {
-   out<<*(g->getCurrentGrid());
-   out<<"Race: " << translateRace(g->getPlayer()->getType())<<endl;
-   out<<"HP: "<<g->getPlayer()->getHp()<<endl;
-   out<<"Atk: "<<g->getPlayer()->getDef()<<endl;
-   out<<"Def: "<<g->getPlayer()->getAtk()<<endl;
+   out<<*(g->currentGrid);
+   out<<"Race: " << translateRace(g->player->getType())<<endl;
+   out<<"HP: "<<g->player->getHp()<<endl;
+   out<<"Atk: "<<g->player->getDef()<<endl;
+   out<<"Def: "<<g->player->getAtk()<<endl;
   return out;
 }
 

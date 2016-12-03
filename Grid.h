@@ -6,6 +6,8 @@
 #include "Cell.h"
 #include <vector>
 #include "Enemy.h"
+#include "Race.h"
+#include "Action.cc"
 
 class Cell;
 
@@ -18,16 +20,24 @@ class Grid {
 	    Cell* grid[GRID_HEIGHT][GRID_WIDTH];
 	    std::vector<Enemy*> enemies;
 	    bool isFrozen;
+
+	    Race* getPlayerNearby(Enemy* enemy);
+	    bool attack(Character*, Character*);
+	    void moveEnemy(Enemy *enemy);
+	    Cell* getCellByDirection(Cell *cell, Direction direction);
+	    bool move(Character *character, Direction direction);
+		bool attack(Race *character, Direction direction);
+		bool usePotion(Race *character, Direction direction);
+
 	public:
 		Grid();
 		~Grid();
 		void setCell(Cell *cell);
 		void setEnemies(std::vector<Enemy*>);
-		bool move(Character *character, Direction direction);
-		// bool attack(Character *character, Direction direction);
-		// void start(Race *player);
+    	bool action(Action, Race*, Direction);
+    	void setIsFrozen(bool setIsFrozen);
 		Cell* getCell(int r, int c);
-		void moveEnemies();
+		void enemiesMove();
 		friend std::ostream &operator<<(std::ostream &out, const Grid &g);
 };
 

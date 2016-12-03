@@ -9,7 +9,7 @@
 class Troll: public Race {
 public:
   Troll();
-  bool move(Direction) override;
+  // bool move(Direction) override;
 };
 
 #endif

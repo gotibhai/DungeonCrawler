@@ -9,7 +9,6 @@ class ActionItem: virtual public Cell {
 public:
   ActionItem();
   virtual bool canMoveOn(Character*) override;
-  virtual void use() = 0;
 };
 
 #endif

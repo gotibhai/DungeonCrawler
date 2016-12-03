@@ -23,6 +23,7 @@ class Cell {
 		void reset();
 		void setType();
 		void setCellTypeCovered(CellType cellType);
+		void setIsFrozen(bool setIsFrozen);
 		CellType getCellTypeCovered();
 		friend std::ostream &operator<<(std::ostream &out, const Cell &g);
 };

@@ -3,13 +3,14 @@
 
 enum Direction {
 	NO,
-	SO,
-	EA,
-	WE,
 	NE,
 	NW,
 	SE,
-	SW
+	SW,
+	SO,
+	EA,
+	WE,
+	TOTAL = 8
 };
 
 #endif

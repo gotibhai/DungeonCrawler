@@ -5,8 +5,10 @@
 #include <vector>
 #include "Grid.h"
 #include "Race.h"
+#include "Action.cc"
 // #include "Direction.cc"
 #include "Potion.h"
+#include "ActionItem.h"
 
 class Game {
 	private:
@@ -18,23 +20,30 @@ class Game {
         int floorNum;
         std::string displayAction;
         std::string floorFile;
+
+        bool toRestart;
+        bool toQuit;
+        bool isMoved;
+
+        void nextFloor();
     public:
          Game();
         ~Game();
         static const std::string DEFAULT_FLOOR_FILE;
 		// void init(std::string);
+
     static Game* getInstance(std::string fileName = Game::DEFAULT_FLOOR_FILE);
 
     void start(char);
-    void nextFloor();
-    bool attack(Direction);
-    bool move(Direction);
-    void usePotion(class Potion);
-    Grid* getCurrentGrid();
-    Race* getPlayer();
-    void restart();
-    void finish();
-    void freeze();
+    void action(Action);
+    void action(Action, Direction);
+    void use(ActionItem* actionItem);
+    // Grid* getCurrentGrid();
+    // Race* getPlayer();
+    bool isRestart();
+    bool isQuit();
+    bool isPlayerMoved();
+    void startMove();
 
   friend std::ostream &operator<<(std::ostream &out , Game *g);
 };

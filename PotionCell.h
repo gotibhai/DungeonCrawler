@@ -3,11 +3,12 @@
 
 #include "Potion.h"
 #include "Cell.h"
+#include "ActionItem.h"
 
-class PotionCell : public Cell{
+class PotionCell: public ActionItem {
 	class Potion *potion;
 public:
-	PotionCell(class Potion*):Cell(CellType::Potion){}
+	PotionCell(class Potion*): Cell(CellType::Potion){}
 	class Potion* getPotion();
 	bool usePotion();
 };

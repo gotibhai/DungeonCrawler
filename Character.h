@@ -13,7 +13,6 @@ private:
   int def;
 public:
   Character(int, int, int);
-  virtual bool move(Direction);
   virtual bool attack(Character*);
   void die();
   virtual void winBattle();

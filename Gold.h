@@ -12,9 +12,9 @@ class Gold : virtual public ActionItem {
 		Gold(GoldType g): Cell{CellType::Gold} { 
 			goldtype = g; 
 		}
-		void use();
-		GoldType getType();
-		bool getIsCollectible();
+
+		GoldType getGoldType();
+		bool canMoveOn();
 		void setIsCollectible(bool);
 };
 

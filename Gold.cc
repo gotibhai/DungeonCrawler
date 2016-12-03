@@ -1,16 +1,13 @@
 #include "Gold.h"
 
-void Gold::use() {
-  
-}
 void Gold::setIsCollectible(bool isCollectible) {
   this->isCollectible = isCollectible;
 }
 
-bool Gold::getIsCollectible() {
+bool Gold::canMoveOn() {
   return this->isCollectible;
 }
 
-GoldType Gold::getType(){
+GoldType Gold::getGoldType(){
 	return goldtype;
 }

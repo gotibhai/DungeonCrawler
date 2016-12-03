@@ -7,11 +7,20 @@ Race::Race(int hp, int atk, int def): Character{hp, atk, def} {}
 int Race::getTotalGold() {
   return totalGold;
 }
-void Race::use(class Potion) {
- //hi
+
+void Race::use(class Potion potion) {
+  if (potion.getHp() != 0) {
+    setHp(getHp() + potion.getHp());
+  } else {
+    potions.push_back(potion);
+  }
+}
+
+void Race::use(GoldType goldType) {
+  totalGold += (int) goldType;
 }
 // void use(Gold);
-int Race::getDef(){
+int Race::getDef() {
   int length = potions.size();
   int totalDef = Character::getDef();
   for(int i = 0; i<length; i++) {
@@ -19,6 +28,7 @@ int Race::getDef(){
   }
   return totalDef;
 }
+
 int Race::getAtk(){
   int length = potions.size();
   int totalAtk = Character::getAtk();

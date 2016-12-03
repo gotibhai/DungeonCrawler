@@ -3,6 +3,8 @@
 #include "CellType.cc"
 #include "Race.h"
 #include "Gold.h"
+#include "PotionCell.h"
+#include "Game.h"
 #include <vector>
 #include <cstdlib>
 #include <algorithm>
@@ -22,9 +24,9 @@ void Grid::setEnemies(std::vector<Enemy*> enemy_vector ) { this->enemies = enemy
 
 bool firstTime = true;
 
-bool Grid::move(Character *character, Direction direction) {
-	int row = character->getRow();
-	int col = character->getCol();
+Cell* Grid::getCellByDirection(Cell *cell, Direction direction) {
+	int row = cell->getRow();
+	int col = cell->getCol();
 
 	if (direction == Direction::NO || direction == Direction::NE || direction == Direction::NW) {
 		row -= 1;
@@ -39,44 +41,82 @@ bool Grid::move(Character *character, Direction direction) {
 		col += 1;
 	}
 
-	Cell *cell = grid[row][col];
-	CellType type = cell->getType();
+	return grid[row][col];
+}
+
+bool Grid::move(Character *character, Direction direction) {
+	Cell *cell = getCellByDirection(character, direction);
+
 	if (!cell->canMoveOn(character)) {
 		return false;
 	}
 
-	if (dynamic_cast<Race*>(character)) {
+	if (character->getType() == CellType::Player) {
 		switch(cell->getType()) {
-			case(CellType::Gold):
-				(dynamic_cast<class Gold*>(cell))->use();
-				break;
 			case(CellType::Stairs):
-				(dynamic_cast<class Stairs*>(cell))->use();
+			case(CellType::Gold):
+				Game::getInstance()->use(dynamic_cast<class ActionItem*>(cell));
 				break;
 		}
+		isFrozen = false;
 	}
 
 	Cell *prevCell = new Cell(character->getCellTypeCovered());
 	prevCell->setCoords(character->getRow(), character->getCol());
-	
+		
 	character->setCellTypeCovered(cell->getType());
-	character->setCoords(row, col);
+	character->setCoords(cell->getRow(), cell->getCol());
 	
 	// bridge
 	setCell(character);
 	setCell(prevCell);
 
 	return true;
-
 };
 
 Cell* Grid::getCell(int r, int c) {
 	return grid[r][c];
 }
 
-// bool Grid::attack(Character *character, Direction direction) {
-// 	return true;
-// };
+bool Grid::action(Action action, Race* player, Direction direction) {
+  switch (action) {
+    case Action::ATTACK:
+    	return attack(player, direction);
+    case Action::MOVE:
+    	return move(player, direction);
+    case Action::USE_POTION:
+    	return usePotion(player, direction);
+    default:
+      return false;
+  }
+}
+
+bool Grid::usePotion(Race *player, Direction direction) {
+	Cell *cell = getCellByDirection(player, direction);
+
+	if (cell->getType() == CellType::Potion) {
+		Game::getInstance()->use(dynamic_cast<class PotionCell*>(cell));
+		cell->reset();
+		return true;
+	}
+	return false;
+}
+
+bool Grid::attack(Race *character, Direction direction) {
+	Cell *cell = getCellByDirection(character, direction);
+
+	if (dynamic_cast<class Enemy*>(cell)) {
+		attack(character, dynamic_cast<class Enemy*>(cell));
+		return true;
+	}
+
+	return false;
+};
+
+bool Grid::attack(Character *character1, Character *character2) {
+	isFrozen = true;
+	return character1->attack(character2);
+};
 
 // void Grid::start(Race *player) {
 // 	// 1. Find empty cell and assign player related coords
@@ -84,26 +124,48 @@ Cell* Grid::getCell(int r, int c) {
 
 // 	setCell(player);
 // };
-void Grid::moveEnemies() {
-	if (isFrozen) {
-		return;
-	}
 
-	const int totalDirections = 8;
-
-	for (int i = 0; i < Grid::MAX_ENEMIES; i++) {
-		bool isMoved = false;
-		vector<Direction> directions;
-		Direction direction;
-		while (!isMoved) {
-			Direction direction;
-			int dir = rand() % (totalDirections);
-			direction = (Direction)dir;
-			while (std::find(directions.begin(), directions.end(), direction) != directions.end()) {
-				direction = static_cast<Direction>(rand() % totalDirections);
+Race* Grid::getPlayerNearby(Enemy* enemy) {
+	for (int row = enemy->getRow()-1; row <= enemy->getRow() + 1; row++ ) {
+		for (int col = enemy->getCol()-1; col <= enemy->getCol() + 1; col++ ) {
+			if (dynamic_cast<class Race*>(grid[row][col])) {
+				return dynamic_cast<class Race*>(grid[row][col]);
 			}
-			isMoved = move(enemies[i], direction);
-			directions.push_back(direction);
+		}
+	}
+	return nullptr;
+}
+
+void Grid::setIsFrozen(bool isFrozen) {
+	this->isFrozen = isFrozen;
+}
+
+void Grid::moveEnemy(Enemy *enemy) {
+	bool isMoved = false;
+	vector<Direction> directions;
+	Direction direction;
+	while (!isMoved) {
+		// Question here
+		Direction direction = (Direction) (rand() % Direction::TOTAL);
+		while (std::find(directions.begin(), directions.end(), direction) != directions.end() && direction) {
+			direction = (Direction) (rand() % Direction::TOTAL);
+		}
+		directions.push_back(direction);
+		isMoved = move(enemy, direction);
+	}
+}
+
+void Grid::enemiesMove() {
+	if (!isFrozen) {
+		for (int i = 0; i < Grid::MAX_ENEMIES; i++) {
+			moveEnemy(enemies[i]);
+		}
+	}
+	for (int i = 0; i < Grid::MAX_ENEMIES; i++) {
+		Race *player = getPlayerNearby(enemies[i]);
+
+		if (player) {
+			attack(enemies[i], player);
 		}
 	}
 }

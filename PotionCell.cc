@@ -1,10 +1,7 @@
 #include "PotionCell.h"
+#include "Game.h"
+
 
 class Potion* PotionCell::getPotion(){
 	return potion;
-}
-	
-
-bool PotionCell::usePotion(){
-	return true;
 }

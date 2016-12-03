@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Potion.h"
 #include "Cell.h"
+#include "GoldType.cc"
 #include <vector>
 
 
@@ -15,7 +16,7 @@ public:
   Race(int, int , int);
   int getTotalGold();
   virtual void use(class Potion);
-  // void use(Gold);
+  void use(GoldType);
   int getDef() override;
   int getAtk() override;
   void resetPotions();

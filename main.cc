@@ -5,6 +5,7 @@
 #include "Grid.h"
 #include "Game.h"
 #include "CellType.cc"
+#include "Action.cc"
 #include <stdlib.h>
 #include <time.h>
 
@@ -25,78 +26,94 @@ Direction translateDirection(string type) {
       else if (type ==  "sw") return Direction::SW;
 }
 
+void printInvalidCommand() {
+  cout << "Invalid command, please try again: ";
+}
+
+void printWelcome() {
+  cout<<"Welcome to CC3K!"<<endl;
+  cout<<"Please choose one of the following races:"<<endl;
+  cout<<"[s]hade"<<endl;
+  cout<<"[d]row"<<endl;
+  cout<<"[v]ampire"<<endl;
+  cout<<"[t]roll"<<endl;
+  cout<<"[g]oblin"<<endl;
+}
+
+void printCommands() {
+  cout << "Pick a direction: no, so, ea, we, nw, ne, sw, se" << endl;
+  cout << "Optionally can do 'a <direction>' to attack or " << endl;
+  cout << "'u <direction' to use potion or " << endl;
+  cout << "Type 'r' to restart or 'q' to quit." <<endl;
+}
+
+void printError(Action action) {
+  cout<<"Cannot " << (char) action << " there. Try again."<<endl;
+}
+
 int main () {
   srand(time(0));
   cin.exceptions(ios::eofbit|ios::failbit);
-  Grid grid();
 
-  bool restart = true;
-  while(restart) {
-    restart = false;
-    cout<<"Welcome to CC3K!"<<endl;
-    cout<<"Please choose one of the following races:"<<endl;
-    cout<<"[s]hade"<<endl;
-    cout<<"[d]row"<<endl;
-    cout<<"[v]ampire"<<endl;
-    cout<<"[t]roll"<<endl;
-    cout<<"[g]oblin"<<endl;
+  Game* game = Game::getInstance();
+  while(!game->isQuit()) {
+    printWelcome();
 
     char race;
     cin >> race;
 
-    Game* game = Game::getInstance();
     game->start(race);
     // create the grid and shit here (maybe game.start will do that stuff)
-    bool quit = false;
-    while(!(quit || restart)) {
-      cout << "Pick a direction: no, so, ea, we, nw, ne, sw, se" << endl;
-      cout << "Optionally can do 'a <direction>' to attack or " << endl;
-      cout << "'u <direction' to use potion or " << endl;
-      cout << "Type 'r' to restart or 'q' to quit." <<endl;
-      while(true) {
+    while(!game->isRestart() && !game->isQuit()) {
+      printCommands();
+
+      game->startMove();
+      while(!game->isPlayerMoved() && !game->isRestart() && !game->isQuit()) {
         string action;
         cin >> action;
-        if(action == "a") {
-            string direction;
-            cin >> direction;
-            // attack enemy
-            if(game->attack(translateDirection(direction))) {
-              cout<<"SUCCESSFUL ATTACK"<<endl;
-              break;
-            } else {
-              cout<<"Cannot attack there. Try again."<<endl;
-            }
-        }
-        else if(action == "u") {
-            string direction;
-            cin >> direction;
-            // use potion
-            cout<<game;
-            break; // only if able to use the potion
-        }
-        else if(action == "r") {
-            restart = true;
-            break;
-        }
-        else if(action == "q") {
-            quit = true;
-            break;
-        }
-        else if(isDirection(action)) { // for moving playercx
 
-            if(game->move(translateDirection(action))) {
-              cout<<game;
-              break; // only if move successful
-            } else {
-              cout<< "Cannot move there. Try again." << endl;
+        Action actionType;
+
+        if (isDirection(action)) {
+          actionType = Action::MOVE;          
+        }
+        
+        if (actionType != Action::MOVE) {
+          if (action.length() > 1) {
+            printInvalidCommand();
+            continue;
+          }
+          actionType = (Action) (char) action.at(0);
+        }
+        switch(actionType) {
+          case Action::ATTACK:
+          case Action::USE_POTION:
+          case Action::MOVE: {
+            string direction;
+
+            if (Action::MOVE) direction = action;
+            else cin >> direction;
+
+
+            game->action(actionType, translateDirection(direction));
+
+            if (!game->isPlayerMoved()) {
+              printError(actionType);
             }
+            break;}
+          case Action::FREEZE:
+          case Action::RESTART:
+          case Action::QUIT: {
+            game->action(actionType);
+            break;}
+          default:
+            printInvalidCommand();
         }
-        else {
-            cout << "Invalid command, please try again: ";
-        }
+
+        
       }
-      game->getCurrentGrid()->moveEnemies();
-      cout<<game;
+
+      
       // check if won
       // check if lost
       // check if new floor
@@ -108,3 +125,42 @@ int main () {
     }
   }
 };
+
+// if(action == "a") {
+        //     string direction;
+        //     cin >> direction;
+        //     // attack enemy
+        //     if(game->attack(translateDirection(direction))) {
+        //       cout<<"SUCCESSFUL ATTACK"<<endl;
+        //       break;
+        //     } else {
+        //       cout<<"Cannot attack there. Try again."<<endl;
+        //     }
+        // }
+        // else if(action == "u") {
+        //     string direction;
+        //     cin >> direction;
+        //     // use potion
+        //     cout<<game;
+        //     break; // only if able to use the potion
+        // }
+        // else if(action == "r") {
+        //     restart = true;
+        //     break;
+        // }
+        // else if(action == "q") {
+        //     quit = true;
+        //     break;
+        // }
+        // else if(isDirection(action)) { // for moving playercx
+
+        //     if(game->move(translateDirection(action))) {
+        //       cout<<game;
+        //       break; // only if move successful
+        //     } else {
+        //       cout<< "Cannot move there. Try again." << endl;
+        //     }
+        // }
+        // else {
+        //     cout << "Invalid command, please try again: ";
+        // }
