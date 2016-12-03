@@ -72,7 +72,7 @@ int main () {
         string action;
         cin >> action;
 
-        Action actionType;
+        Action actionType = Action::NONE;
 
         if (isDirection(action)) {
           actionType = Action::MOVE;          
@@ -91,7 +91,7 @@ int main () {
           case Action::MOVE: {
             string direction;
 
-            if (Action::MOVE) direction = action;
+            if (actionType == Action::MOVE) direction = action;
             else cin >> direction;
 
 

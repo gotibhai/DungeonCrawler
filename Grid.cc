@@ -105,6 +105,8 @@ bool Grid::usePotion(Race *player, Direction direction) {
 bool Grid::attack(Race *character, Direction direction) {
 	Cell *cell = getCellByDirection(character, direction);
 
+	isFrozen = true;
+	
 	if (dynamic_cast<class Enemy*>(cell)) {
 		attack(character, dynamic_cast<class Enemy*>(cell));
 		return true;

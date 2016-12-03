@@ -7,7 +7,8 @@ enum Action {
 	MOVE = (int) 'm',
 	RESTART = (int) 'r',
 	FREEZE = (int) 'f',
-	QUIT = (int)'q'
+	QUIT = (int)'q',
+	NONE = -1
 };
 
 #endif

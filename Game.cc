@@ -70,7 +70,7 @@ void Game::action(Action action) {
 
 
 void Game::action(Action action, Direction direction) {
-  cout << "action1 " << action << "\n";
+  cout << "action1 " << (char) action << "\n";
 
   isMoved = currentGrid->action(action, player, direction);
   cout << "action2 " << action << "\n";
