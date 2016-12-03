@@ -101,7 +101,7 @@ Cell* CellFactory::getPotionCell(int characters){
 	} else {
 		mypotion = new class Potion(PotionType::WD);
 	}
-	newcell = new class PotionCell(mypotion);
+	newcell = new class PotionCell(*mypotion);
 	return newcell;
 } 
 
@@ -112,8 +112,7 @@ std::vector<Cell *> CellFactory::generateRandPotions(){
 		for(int i = 0; i < 10; i++){
 			int random_number = rand() % 6;
 			Cell *newcell;
-			mypotion = new class Potion((PotionType) random_number);
-			newcell = new class PotionCell(mypotion);
+			newcell = new class PotionCell(*(new class Potion((PotionType) random_number)));
 			my_potion_vector.push_back(newcell);
 		}
 

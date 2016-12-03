@@ -2,6 +2,6 @@
 #include "Game.h"
 
 
-class Potion* PotionCell::getPotion(){
+class Potion PotionCell::getPotion(){
 	return potion;
 }

@@ -7,6 +7,7 @@ class Human: public Enemy, public Gold {
 public:
   Human();
   void reset();
+  bool canMoveOn(Character*) override;
 };
 
 #endif

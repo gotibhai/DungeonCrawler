@@ -1,5 +1,9 @@
 #include "Race.h"
+#include <iostream>
 #include <stdlib.h>
+
+using namespace std;
+
 
 Race::Race(int hp, int atk, int def): Character{hp, atk, def} {}
 
@@ -9,6 +13,7 @@ int Race::getTotalGold() {
 }
 
 void Race::use(class Potion potion) {
+  cout << "Race::use" << endl;
   if (potion.getHp() != 0) {
     setHp(getHp() + potion.getHp());
   } else {

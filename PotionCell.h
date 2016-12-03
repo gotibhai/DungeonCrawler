@@ -6,11 +6,10 @@
 #include "ActionItem.h"
 
 class PotionCell: public ActionItem {
-	class Potion *potion;
+	class Potion potion;
 public:
-	PotionCell(class Potion*): Cell(CellType::Potion){}
-	class Potion* getPotion();
-	bool usePotion();
+	PotionCell(class Potion potion): potion{potion}, Cell(CellType::Potion){}
+	class Potion getPotion();
 };
 
 

@@ -10,7 +10,7 @@ class Cell {
 	    int row;
 	    int col;
 	    CellType type;
-	    CellType cellTypeCovered;
+	    Cell* cellCovered;
 	public:
 		Cell();
 		Cell(CellType);
@@ -22,9 +22,8 @@ class Cell {
 		CellType getType() const;
 		void reset();
 		void setType();
-		void setCellTypeCovered(CellType cellType);
-		void setIsFrozen(bool setIsFrozen);
-		CellType getCellTypeCovered();
+		void setCellCovered(Cell* cell);
+		Cell* getCellCovered();
 		friend std::ostream &operator<<(std::ostream &out, const Cell &g);
 };
 

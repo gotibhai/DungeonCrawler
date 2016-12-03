@@ -88,19 +88,27 @@ void Game::action(Action action, Direction direction) {
 }
 
 void Game::use(ActionItem* actionItem) {
+  cout << "Game::use " << (char) actionItem->getType() << endl;
   if (actionItem->getType() == CellType::Stairs) {
     nextFloor();
   } 
   if (actionItem->getType() == CellType::Potion) {
-    player->use(*dynamic_cast<class PotionCell*>(actionItem)->getPotion());
+        cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
+    player->use(dynamic_cast<class PotionCell*>(actionItem)->getPotion());
+    actionItem->reset();
   } 
   if (actionItem->getType() == CellType::Gold) {
     player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
+    actionItem->reset();
   }  
 }
 
 bool Game::isRestart() {
   return toRestart;
+}
+
+Grid* Game::getCurrentGrid() {
+  return currentGrid;
 }
 
 bool Game::isQuit() {

@@ -55,24 +55,29 @@ bool Grid::move(Character *character, Direction direction) {
 	cout << "Grid::move 2" << (char) character->getType() << endl;
 	
 	if (dynamic_cast<class Race*>(character)) {
+		cout << "Grid::move isRace " << (char) character->getType() << endl;
 		switch(cell->getType()) {
 			case(CellType::Stairs):
 			case(CellType::Gold):
 				Game::getInstance()->use(dynamic_cast<class ActionItem*>(cell));
+				cell = getCellByDirection(character, direction);
 				break;
 		}
 		isFrozen = false;
 	}
+	cout << "Grid::move 3" << (char) character->getType() << endl;
 
-	Cell *prevCell = new Cell(character->getCellTypeCovered());
-	prevCell->setCoords(character->getRow(), character->getCol());
-		
-	character->setCellTypeCovered(cell->getType());
+	character->reset();	
+	cout << "Grid::move 4" << (char) character->getType() << endl;
+
+
+	character->setCellCovered(cell);
 	character->setCoords(cell->getRow(), cell->getCol());
-	
-	// bridge
 	setCell(character);
-	setCell(prevCell);
+	cout << "Grid::move 5" << (char) character->getType() << endl;
+	// bridge
+
+	cout << "Grid::move 6" << (char) character->getType() << endl;
 
 	return true;
 };
@@ -80,6 +85,7 @@ bool Grid::move(Character *character, Direction direction) {
 Cell* Grid::getCell(int r, int c) {
 	return grid[r][c];
 }
+
 
 bool Grid::action(Action action, Race* player, Direction direction) {
   switch (action) {
@@ -96,9 +102,11 @@ bool Grid::action(Action action, Race* player, Direction direction) {
 
 bool Grid::usePotion(Race *player, Direction direction) {
 	Cell *cell = getCellByDirection(player, direction);
-
-	if (cell->getType() == CellType::Potion) {
+	cout << "Grid::usePotion cell " << (char) cell->getType() << endl;
+	if (dynamic_cast<class PotionCell*>(cell)) {
+		cout << "Grid::usePotion use " << (char) cell->getType() << endl;
 		Game::getInstance()->use(dynamic_cast<class PotionCell*>(cell));
+		cout << "Grid::usePotion after use " << (char) cell->getType() << endl;
 		cell->reset();
 		return true;
 	}
@@ -152,9 +160,10 @@ void Grid::moveEnemy(Enemy *enemy) {
 	while (!isMoved) {
 		// Question here
 		Direction direction = (Direction) (rand() % Direction::TOTAL);
-		while (std::find(directions.begin(), directions.end(), direction) != directions.end() && direction) {
+		while (std::find(directions.begin(), directions.end(), direction) != directions.end()) {
 			direction = (Direction) (rand() % Direction::TOTAL);
 		}
+		cout << direction << endl;
 		directions.push_back(direction);
 		isMoved = move(enemy, direction);
 	}

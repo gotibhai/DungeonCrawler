@@ -42,6 +42,7 @@ class Game {
     bool isRestart();
     bool isQuit();
     bool isPlayerMoved();
+    Grid* getCurrentGrid();
     void startMove();
     void addActionDisplay(std::string actionDisplay);
 
