@@ -5,6 +5,7 @@
 #include "Gold.h"
 #include "PotionCell.h"
 #include "Game.h"
+#include "Logger.h"
 #include <vector>
 #include <cstdlib>
 #include <algorithm>
@@ -64,6 +65,8 @@ bool Grid::move(Character *character, Direction direction) {
 				break;
 		}
 		isFrozen = false;
+
+		Logger::getInstance()->move(direction, getObjectsNearby(dynamic_cast<class Race*>(character)));
 	}
 	cout << "Grid::move 3" << (char) character->getType() << endl;
 
@@ -81,6 +84,20 @@ bool Grid::move(Character *character, Direction direction) {
 
 	return true;
 };
+
+vector<Cell*> Grid::getObjectsNearby(Cell* player) {
+	vector<Cell*> cells;
+	for (int row = player->getRow()-1; row <= player->getRow() + 1; row++ ) {
+		for (int col = player->getCol()-1; col <= player->getCol() + 1; col++ ) {
+			if ((!(row == player->getRow() && col == player->getCol())) &&
+				(dynamic_cast<class Character*>(grid[row][col]) || 
+					dynamic_cast<class ActionItem*>(grid[row][col]))) {
+				cells.push_back(grid[row][col]);
+			}
+		}
+	}
+	return cells;
+}
 
 Cell* Grid::getCell(int r, int c) {
 	return grid[r][c];
@@ -149,8 +166,11 @@ Race* Grid::getPlayerNearby(Enemy* enemy) {
 	return nullptr;
 }
 
+
+
 void Grid::setIsFrozen(bool isFrozen) {
 	this->isFrozen = isFrozen;
+	isFrozenByUserControl = isFrozen;
 }
 
 void Grid::moveEnemy(Enemy *enemy) {

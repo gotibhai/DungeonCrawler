@@ -93,8 +93,7 @@ int main () {
 
             if (actionType == Action::MOVE) direction = action;
             else cin >> direction;
-
-
+            
             game->action(actionType, translateDirection(direction));
 
             if (!game->isPlayerMoved()) {
