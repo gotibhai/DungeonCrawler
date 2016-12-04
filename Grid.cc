@@ -53,7 +53,7 @@ bool Grid::move(Character *character, Direction direction) {
 	}
 
 	cout << "Grid::move 2" << (char) character->getType() << endl;
-	
+
 	if (dynamic_cast<class Race*>(character)) {
 		cout << "Grid::move isRace " << (char) character->getType() << endl;
 		switch(cell->getType()) {
@@ -61,13 +61,16 @@ bool Grid::move(Character *character, Direction direction) {
 			case(CellType::Gold):
 				Game::getInstance()->use(dynamic_cast<class ActionItem*>(cell));
 				cell = getCellByDirection(character, direction);
+				if(CellType::Stairs) {
+						return true;
+				}
 				break;
 		}
 		isFrozen = false;
 	}
 	cout << "Grid::move 3" << (char) character->getType() << endl;
 
-	character->reset();	
+	character->reset();
 	cout << "Grid::move 4" << (char) character->getType() << endl;
 
 
