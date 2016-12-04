@@ -24,7 +24,6 @@ class Grid {
 	    Race* getPlayerNearby(Enemy* enemy);
 	    bool attack(Character*, Character*);
 	    void moveEnemy(Enemy *enemy);
-	    Cell* getCellByDirection(Cell *cell, Direction direction);
 	    bool move(Character *character, Direction direction);
 		bool attack(Race *character, Direction direction);
 		bool usePotion(Race *character, Direction direction);
@@ -34,6 +33,7 @@ class Grid {
 		~Grid();
 		void setCell(Cell *cell);
 		void setEnemies(std::vector<Enemy*>);
+		Cell* getCellByDirection(Cell *cell, Direction direction);
     	bool action(Action, Race*, Direction);
     	void setIsFrozen(bool setIsFrozen);
 		Cell* getCell(int r, int c);

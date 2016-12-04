@@ -98,8 +98,9 @@ void Game::use(ActionItem* actionItem) {
     actionItem->reset();
   } 
   if (actionItem->getType() == CellType::Gold) {
-    player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
-    actionItem->reset();
+     cout<<"Using Gold : "<<endl;
+     player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
+     actionItem->reset();
   }  
 }
 

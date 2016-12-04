@@ -11,6 +11,11 @@ class Gold : virtual public ActionItem {
 	public: 
 		Gold(GoldType g): Cell{CellType::Gold} { 
 			goldtype = g; 
+			if(g == GoldType::DragonGold){
+				isCollectible = false;
+			} else {
+				isCollectible = true;
+			}
 		}
 
 		GoldType getGoldType();

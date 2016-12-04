@@ -8,7 +8,8 @@ class Dragon: public Enemy {
 private:
   class Gold *gold;
 public:
-  Dragon();
+  Dragon(class Gold*);
+  void die() override;
   // bool move(Direction) override;
 };
 
