@@ -1,4 +1,5 @@
 #include "Race.h"
+#include "Game.h"
 #include <iostream>
 #include <stdlib.h>
 
@@ -7,6 +8,9 @@ using namespace std;
 
 Race::Race(int hp, int atk, int def): Character{hp, atk, def} {}
 
+void Race::die() {
+  Game::finishGame(false);
+}
 
 int Race::getTotalGold() {
   return totalGold;

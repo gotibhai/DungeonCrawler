@@ -20,9 +20,9 @@ class Game {
         std::string floorFile;
 
         bool toRestart;
-        bool toQuit;
+        static bool toQuit;
         bool isMoved;
-
+				static bool won;
         void nextFloor();
     public:
          Game();
@@ -31,6 +31,7 @@ class Game {
 		// void init(std::string);
 
     static Game* getInstance(std::string fileName = Game::DEFAULT_FLOOR_FILE);
+		static void finishGame(bool);
 
     void start(char);
     void action(Action);
@@ -40,6 +41,7 @@ class Game {
     // Race* getPlayer();
     bool isRestart();
     bool isQuit();
+		bool isWon();
     bool isPlayerMoved();
     Grid* getCurrentGrid();
     void startMove();

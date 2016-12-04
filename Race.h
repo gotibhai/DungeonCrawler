@@ -16,6 +16,7 @@ public:
   Race(int, int , int);
   int getTotalGold();
   virtual void use(class Potion);
+  void die() override;
   void use(GoldType);
   int getDef() override;
   int getAtk() override;

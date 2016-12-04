@@ -36,8 +36,8 @@ class Grid {
 		void setCell(Cell *cell);
 		void setEnemies(std::vector<Enemy*>);
 		Cell* getCellByDirection(Cell *cell, Direction direction);
-    	bool action(Action, Race*, Direction);
-    	void setIsFrozen(bool setIsFrozen);
+  	bool action(Action, Race*, Direction);
+  	void setIsFrozen(bool setIsFrozen);
 		Cell* getCell(int r, int c);
 		void enemiesMove();
 		friend std::ostream &operator<<(std::ostream &out, const Grid &g);

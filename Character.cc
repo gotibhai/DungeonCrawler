@@ -4,6 +4,7 @@
 #include "math.h"
 #include "Race.h"
 #include "Logger.h"
+#include "Game.h"
 #include <string>
 
 using namespace std;
@@ -15,7 +16,7 @@ bool Character::attack(Character* defender) {
   defender->setHp(defender->getHp()-damage);
 
   Logger::getInstance()->attack(this, defender, damage);
-  
+
   return true;
 }
 

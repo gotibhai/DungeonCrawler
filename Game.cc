@@ -13,7 +13,10 @@
 #include "PotionCell.h"
 using namespace std;
 
-Game::Game(): toRestart{false}, toQuit{false} {
+bool Game::toQuit = false;
+bool Game::won = false;
+
+Game::Game(): toRestart{false}{
 
 }
 
@@ -125,6 +128,15 @@ bool Game::isQuit() {
 
 bool Game::isPlayerMoved() {
   return isMoved;
+}
+
+void Game::finishGame(bool hasWon) {
+  toQuit = true;
+  won = hasWon;
+}
+
+bool Game::isWon() {
+  return won;
 }
 
 string translateRace(CellType type) {
