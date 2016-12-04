@@ -24,7 +24,7 @@ class CellFactory {
 public:
 	// CellFactory();
 	// ~CellFactory();
-	Grid* GenerateGridFromFile(std::string filename , Race* player);
+	Grid* GenerateGridFromFile(std::string filename , Race* player, int floor = 0);
 
 	//Race* getRace(char racetype);
 };

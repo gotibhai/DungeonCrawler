@@ -45,9 +45,6 @@ Cell* CellFactory::getCell(char symbol){
 	} else if(symbol == 'M'){
 		newcell = new class Merchant();
 	}
-	// } else if(symbol == 'D'){
-	// 	newcell = new class Dragon();
-	// }
 	return newcell;
 }
 
@@ -194,7 +191,7 @@ void CellFactory::place(Cell* cell) {
 	}
 }
 
-Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
+Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int floor){
 	
 	grid = new Grid();
 	if(filename == Game::DEFAULT_FLOOR_FILE){
@@ -261,43 +258,54 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 			place(enemy_vector[i]);
 		}
 
-		// int playerCount = 0;
-		// // int potionCount = 0;
-		// for(int i = 0; i<25; i++) {
-		//
-		// 	for(int j = 0; j<79; j++) {
-		// 		if(grid->getCell(i, j)->getSymbol() == '@') {
-		// 			playerCount++;
-		// 		}
-		//
-		// 	}
-		// }
-		// cout<<"PlayerCount: "<< playerCount << endl;
-		// // cout<<"Potion: "<< potionCount << endl;
-
-
 	} else {
+		cout<<"not def"<<endl;
 		std::ifstream file{filename};
 		std::string str;
 		std::locale loc;
+		std::vector<std::vector<char>> File_arr;
 		int characters;
 		char chars;
 		int row = 0;
 		int col = 0;
-		while(std::getline(file,str)) {
-			Cell *cell;
+		int i = 0;
+		int floor_start = (floor * 25);
+		if(floor != 0)floor_start++;
+		int floor_end = floor_start + 25;
+		//(floor+1) * 25;
+		while(std::getline(file,str) && (i >= floor_start) && (i < floor_end)) {
 			std::istringstream iss{str};
 			iss.exceptions(std::ios::failbit);
+			std::vector<char> line;
 			while(iss>>chars){
-				if(isdigit(chars,loc)){
-					int characters = chars - '0';
+				line.push_back(chars);
+			}
+			File_arr.push_back(line);
+			i++;
+		}
+
+		Cell *cell;
+		for(int k = 0;k < 25; k++){
+			for(int j = 0; j < 79; j++){
+				if(isdigit(File_arr[k][j],loc)){
+					int characters = File_arr[k][j] - '0';
 					if(characters <= 5){
 						//Create a Potion
 						cell = getPotionCell(characters);
-
-					} else if (characters > 5 && characters <= 9){
+					} else if (characters > 5 && characters <9){
 						//Create a Gold potion
 						cell = getGoldCell(characters);
+					} else if (characters == 9){
+						cell = getGoldCell(characters);
+						for(int a = k-1; a <= k+1; a++){
+							for(int b = j-1; b <= j+1; b++){
+								if(File_arr[a][b] == 'D'){
+									Cell* newcell = new class Dragon(dynamic_cast<class Gold*>(cell));
+									newcell->setCoords(a,b);
+									grid->setCell(newcell);	
+								}
+							}
+						}
 					}
 				} else {
 					cell = getCell(chars);
@@ -308,9 +316,11 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 			}
 			row++;
 			std::cout<<str<<std::endl;
-		}
+	    }
+
+		return grid;
 	}
-	return grid;
+	
 }
 
 const int CellFactory::TOTAL_CHAMBERS = 5;
