@@ -16,7 +16,12 @@ Grid::Grid(){
 };
 
 Grid::~Grid() {
-	// Destroy cells and enemies
+	for(int i = 0; i<GRID_HEIGHT; i++) {
+		for(int j = 0; j<GRID_WIDTH; j++) {
+			delete grid[i][j];
+		}
+	}
+	// delete grid;
 };
 
 void Grid::setCell(Cell *cell) { grid[cell->getRow()][cell->getCol()] = cell; };

@@ -9,6 +9,7 @@ private:
   class Gold *gold;
 public:
   Dragon();
+  ~Dragon();
   // bool move(Direction) override;
 };
 

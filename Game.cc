@@ -16,6 +16,12 @@ Game::Game(): toRestart{false}, toQuit{false} {
 
 }
 
+Game::~Game() {
+  delete currentGrid;
+  delete player;
+  delete instance;
+}
+
 Game* Game::getInstance(string fileName) {
   Game::instance->floorFile = fileName;
 
@@ -39,6 +45,7 @@ void Game::start(char raceType){
   toRestart = false;
 }
 void Game::nextFloor() {
+  // delete currentGrid;
   currentGrid = CellFactory().GenerateGridFromFile(DEFAULT_FLOOR_FILE, player);
   player->setCellCovered(new Cell());
   cout<<*currentGrid<<endl;

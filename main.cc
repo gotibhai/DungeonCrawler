@@ -75,9 +75,9 @@ int main () {
         Action actionType = Action::NONE;
 
         if (isDirection(action)) {
-          actionType = Action::MOVE;          
+          actionType = Action::MOVE;
         }
-        
+
         if (actionType != Action::MOVE) {
           if (action.length() > 1) {
             printInvalidCommand();
@@ -110,10 +110,8 @@ int main () {
             printInvalidCommand();
         }
 
-        
       }
 
-      
       // check if won
       // check if lost
       // check if new floor
