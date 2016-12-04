@@ -25,6 +25,20 @@ Grid::~Grid() {
 	// delete grid;
 };
 
+void Grid::removeEnemy(Enemy *enemy) {
+	// this->enemies.pop(enemy);
+	int len = this->enemies.size();
+	cout<<"MY SIZE: "<<this->enemies.size()<<endl;
+	for(int i = 0; i<len; i++) {
+		if(this->enemies[i] == enemy) {
+			cout<<"ERASING"<<endl;
+			this->enemies.erase(this->enemies.begin() + i);
+		}
+	}
+	// this->enemies.erase(std::remove(this->enemies.begin(), this->enemies.end(), enemy), this->enemies.end());
+	cout<<"MY SIZE2: "<<this->enemies.size()<<endl;
+}
+
 void Grid::setCell(Cell *cell) { grid[cell->getRow()][cell->getCol()] = cell; };
 void Grid::setEnemies(std::vector<Enemy*> enemy_vector ) { this->enemies = enemy_vector ;};
 

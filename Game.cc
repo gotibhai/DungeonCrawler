@@ -13,7 +13,10 @@
 #include "PotionCell.h"
 using namespace std;
 
-Game::Game(): toRestart{false}, toQuit{false} {
+bool Game::toQuit = false;
+bool Game::won = false;
+
+Game::Game(): toRestart{false}{
 
 }
 
@@ -23,11 +26,20 @@ Game::~Game() {
   delete instance;
 }
 
-Game* Game::getInstance(string fileName) {
-  Game::instance->floorFile = fileName;
-
+Game* Game::getInstance() {
+  // cout<<"RIGHT HERE RIGHT NOW"<<endl;
+  if(Game::instance->floorFile == "") {
+    Game::instance->floorFile = Game::DEFAULT_FLOOR_FILE;
+  }
   return Game::instance;
 }
+
+Game* Game::getInstance(string fileName) {
+  // cout<<"RIGHT HERE RIGHT NOW"<<endl;
+  Game::instance->floorFile = fileName;
+  return Game::instance;
+}
+
 void Game::start(char raceType){
   if(raceType == 's') {
       player = new class Shade();
@@ -126,6 +138,15 @@ bool Game::isQuit() {
 
 bool Game::isPlayerMoved() {
   return isMoved;
+}
+
+void Game::finishGame(bool hasWon) {
+  toQuit = true;
+  won = hasWon;
+}
+
+bool Game::isWon() {
+  return won;
 }
 
 string translateRace(CellType type) {

@@ -14,7 +14,7 @@ private:
 public:
   Character(int, int, int);
   virtual bool attack(Character*);
-  virtual void die();
+  virtual void die() = 0;
   virtual void winBattle();
   int getHp();
   virtual int getAtk();

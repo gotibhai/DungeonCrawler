@@ -121,6 +121,15 @@ int main (int argc, char* argv[]) {
           default:
             printInvalidCommand();
         }
+        if(game->isQuit()) {
+          cout<<"Game is over."<<endl;
+          if(game->isWon()) {
+            cout<<"Congrats you won"<<endl;
+          } else {
+            cout<<"Sorry, you lost."<<endl;
+          }
+          cout<<"Goodbye."<<endl;
+        }
 
       }
 
