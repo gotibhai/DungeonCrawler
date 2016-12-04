@@ -26,11 +26,20 @@ Game::~Game() {
   delete instance;
 }
 
-Game* Game::getInstance(string fileName) {
-  Game::instance->floorFile = fileName;
-
+Game* Game::getInstance() {
+  // cout<<"RIGHT HERE RIGHT NOW"<<endl;
+  if(Game::instance->floorFile == "") {
+    Game::instance->floorFile = Game::DEFAULT_FLOOR_FILE;
+  }
   return Game::instance;
 }
+
+Game* Game::getInstance(string fileName) {
+  // cout<<"RIGHT HERE RIGHT NOW"<<endl;
+  Game::instance->floorFile = fileName;
+  return Game::instance;
+}
+
 void Game::start(char raceType){
   if(raceType == 's') {
       player = new class Shade();

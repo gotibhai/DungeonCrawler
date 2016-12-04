@@ -40,6 +40,7 @@ class Grid {
   	void setIsFrozen(bool setIsFrozen);
 		Cell* getCell(int r, int c);
 		void enemiesMove();
+		void removeEnemy(Enemy*);
 		friend std::ostream &operator<<(std::ostream &out, const Grid &g);
 };
 

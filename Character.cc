@@ -20,10 +20,6 @@ bool Character::attack(Character* defender) {
   return true;
 }
 
-void Character::die() {
-  reset();
-}
-
 void Character::winBattle() {
 
 }

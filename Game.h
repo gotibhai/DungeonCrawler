@@ -30,7 +30,8 @@ class Game {
         static const std::string DEFAULT_FLOOR_FILE;
 		// void init(std::string);
 
-    static Game* getInstance(std::string fileName = Game::DEFAULT_FLOOR_FILE);
+    static Game* getInstance(std::string fileName);
+		static Game* getInstance();
 		static void finishGame(bool);
 
     void start(char);

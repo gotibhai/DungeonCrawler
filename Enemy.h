@@ -9,6 +9,7 @@ public:
   Enemy(bool isHostile = true);
   void setIsHostile(bool);
   bool getIsHostile();
+  void die();
   virtual bool attack(Character*) override;
 };
 
