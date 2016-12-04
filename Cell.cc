@@ -27,21 +27,21 @@ char Cell::getSymbol() const {
 };
 
 bool Cell::canMoveOn(Character* character) {
-	cout << "can " << (char) character->getType() << " MoveOn " << (char) this->getType() << endl;
+	//cout << "can " << (char) character->getType() << " MoveOn " << (char) this->getType() << endl;
 	return (this->getType() == CellType::Ground ||
 		(dynamic_cast<class Race*>(character) && (this->getType() == CellType::Bridge || this->getType() == CellType::BridgeEnter)));
 }
 
 void Cell::reset() {
-	cout << "Cell::reset" << endl;
+	//cout << "Cell::reset" << endl;
 	Cell *prevCell = cellCovered;
 	if (prevCell->getType() == CellType::Empty) {
-		cout << "Cell::reset == NULL 1" << endl;
+		//cout << "Cell::reset == NULL 1" << endl;
 		prevCell = new Cell(CellType::Ground);
 		prevCell->setCoords(getRow(), getCol());
-		cout << "Cell::reset == NULL" << endl;
+		//cout << "Cell::reset == NULL" << endl;
 	}
-	cout << "Cell::reset 2 " << prevCell->getType() << " row: " << prevCell->getRow() << " " << prevCell->getCol() << endl;
+	//cout << "Cell::reset 2 " << prevCell->getType() << " row: " << prevCell->getRow() << " " << prevCell->getCol() << endl;
 
 	Game::getInstance()->getCurrentGrid()->setCell(prevCell);
 }

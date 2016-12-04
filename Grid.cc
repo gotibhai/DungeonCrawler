@@ -198,11 +198,11 @@ void Grid::moveEnemy(Enemy *enemy) {
 
 void Grid::enemiesMove() {
 	if (!isFrozen) {
-		for (int i = 0; i < Grid::MAX_ENEMIES; i++) {
+		for (int i = 0; i < enemies.size(); i++) {
 			moveEnemy(enemies[i]);
 		}
 	}
-	for (int i = 0; i < Grid::MAX_ENEMIES; i++) {
+	for (int i = 0; i < enemies.size(); i++) {
 		Race *player = getPlayerNearby(enemies[i]);
 
 		if (player) {

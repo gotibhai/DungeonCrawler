@@ -14,6 +14,18 @@
 #include "PotionCell.h"
 using namespace std;
 
+string stringDirection(Direction type) {
+      if (type == Direction::NO) return "North";
+      else if (type ==  Direction::SO) return "South";
+      else if (type ==  Direction::EA) return "East";
+      else if (type ==  Direction::WE) return "West";
+      else if (type ==  Direction::NE) return "North-East";
+      else if (type ==  Direction::NW) return "North-West";
+      else if (type ==  Direction::SE) return "South-East";
+      else if (type ==  Direction::SW) return "South-West";
+}
+
+
 Logger::Logger(): action{""} {}
 
 Logger* Logger::getInstance() {
@@ -37,7 +49,7 @@ void Logger::attack(Character* character1, Character* character2, int damage) {
 }
 
 void Logger::move(Direction direction, std::vector<Cell*> objectsNearby) {
-  action << "PC moves " << (char) direction;
+  action << "PC moves " << stringDirection(direction);
 
   if (objectsNearby.size() > 0) {
     action << " and sees ";

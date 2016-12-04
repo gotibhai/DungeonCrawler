@@ -11,7 +11,7 @@ using namespace std;
 Character::Character(int hp, int atk, int def): hp{hp}, atk{atk}, def{def}, Cell{CellType::Empty} { }
 
 bool Character::attack(Character* defender) {
-  int damage = ceil((100.0/(100.0+defender->getDef()))*this->atk);
+  int damage = ceil((100.0/(100.0+defender->getDef()))*(getAtk()));
   defender->setHp(defender->getHp()-damage);
 
   Logger::getInstance()->attack(this, defender, damage);

@@ -49,6 +49,7 @@ void Game::nextFloor() {
   // delete currentGrid;
   currentGrid = CellFactory().GenerateGridFromFile(floorFile, player, floorNum);
   player->setCellCovered(new Cell());
+  player->resetPotions();
   cout<<*currentGrid<<endl;
   floorNum++;
 }
@@ -144,8 +145,8 @@ std::ostream &operator<<(std::ostream &out , Game *g) {
    out<<*(g->currentGrid);
    out<<"Race: " << translateRace(g->player->getType())<<endl;
    out<<"HP: "<<g->player->getHp()<<endl;
-   out<<"Atk: "<<g->player->getDef()<<endl;
-   out<<"Def: "<<g->player->getAtk()<<endl;
+   out<<"Atk: "<<g->player->getAtk()<<endl;
+   out<<"Def: "<<g->player->getDef()<<endl;
    out<<"Action: " << Logger::getInstance()->getAction() <<endl;
   return out;
 }

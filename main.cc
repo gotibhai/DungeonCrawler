@@ -64,6 +64,12 @@ int main (int argc, char* argv[]) {
     game = Game::getInstance();
   }
   while(!game->isQuit()) {
+  if(argc > 1) {
+    cout<<"Arg[1]: "<< argv[1]<<endl;
+    game = Game::getInstance(argv[1]);
+  } else {
+    game = Game::getInstance();
+  }
     printWelcome();
 
     char race;

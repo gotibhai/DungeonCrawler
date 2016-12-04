@@ -8,10 +8,11 @@ class Potion{
     PotionType potionType;
     int value;
   public:
-  	Potion(PotionType);
+  	Potion(PotionType, int);
     int getHp();
     int getDef();
     int getAtk();
+    PotionType getPotionType();
     void setValue(int);
     int getValue();
 };

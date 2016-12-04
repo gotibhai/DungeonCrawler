@@ -94,17 +94,17 @@ Cell* CellFactory::getPotionCell(int characters){
 	Cell *newcell;
 	class Potion *mypotion;
 	if(characters == 0){
-		mypotion = new class Potion(PotionType::RH);
+		mypotion = new class Potion(PotionType::RH , 10);
 	} else if(characters == 1){
-		mypotion = new class Potion(PotionType::BA);
+		mypotion = new class Potion(PotionType::BA , 5);
 	} else if(characters == 2){
-		mypotion = new class Potion(PotionType::BD);
+		mypotion = new class Potion(PotionType::BD, 5);
 	} else if(characters == 3){
-		mypotion = new class Potion(PotionType::PH);
+		mypotion = new class Potion(PotionType::PH , -10);
 	} else if (characters == 4){
-		mypotion = new class Potion(PotionType::WA);
+		mypotion = new class Potion(PotionType::WA , -5);
 	} else {
-		mypotion = new class Potion(PotionType::WD);
+		mypotion = new class Potion(PotionType::WD , -5);
 	}
 	newcell = new class PotionCell(*mypotion);
 	return newcell;
@@ -116,8 +116,7 @@ std::vector<Cell *> CellFactory::generateRandPotions(){
 
 		for(int i = 0; i < 10; i++){
 			int random_number = rand() % 6;
-			Cell *newcell;
-			newcell = new class PotionCell(*(new class Potion((PotionType) random_number)));
+			Cell *newcell = newcell = getPotionCell(random_number);
 			my_potion_vector.push_back(newcell);
 		}
 
@@ -319,7 +318,6 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 						   	enemy_vector.push_back(dynamic_cast<class Enemy*> (cell));
 						}
 					}
-					
 				}
 				// if(k == 3){
 				// 	cout<<"Row : "<<k<<" "<<"Col : "<<j<<cell->getSymbol()<<endl;
@@ -330,7 +328,6 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 			}
 	    }
 	}
-
 	grid->setEnemies(enemy_vector);
 	return grid;
 }

@@ -15,7 +15,9 @@ int Race::getTotalGold() {
 void Race::use(class Potion potion) {
   cout << "Race::use" << endl;
   if (potion.getHp() != 0) {
+    cout<<getHp();
     setHp(getHp() + potion.getHp());
+    cout<<getHp();
   } else {
     potions.push_back(potion);
   }
@@ -45,7 +47,12 @@ int Race::getAtk(){
 }
 
 void Race::resetPotions() {
-
+  int length = potions.size();
+ for(int i = 0; i<length; i++) {
+    if(potions[i].getPotionType() != PotionType::RH || potions[i].getPotionType() != PotionType::PH){
+       potions.erase(potions.begin() + i);
+    }
+  }
 }
 
 bool Race::attack(Character* defender) {
