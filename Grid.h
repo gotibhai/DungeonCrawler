@@ -20,6 +20,7 @@ class Grid {
 	    Cell* grid[GRID_HEIGHT][GRID_WIDTH];
 	    std::vector<Enemy*> enemies;
 	    bool isFrozen;
+	    bool isFrozenByUserControl;
 
 	    Race* getPlayerNearby(Enemy* enemy);
 	    bool attack(Character*, Character*);
@@ -27,6 +28,7 @@ class Grid {
 	    bool move(Character *character, Direction direction);
 		bool attack(Race *character, Direction direction);
 		bool usePotion(Race *character, Direction direction);
+		std::vector<Cell*> getObjectsNearby(Cell* player);
 
 	public:
 		Grid();

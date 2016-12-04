@@ -8,12 +8,19 @@
 #include "Goblin.h"
 #include "Gold.h"
 #include "CellFactory.h"
+#include "Logger.h"
 #include "GoldType.cc"
 #include "PotionCell.h"
 using namespace std;
 
 Game::Game(): toRestart{false}, toQuit{false} {
 
+}
+
+Game::~Game() {
+  delete currentGrid;
+  delete player;
+  delete instance;
 }
 
 Game* Game::getInstance(string fileName) {
@@ -39,7 +46,8 @@ void Game::start(char raceType){
   toRestart = false;
 }
 void Game::nextFloor() {
-  currentGrid = CellFactory().GenerateGridFromFile(DEFAULT_FLOOR_FILE, player);
+  // delete currentGrid;
+  currentGrid = CellFactory().GenerateGridFromFile(floorFile, player);
   player->setCellCovered(new Cell());
   cout<<*currentGrid<<endl;
   floorNum++;
@@ -47,11 +55,7 @@ void Game::nextFloor() {
 
 void Game::startMove() {
   isMoved = false;
-  actionDisplay = "";
-}
-
-void Game::addActionDisplay(std::string actionDisplay) {
-  this->actionDisplay += actionDisplay;
+  Logger::getInstance()->reset();
 }
 
 void Game::action(Action action) {
@@ -79,6 +83,8 @@ void Game::action(Action action, Direction direction) {
   cout << "action1 " << (char) action << "\n";
 
   isMoved = currentGrid->action(action, player, direction);
+
+
   cout << "action2 " << action << "\n";
   cout << "isMoved " << isMoved << "\n";
 
@@ -94,7 +100,7 @@ void Game::use(ActionItem* actionItem) {
     nextFloor();
   }
   if (actionItem->getType() == CellType::Potion) {
-        cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
+    cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
     player->use(dynamic_cast<class PotionCell*>(actionItem)->getPotion());
     actionItem->reset();
   }
@@ -102,7 +108,7 @@ void Game::use(ActionItem* actionItem) {
      cout<<"Using Gold : "<<endl;
      player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
      actionItem->reset();
-  }  
+  }
 }
 
 bool Game::isRestart() {
@@ -140,7 +146,7 @@ std::ostream &operator<<(std::ostream &out , Game *g) {
    out<<"HP: "<<g->player->getHp()<<endl;
    out<<"Atk: "<<g->player->getDef()<<endl;
    out<<"Def: "<<g->player->getAtk()<<endl;
-   out<<"Action: " << g->actionDisplay<<endl;
+   out<<"Action: " << Logger::getInstance()->getAction() <<endl;
   return out;
 }
 

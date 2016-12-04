@@ -13,6 +13,7 @@ class Cell {
 	    Cell* cellCovered;
 	public:
 		Cell();
+		~Cell();
 		Cell(CellType);
 		virtual bool canMoveOn(Character* character);
 		void setCoords(int row, int col);

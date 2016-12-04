@@ -8,14 +8,17 @@
 using namespace std;
 
 Cell::Cell(): type{CellType::Empty} {};
-Cell::Cell(CellType type): type{type}, cellCovered{new Cell()} {	
+Cell::Cell(CellType type): type{type}, cellCovered{new Cell()} {
 };
+Cell::~Cell() {
+	delete cellCovered;
+}
 void Cell::setCoords(int row, int col) {this->row = row; this->col = col;};
 CellType Cell::getType() const { return type; };
 int Cell::getRow() { return row; };
 int Cell::getCol() { return col; };
 
-char Cell::getSymbol() const { 
+char Cell::getSymbol() const {
 	if((char) type == 's' || (char) type == 'd' || (char) type == 'v' || (char) type == 't'|| (char) type == 'g'){
 		return '@';
 	} else {
@@ -24,13 +27,13 @@ char Cell::getSymbol() const {
 
 };
 
-bool Cell::canMoveOn(Character* character) { 
+bool Cell::canMoveOn(Character* character) {
 	cout << "can " << (char) character->getType() << " MoveOn " << (char) this->getType() << endl;
-	return (this->getType() == CellType::Ground || 
+	return (this->getType() == CellType::Ground ||
 		(dynamic_cast<class Race*>(character) && (this->getType() == CellType::Bridge || this->getType() == CellType::BridgeEnter)));
 }
 
-void Cell::reset() { 
+void Cell::reset() {
 	cout << "Cell::reset" << endl;
 	Cell *prevCell = cellCovered;
 	if (prevCell->getType() == CellType::Empty) {
@@ -54,4 +57,3 @@ std::ostream &operator<<(std::ostream &out, const Cell &g) {
 	out << g.getSymbol();
 	return out;
 };
-
