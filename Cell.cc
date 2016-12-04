@@ -24,7 +24,6 @@ char Cell::getSymbol() const {
 	} else {
 		return (char) type;
 	}
-
 };
 
 bool Cell::canMoveOn(Character* character) {

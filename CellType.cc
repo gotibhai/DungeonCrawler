@@ -23,7 +23,7 @@ enum CellType {
 	Shade = (int)'s',
 	Troll = (int)'t',
 	Goblin = (int)'g',
-	Stairs = (int)'/'
+	Stairs = (int)'\\'
 };
 
 #endif

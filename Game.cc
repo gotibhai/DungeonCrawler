@@ -47,7 +47,7 @@ void Game::start(char raceType){
 }
 void Game::nextFloor() {
   // delete currentGrid;
-  currentGrid = CellFactory().GenerateGridFromFile(floorFile, player);
+  currentGrid = CellFactory().GenerateGridFromFile(floorFile, player, floorNum);
   player->setCellCovered(new Cell());
   cout<<*currentGrid<<endl;
   floorNum++;

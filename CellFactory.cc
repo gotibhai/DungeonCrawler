@@ -7,6 +7,11 @@
 #include "Dwarf.h"
 #include "Orc.h"
 #include "Elf.h"
+#include "Shade.h"
+#include "Drow.h"
+#include "Vampire.h"
+#include "Troll.h"
+#include "Goblin.h"
 #include "Stairs.h"
 #include "Merchant.h"
 #include "Dragon.h"
@@ -32,6 +37,8 @@ Cell* CellFactory::getCell(char symbol){
 		newcell = new Cell(CellType::BridgeEnter);
 	} else if (symbol == '#'){
 		newcell = new Cell(CellType::Bridge);
+	} else if (symbol == '\\'){
+		newcell = new class Stairs();
 	} else if(symbol  == 'H'){
 		newcell = new class Human();
 	} else if(symbol  == 'W'){
@@ -194,6 +201,7 @@ void CellFactory::place(Cell* cell) {
 Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int floor){
 	
 	grid = new Grid();
+	std::vector<Enemy*> enemy_vector;
 	if(filename == Game::DEFAULT_FLOOR_FILE){
 		std::ifstream file{filename};
 		std::string str;
@@ -204,11 +212,9 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 			chambers.push_back(vector<Cell*>());
 		}
 
-		std::vector<Enemy*> enemy_vector = generateEnemies();
+		enemy_vector = generateEnemies();
 		std::vector<Cell*> potion_vector = generateRandPotions();
 		std::vector<Cell*> gold_vector = getRandomGoldCell();
-
-		grid->setEnemies(enemy_vector);
 
 		while(std::getline(file,str)){
 			Cell *cell;
@@ -259,40 +265,36 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 		}
 
 	} else {
-		cout<<"not def"<<endl;
 		std::ifstream file{filename};
 		std::string str;
 		std::locale loc;
 		std::vector<std::vector<char>> File_arr;
 		int characters;
-		char chars;
-		int row = 0;
-		int col = 0;
 		int i = 0;
 		int floor_start = (floor * 25);
 		if(floor != 0)floor_start++;
 		int floor_end = floor_start + 25;
-		//(floor+1) * 25;
+		if(floor == 0)floor_end++;
+		//cout<<"Floor Start :"<<floor_start<<" Floor End :"<<floor_end<<endl;
 		while(std::getline(file,str) && (i >= floor_start) && (i < floor_end)) {
-			std::istringstream iss{str};
-			iss.exceptions(std::ios::failbit);
 			std::vector<char> line;
-			while(iss>>chars){
-				line.push_back(chars);
+			for(int p = 0; p < str.length(); p++){
+				line.push_back(str[p]);
 			}
 			File_arr.push_back(line);
 			i++;
 		}
-
-		Cell *cell;
-		for(int k = 0;k < 25; k++){
+		Cell *cell = nullptr;
+		for(int k = 0; k < 25; k++){
 			for(int j = 0; j < 79; j++){
+				if(File_arr[k][j] == 'D') continue;
 				if(isdigit(File_arr[k][j],loc)){
 					int characters = File_arr[k][j] - '0';
+					//cout<<"characters = "<<characters<<endl;
 					if(characters <= 5){
 						//Create a Potion
 						cell = getPotionCell(characters);
-					} else if (characters > 5 && characters <9){
+					} else if (characters > 5 && characters < 9 ){
 						//Create a Gold potion
 						cell = getGoldCell(characters);
 					} else if (characters == 9){
@@ -300,6 +302,7 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 						for(int a = k-1; a <= k+1; a++){
 							for(int b = j-1; b <= j+1; b++){
 								if(File_arr[a][b] == 'D'){
+									//cout<<"Dragon coords : row : "<<a<<" Col : "<<b<<endl;
 									Cell* newcell = new class Dragon(dynamic_cast<class Gold*>(cell));
 									newcell->setCoords(a,b);
 									grid->setCell(newcell);	
@@ -308,19 +311,29 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 						}
 					}
 				} else {
-					cell = getCell(chars);
+					if(File_arr[k][j] == '@'){
+						cell = player;
+					} else {
+						cell = getCell(File_arr[k][j]);
+						if(dynamic_cast<class Enemy*> (cell)){
+						   	enemy_vector.push_back(dynamic_cast<class Enemy*> (cell));
+						}
+					}
+					
 				}
-				cell->setCoords(row,col);
+				// if(k == 3){
+				// 	cout<<"Row : "<<k<<" "<<"Col : "<<j<<cell->getSymbol()<<endl;
+				// }
+				cell->setCoords(k,j);
 				grid->setCell(cell);
-				col++;
+				//cout<<"Symbol = "<<cell->getSymbol();
 			}
-			row++;
-			std::cout<<str<<std::endl;
 	    }
-
-		return grid;
 	}
-	
+
+	grid->setEnemies(enemy_vector);
+	return grid;
 }
+	
 
 const int CellFactory::TOTAL_CHAMBERS = 5;
