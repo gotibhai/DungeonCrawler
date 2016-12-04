@@ -8,6 +8,7 @@
 #include "Goblin.h"
 #include "Gold.h"
 #include "CellFactory.h"
+#include "Logger.h"
 #include "GoldType.cc"
 #include "PotionCell.h"
 using namespace std;
@@ -54,11 +55,7 @@ void Game::nextFloor() {
 
 void Game::startMove() {
   isMoved = false;
-  actionDisplay = "";
-}
-
-void Game::addActionDisplay(std::string actionDisplay) {
-  this->actionDisplay += actionDisplay;
+  Logger::getInstance()->reset();
 }
 
 void Game::action(Action action) {
@@ -86,6 +83,8 @@ void Game::action(Action action, Direction direction) {
   cout << "action1 " << (char) action << "\n";
 
   isMoved = currentGrid->action(action, player, direction);
+
+
   cout << "action2 " << action << "\n";
   cout << "isMoved " << isMoved << "\n";
 
@@ -106,9 +105,10 @@ void Game::use(ActionItem* actionItem) {
     actionItem->reset();
   }
   if (actionItem->getType() == CellType::Gold) {
-    player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
-    actionItem->reset();
-  }
+     cout<<"Using Gold : "<<endl;
+     player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
+     actionItem->reset();
+  }  
 }
 
 bool Game::isRestart() {
@@ -146,7 +146,7 @@ std::ostream &operator<<(std::ostream &out , Game *g) {
    out<<"HP: "<<g->player->getHp()<<endl;
    out<<"Atk: "<<g->player->getDef()<<endl;
    out<<"Def: "<<g->player->getAtk()<<endl;
-   out<<"Action: " << g->actionDisplay<<endl;
+   out<<"Action: " << Logger::getInstance()->getAction() <<endl;
   return out;
 }
 

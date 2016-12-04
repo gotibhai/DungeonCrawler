@@ -44,14 +44,15 @@ Cell* CellFactory::getCell(char symbol){
 		newcell = new class Halfling();
 	} else if(symbol == 'M'){
 		newcell = new class Merchant();
-	} else if(symbol == 'D'){
-		newcell = new class Dragon();
 	}
+	// } else if(symbol == 'D'){
+	// 	newcell = new class Dragon();
+	// }
 	return newcell;
 }
 
 Cell* CellFactory::getGoldCell(int characters){
-	Cell *newcell;
+	Cell *newcell = nullptr;
 	if(characters == 6){
 		newcell = new class Gold(GoldType::NormalGold);
 	} else if (characters == 7){
@@ -143,9 +144,24 @@ std::vector<Enemy *> CellFactory::generateEnemies(){
 }
 
 
-void CellFactory::place(Cell* cell) {
-	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;
+Cell* CellFactory::DragonPlacer(Cell* newcell){
+	while(true){
+		Direction direction = (Direction) (rand() % Direction::TOTAL);
+		Cell *mycell = grid->getCellByDirection(newcell,direction);
+		if(mycell->getType() == CellType::Ground){
+			newcell->setCoords(mycell->getRow(),mycell->getCol());
+			//cout<<newcell->getSymbol()<<endl;
+			grid->setCell(newcell);
+			return newcell;
+		}
+	}
 
+}
+
+
+
+void CellFactory::place(Cell* cell) {
+	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;	
 	std::vector<Cell*> *chamber = &chambers[chamberNum];
 
 	while(true) {
@@ -157,12 +173,29 @@ void CellFactory::place(Cell* cell) {
 			cell->setCoords(row, col);
 			grid->setCell(cell);
 			chamber->at(pos) = cell;
+			if(cell->getType() == (char) 'G'){
+				GoldType temp = dynamic_cast<class Gold*> (cell)->getGoldType();
+				if(temp == 6){
+					//cout<<"DGOLD is at "<<row<<" "<<col<<endl;
+					Cell* newcell = new class Dragon(dynamic_cast<class Gold*> (cell));
+					newcell->setCoords(row,col);
+					Cell* dcell = DragonPlacer(newcell);
+					//cout<<dcell->getSymbol()<<endl;
+					//cout<<"DCELL is at "<<dcell->getRow()<<" "<<dcell->getCol()<<endl;
+					for(int i = 0; i < chamber->size();i++){
+						if(dcell->getRow() == chamber->at(i)->getRow() && dcell->getRow() == chamber->at(i)->getCol()){
+							chamber->at(i) = dcell;
+						}
+					}
+				}
+			}
 			return;
 		}
 	}
 }
 
 Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
+	
 	grid = new Grid();
 	if(filename == Game::DEFAULT_FLOOR_FILE){
 		std::ifstream file{filename};
@@ -173,7 +206,6 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 		for (int i = 0; i < CellFactory::TOTAL_CHAMBERS; i++) {
 			chambers.push_back(vector<Cell*>());
 		}
-		cout << "works1 \n";
 
 		std::vector<Enemy*> enemy_vector = generateEnemies();
 		std::vector<Cell*> potion_vector = generateRandPotions();

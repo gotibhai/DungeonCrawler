@@ -17,7 +17,6 @@ class Game {
         Grid* currentGrid;
         Race* player;
         int floorNum;
-        std::string actionDisplay;
         std::string floorFile;
 
         bool toRestart;
@@ -44,7 +43,6 @@ class Game {
     bool isPlayerMoved();
     Grid* getCurrentGrid();
     void startMove();
-    void addActionDisplay(std::string actionDisplay);
 
   friend std::ostream &operator<<(std::ostream &out , Game *g);
 };
