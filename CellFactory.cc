@@ -271,16 +271,16 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 		int characters;
 		int i = 0;
 		int floor_start = (floor * 25);
-		if(floor != 0)floor_start++;
 		int floor_end = floor_start + 25;
-		if(floor == 0)floor_end++;
 		//cout<<"Floor Start :"<<floor_start<<" Floor End :"<<floor_end<<endl;
-		while(std::getline(file,str) && (i >= floor_start) && (i < floor_end)) {
-			std::vector<char> line;
-			for(int p = 0; p < str.length(); p++){
-				line.push_back(str[p]);
+		while(std::getline(file,str)) {
+			if(i>=floor_start && i<floor_end) {
+				std::vector<char> line;
+				for(int p = 0; p < str.length(); p++){
+					line.push_back(str[p]);
+				}
+				File_arr.push_back(line);
 			}
-			File_arr.push_back(line);
 			i++;
 		}
 		Cell *cell = nullptr;

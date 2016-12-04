@@ -59,6 +59,10 @@ void Game::start(char raceType){
 }
 void Game::nextFloor() {
   // delete currentGrid;
+  cout<<"Floor :"<<floorNum<<endl;
+  if(floorNum==5) {
+    Game::finishGame(true);
+  }
   currentGrid = CellFactory().GenerateGridFromFile(floorFile, player, floorNum);
   player->setCellCovered(new Cell());
   player->resetPotions();
