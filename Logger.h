@@ -20,7 +20,7 @@ class Logger {
 	private:
         static Logger* instance;
         std::stringstream action;
-        
+
     public:
          Logger();
         ~Logger();
@@ -29,6 +29,7 @@ class Logger {
 
     void attack(Character*, Character*, int);
     void move(Direction direction, std::vector<Cell*>);
+		void pickUp(ActionItem*m);
     void reset();
     std::string getAction();
 };

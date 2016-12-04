@@ -53,8 +53,13 @@ void Logger::move(Direction direction, std::vector<Cell*> objectsNearby) {
       action << "unknown ";
     }
     action << cell->getSymbol();
-  } 
-  action << ".";
+  }
+  action << ". ";
+}
+
+void Logger::pickUp(ActionItem* item) {
+  action << "PC picks up " << item->getSymbol();
+  action << ". ";
 }
 
 void Logger::reset() {
