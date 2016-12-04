@@ -52,14 +52,8 @@ bool Grid::move(Character *character, Direction direction) {
 	if (!cell->canMoveOn(character)) {
 		return false;
 	}
-
-<<<<<<< HEAD
 	//cout << "Grid::move 2" << (char) character->getType() << endl;
 	
-=======
-	cout << "Grid::move 2" << (char) character->getType() << endl;
-
->>>>>>> 3ec5071580097dfad5679f06bd6cda29aa46acf3
 	if (dynamic_cast<class Race*>(character)) {
 		//cout << "Grid::move isRace " << (char) character->getType() << endl;
 		switch(cell->getType()) {
@@ -78,13 +72,8 @@ bool Grid::move(Character *character, Direction direction) {
 	}
 	//cout << "Grid::move 3" << (char) character->getType() << endl;
 
-<<<<<<< HEAD
 	character->reset();	
 	//cout << "Grid::move 4" << (char) character->getType() << endl;
-=======
-	character->reset();
-	cout << "Grid::move 4" << (char) character->getType() << endl;
->>>>>>> 3ec5071580097dfad5679f06bd6cda29aa46acf3
 
 
 	character->setCellCovered(cell);

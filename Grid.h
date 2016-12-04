@@ -28,7 +28,6 @@ class Grid {
 	    bool move(Character *character, Direction direction);
 		bool attack(Race *character, Direction direction);
 		bool usePotion(Race *character, Direction direction);
-		Cell* getCellByDirection(Cell *cell, Direction direction);
 		std::vector<Cell*> getObjectsNearby(Cell* player);
 
 	public:
