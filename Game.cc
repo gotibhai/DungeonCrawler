@@ -47,7 +47,7 @@ void Game::start(char raceType){
 }
 void Game::nextFloor() {
   // delete currentGrid;
-  currentGrid = CellFactory().GenerateGridFromFile(DEFAULT_FLOOR_FILE, player);
+  currentGrid = CellFactory().GenerateGridFromFile(floorFile, player);
   player->setCellCovered(new Cell());
   cout<<*currentGrid<<endl;
   floorNum++;
@@ -100,7 +100,7 @@ void Game::use(ActionItem* actionItem) {
     nextFloor();
   }
   if (actionItem->getType() == CellType::Potion) {
-        cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
+    cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
     player->use(dynamic_cast<class PotionCell*>(actionItem)->getPotion());
     actionItem->reset();
   }
@@ -108,7 +108,7 @@ void Game::use(ActionItem* actionItem) {
      cout<<"Using Gold : "<<endl;
      player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
      actionItem->reset();
-  }  
+  }
 }
 
 bool Game::isRestart() {

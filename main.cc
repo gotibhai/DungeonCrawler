@@ -51,11 +51,18 @@ void printError(Action action) {
   cout<<"Cannot " << (char) action << " there. Try again."<<endl;
 }
 
-int main () {
+int main (int argc, char* argv[]) {
   srand(time(0));
   cin.exceptions(ios::eofbit|ios::failbit);
 
-  Game* game = Game::getInstance();
+  cout<<"Arg Count: "<< argc<<endl;
+  Game* game;
+  if(argc > 1) {
+    cout<<"Arg[1]: "<< argv[1]<<endl;
+    game = Game::getInstance(argv[1]);
+  } else {
+    game = Game::getInstance();
+  }
   while(!game->isQuit()) {
     printWelcome();
 
@@ -93,7 +100,7 @@ int main () {
 
             if (actionType == Action::MOVE) direction = action;
             else cin >> direction;
-            
+
             game->action(actionType, translateDirection(direction));
 
             if (!game->isPlayerMoved()) {
