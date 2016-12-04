@@ -19,11 +19,13 @@ class CellFactory {
 	std::vector<Cell> generateCells();
 	std::vector<Cell *> generateRandPotions();
 	std::vector<Cell *> getRandomGoldCell();
+	Cell* DragonPlacer(Cell* newcell);
 
 public:
 	// CellFactory();
 	// ~CellFactory();
 	Grid* GenerateGridFromFile(std::string filename , Race* player);
+
 	//Race* getRace(char racetype);
 };
 

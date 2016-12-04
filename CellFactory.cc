@@ -44,14 +44,15 @@ Cell* CellFactory::getCell(char symbol){
 		newcell = new class Halfling();
 	} else if(symbol == 'M'){
 		newcell = new class Merchant();
-	} else if(symbol == 'D'){
-		newcell = new class Dragon();
 	}
+	// } else if(symbol == 'D'){
+	// 	newcell = new class Dragon();
+	// }
 	return newcell;
 }
 
 Cell* CellFactory::getGoldCell(int characters){
-	Cell *newcell;
+	Cell *newcell = nullptr;
 	if(characters == 6){
 		newcell = new class Gold(GoldType::NormalGold);
 	} else if (characters == 7){
@@ -103,7 +104,7 @@ Cell* CellFactory::getPotionCell(int characters){
 	}
 	newcell = new class PotionCell(*mypotion);
 	return newcell;
-} 
+}
 
 std::vector<Cell *> CellFactory::generateRandPotions(){
 		std::vector<Cell*> my_potion_vector;
@@ -143,11 +144,26 @@ std::vector<Enemy *> CellFactory::generateEnemies(){
 }
 
 
+Cell* CellFactory::DragonPlacer(Cell* newcell){
+	while(true){
+		Direction direction = (Direction) (rand() % Direction::TOTAL);
+		Cell *mycell = grid->getCellByDirection(newcell,direction);
+		if(mycell->getType() == CellType::Ground){
+			newcell->setCoords(mycell->getRow(),mycell->getCol());
+			//cout<<newcell->getSymbol()<<endl;
+			grid->setCell(newcell);
+			return newcell;
+		}
+	}
+
+}
+
+
+
 void CellFactory::place(Cell* cell) {
-	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;
-	
+	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;	
 	std::vector<Cell*> *chamber = &chambers[chamberNum];
-		
+
 	while(true) {
 		int pos = rand() % (chamber->size());
 
@@ -157,12 +173,29 @@ void CellFactory::place(Cell* cell) {
 			cell->setCoords(row, col);
 			grid->setCell(cell);
 			chamber->at(pos) = cell;
+			if(cell->getType() == (char) 'G'){
+				GoldType temp = dynamic_cast<class Gold*> (cell)->getGoldType();
+				if(temp == 6){
+					//cout<<"DGOLD is at "<<row<<" "<<col<<endl;
+					Cell* newcell = new class Dragon(dynamic_cast<class Gold*> (cell));
+					newcell->setCoords(row,col);
+					Cell* dcell = DragonPlacer(newcell);
+					//cout<<dcell->getSymbol()<<endl;
+					//cout<<"DCELL is at "<<dcell->getRow()<<" "<<dcell->getCol()<<endl;
+					for(int i = 0; i < chamber->size();i++){
+						if(dcell->getRow() == chamber->at(i)->getRow() && dcell->getRow() == chamber->at(i)->getCol()){
+							chamber->at(i) = dcell;
+						}
+					}
+				}
+			}
 			return;
 		}
 	}
 }
 
 Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
+	
 	grid = new Grid();
 	if(filename == Game::DEFAULT_FLOOR_FILE){
 		std::ifstream file{filename};
@@ -173,7 +206,6 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 		for (int i = 0; i < CellFactory::TOTAL_CHAMBERS; i++) {
 			chambers.push_back(vector<Cell*>());
 		}
-		cout << "works1 \n";
 
 		std::vector<Enemy*> enemy_vector = generateEnemies();
 		std::vector<Cell*> potion_vector = generateRandPotions();
@@ -181,7 +213,7 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 
 		grid->setEnemies(enemy_vector);
 
-		while(std::getline(file,str)){		
+		while(std::getline(file,str)){
 			Cell *cell;
 			int len = str.length();
 			col = 0;
@@ -193,7 +225,7 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 				if (str[k] =='.') {
 					if(row >= 3 && row <=6 && col>=3 && col <= 28 ){
 						chambers[0].push_back(cell);
-					} else if (((row >= 3 && row <=6 && col>=39 && col <62) || (row == 5 && col >= 62 && col <70) 
+					} else if (((row >= 3 && row <=6 && col>=39 && col <62) || (row == 5 && col >= 62 && col <70)
 						       || (row == 6 && col >=62 && col <73) || (row >= 7 && row <=12 && col>=61 && col < 76))) {
 						chambers[1].push_back(cell);
 					} else if (row >= 10 && row <=12 && col>=38 && col < 50){
@@ -206,7 +238,7 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 				}
 				col++;
 			}
-			row++;	
+			row++;
 		}
 
 		place(player);
@@ -229,23 +261,21 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 			place(enemy_vector[i]);
 		}
 
-		// int goldCount = 0;
-		// int potionCount = 0;
+		// int playerCount = 0;
+		// // int potionCount = 0;
 		// for(int i = 0; i<25; i++) {
-
+		//
 		// 	for(int j = 0; j<79; j++) {
-		// 		if(mygrid->getCell(i, j)->getSymbol() == 'G') {
-		// 			goldCount++;
+		// 		if(grid->getCell(i, j)->getSymbol() == '@') {
+		// 			playerCount++;
 		// 		}
-		// 		else if(mygrid->getCell(i, j)->getSymbol() == 'P') {
-		// 			potionCount++;
-		// 		}
+		//
 		// 	}
 		// }
-		// cout<<"Gold: "<< goldCount << endl;
-		// cout<<"Potion: "<< potionCount << endl;
+		// cout<<"PlayerCount: "<< playerCount << endl;
+		// // cout<<"Potion: "<< potionCount << endl;
 
-		
+
 	} else {
 		std::ifstream file{filename};
 		std::string str;
@@ -267,7 +297,7 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 
 					} else if (characters > 5 && characters <= 9){
 						//Create a Gold potion
-						cell = getGoldCell(characters);						
+						cell = getGoldCell(characters);
 					}
 				} else {
 					cell = getCell(chars);
@@ -284,8 +314,3 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player){
 }
 
 const int CellFactory::TOTAL_CHAMBERS = 5;
-
-
-
-
-

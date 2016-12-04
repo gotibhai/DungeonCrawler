@@ -47,40 +47,53 @@ Cell* Grid::getCellByDirection(Cell *cell, Direction direction) {
 
 bool Grid::move(Character *character, Direction direction) {
 	Cell *cell = getCellByDirection(character, direction);
-	cout << "Grid::move character" << (char) character->getType() << endl;
-	cout << "Grid::move cell" << (char) cell->getType() << endl;
+	//cout << "Grid::move character" << (char) character->getType() << endl;
+	//cout << "Grid::move cell" << (char) cell->getType() << endl;
 	if (!cell->canMoveOn(character)) {
 		return false;
 	}
 
-	cout << "Grid::move 2" << (char) character->getType() << endl;
+<<<<<<< HEAD
+	//cout << "Grid::move 2" << (char) character->getType() << endl;
 	
+=======
+	cout << "Grid::move 2" << (char) character->getType() << endl;
+
+>>>>>>> 3ec5071580097dfad5679f06bd6cda29aa46acf3
 	if (dynamic_cast<class Race*>(character)) {
-		cout << "Grid::move isRace " << (char) character->getType() << endl;
+		//cout << "Grid::move isRace " << (char) character->getType() << endl;
 		switch(cell->getType()) {
 			case(CellType::Stairs):
 			case(CellType::Gold):
 				Game::getInstance()->use(dynamic_cast<class ActionItem*>(cell));
 				cell = getCellByDirection(character, direction);
+				if(CellType::Stairs) {
+						return true;
+				}
 				break;
 		}
 		isFrozen = false;
 
 		Logger::getInstance()->move(direction, getObjectsNearby(dynamic_cast<class Race*>(character)));
 	}
-	cout << "Grid::move 3" << (char) character->getType() << endl;
+	//cout << "Grid::move 3" << (char) character->getType() << endl;
 
+<<<<<<< HEAD
 	character->reset();	
+	//cout << "Grid::move 4" << (char) character->getType() << endl;
+=======
+	character->reset();
 	cout << "Grid::move 4" << (char) character->getType() << endl;
+>>>>>>> 3ec5071580097dfad5679f06bd6cda29aa46acf3
 
 
 	character->setCellCovered(cell);
 	character->setCoords(cell->getRow(), cell->getCol());
 	setCell(character);
-	cout << "Grid::move 5" << (char) character->getType() << endl;
+	//cout << "Grid::move 5" << (char) character->getType() << endl;
 	// bridge
 
-	cout << "Grid::move 6" << (char) character->getType() << endl;
+	//cout << "Grid::move 6" << (char) character->getType() << endl;
 
 	return true;
 };
