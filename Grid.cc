@@ -64,10 +64,12 @@ bool Grid::move(Character *character, Direction direction) {
 			case(CellType::Stairs):
 			case(CellType::Gold):
 				Game::getInstance()->use(dynamic_cast<class ActionItem*>(cell));
-				cell = getCellByDirection(character, direction);
-				if(CellType::Stairs) {
+				if(cell->getType() == CellType::Stairs) {
 						return true;
+				} else if(cell->getType() == CellType::Gold) {
+					Logger::getInstance()->pickUp(dynamic_cast<class ActionItem*>(cell));
 				}
+				cell = getCellByDirection(character, direction);
 				break;
 		}
 		isFrozen = false;
@@ -76,7 +78,7 @@ bool Grid::move(Character *character, Direction direction) {
 	}
 	//cout << "Grid::move 3" << (char) character->getType() << endl;
 
-	character->reset();	
+	character->reset();
 	//cout << "Grid::move 4" << (char) character->getType() << endl;
 
 	character->setCellCovered(cell);
@@ -95,7 +97,7 @@ vector<Cell*> Grid::getObjectsNearby(Cell* player) {
 	for (int row = player->getRow()-1; row <= player->getRow() + 1; row++ ) {
 		for (int col = player->getCol()-1; col <= player->getCol() + 1; col++ ) {
 			if ((!(row == player->getRow() && col == player->getCol())) &&
-				(dynamic_cast<class Character*>(grid[row][col]) || 
+				(dynamic_cast<class Character*>(grid[row][col]) ||
 					dynamic_cast<class ActionItem*>(grid[row][col]))) {
 				cells.push_back(grid[row][col]);
 			}
