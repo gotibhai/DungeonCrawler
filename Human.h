@@ -6,7 +6,7 @@
 class Human: public Enemy, public Gold {
 public:
   Human();
-  void reset();
+  void die();
   bool canMoveOn(Character*) override;
 };
 

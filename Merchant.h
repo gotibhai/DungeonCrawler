@@ -6,7 +6,7 @@
 class Merchant: public Enemy, public Gold {
 public:
   Merchant();
-  void reset();
+  void die();
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "CellType.cc"
 #include "Game.h"
+#include "Logger.h"
 #include <stdlib.h>
 
 Enemy::Enemy(bool isHostile): Character{0, 0, 0}, Cell{CellType::Empty}, isHostile{isHostile} {}
@@ -20,5 +21,6 @@ bool Enemy::attack(Character* defender) {
   if(chance == 1) {
     return Character::attack(defender);
   }
+  Logger::getInstance()->missAttack(this, defender);
   return false;
 }

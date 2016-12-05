@@ -25,6 +25,11 @@ string stringDirection(Direction type) {
       else if (type ==  Direction::SW) return "South-West";
 }
 
+string getSymbol(Character* character) {
+  stringstream streamString;
+  streamString << character->getSymbol();
+  return dynamic_cast<class Race*>(character)? "PC": streamString.str();
+}
 
 Logger::Logger(): action{""} {}
 
@@ -33,20 +38,21 @@ Logger* Logger::getInstance() {
 }
 
 void Logger::attack(Character* character1, Character* character2, int damage) {
-  bool isPlayer = dynamic_cast<class Race*>(character1);
-  if (isPlayer) {
-    action << "PC";
+  action << getSymbol(character1);
+  if (character2->getHp() > 0) {
+    action << " deals " << damage << " damage to ";
+    action << getSymbol(character2);
+    if (dynamic_cast<class Enemy*>(character2)) {
+      action << "(" << character2->getHp() << " HP)";
+    }
   } else {
-    action << character1->getSymbol();
+    action << " kills " << getSymbol(character2);
   }
-  action << " deals " << damage << " damage to ";
-  if (isPlayer) {
-    action << character2->getSymbol() << "(" << character2->getHp() << " HP). ";
-  } else {
-    action << "PC";
-  }
-  action << ".";
+  
+  action << ". ";
 }
+
+
 
 void Logger::move(Direction direction, std::vector<Cell*> objectsNearby) {
   action << "PC moves " << stringDirection(direction);
@@ -70,8 +76,13 @@ void Logger::move(Direction direction, std::vector<Cell*> objectsNearby) {
 }
 
 void Logger::pickUp(ActionItem* item) {
-  action << "PC picks up " << item->getSymbol();
-  action << ". ";
+  action << "PC picks up " << item->getSymbol() << ".";
+}
+
+
+
+void Logger::missAttack(Character* character1, Character* character2) {
+  action << getSymbol(character1) << " misses attack on "<< getSymbol(character2);
 }
 
 void Logger::reset() {

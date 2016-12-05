@@ -29,7 +29,8 @@ class Logger {
 
     void attack(Character*, Character*, int);
     void move(Direction direction, std::vector<Cell*>);
-		void pickUp(ActionItem*m);
+	void pickUp(ActionItem*m);
+    void missAttack(Character*, Character*);
     void reset();
     std::string getAction();
 };
