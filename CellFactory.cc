@@ -220,11 +220,6 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 
 		place(stairs);
 
-		for (int i=0; i < gold_vector.size(); i++) {
-			place(gold_vector[i]);
-		}
-
-
 		for (int i=0; i < potion_vector.size(); i++) {
 			place(potion_vector[i]);
 		}
@@ -232,6 +227,10 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 
 		for (int i=0; i < enemy_vector.size(); i++) {
 			place(enemy_vector[i]);
+		}
+
+		for (int i=0; i < gold_vector.size(); i++) {
+			place(gold_vector[i]);
 		}
 
 	} else {
