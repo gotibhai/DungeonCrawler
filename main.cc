@@ -126,16 +126,18 @@ int main (int argc, char* argv[]) {
           } else {
             cout<<"Sorry, you lost."<<endl;
           }
-          cout<<game;
-          cout<<"========================================="<<endl;
-          cout<<"Do you wish to q or r?"<<endl;
-          string ans;
-          cin >> action;
-          if(action == "r") {
-            game->setQuit(false);
-            game->action(Action::RESTART);
+          if(action!="q") {
+            cout<<game;
+            cout<<"========================================="<<endl;
+            cout<<"Do you wish to q or r?"<<endl;
+            string ans;
+            cin >> ans;
+            if(ans == "r") {
+              game->setQuit(false);
+              game->action(Action::RESTART);
+            }
+            // delete game;
           }
-          // delete game;
         }
 
       }
