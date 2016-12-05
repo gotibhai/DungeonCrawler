@@ -35,7 +35,6 @@ bool Cell::canMoveOn(Character* character) {
 void Cell::reset() {
 	//cout << "Cell::reset" << endl;
 	Cell *prevCell = cellCovered;
-	cout<<"HELLO THERE MATEY: "<<prevCell->getSymbol()<<endl;
 	Game::getInstance()->getCurrentGrid()->removeEnemy(dynamic_cast<class Enemy*>(prevCell));
 	if (prevCell->getType() == CellType::Empty) {
 		//cout << "Cell::reset == NULL 1" << endl;
