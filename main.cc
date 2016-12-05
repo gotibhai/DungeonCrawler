@@ -130,58 +130,11 @@ int main (int argc, char* argv[]) {
           }
           cout<<"Goodbye."<<endl;
           game->action(Action::RESTART);
-          // delete game;
         }
 
       }
 
-      // check if won
-      // check if lost
-      // check if new floor
-      // do enemies turn otherwise
-      // check if lost
-      // if won or lost, prompt to play again
-      // if not wanna play again destruct everything
-      // TODO: print the grid wherever necessary
+      // delete game
     }
   }
 };
-
-// if(action == "a") {
-        //     string direction;
-        //     cin >> direction;
-        //     // attack enemy
-        //     if(game->attack(translateDirection(direction))) {
-        //       cout<<"SUCCESSFUL ATTACK"<<endl;
-        //       break;
-        //     } else {
-        //       cout<<"Cannot attack there. Try again."<<endl;
-        //     }
-        // }
-        // else if(action == "u") {
-        //     string direction;
-        //     cin >> direction;
-        //     // use potion
-        //     cout<<game;
-        //     break; // only if able to use the potion
-        // }
-        // else if(action == "r") {
-        //     restart = true;
-        //     break;
-        // }
-        // else if(action == "q") {
-        //     quit = true;
-        //     break;
-        // }
-        // else if(isDirection(action)) { // for moving playercx
-
-        //     if(game->move(translateDirection(action))) {
-        //       cout<<game;
-        //       break; // only if move successful
-        //     } else {
-        //       cout<< "Cannot move there. Try again." << endl;
-        //     }
-        // }
-        // else {
-        //     cout << "Invalid command, please try again: ";
-        // }

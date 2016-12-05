@@ -27,14 +27,12 @@ Grid::~Grid() {
 };
 
 void Grid::removeEnemy(Enemy *enemy) {
-	// this->enemies.pop(enemy);
 	int len = this->enemies.size();
 	for(int i = 0; i<len; i++) {
 		if(this->enemies[i] == enemy) {
 			this->enemies.erase(this->enemies.begin() + i);
 		}
 	}
-	// this->enemies.erase(std::remove(this->enemies.begin(), this->enemies.end(), enemy), this->enemies.end());
 }
 
 void Grid::setCell(Cell *cell) { grid[cell->getRow()][cell->getCol()] = cell; };
@@ -64,14 +62,10 @@ Cell* Grid::getCellByDirection(Cell *cell, Direction direction) {
 
 bool Grid::move(Character *character, Direction direction) {
 	Cell *cell = getCellByDirection(character, direction);
-	//cout << "Grid::move character" << (char) character->getType() << endl;
-	//cout << "Grid::move cell" << (char) cell->getType() << endl;
 	if (!cell->canMoveOn(character)) {
 		return false;
 	}
-	//cout << "Grid::move 2" << (char) character->getType() << endl;
 	if (dynamic_cast<class Race*>(character)) {
-		//cout << "Grid::move isRace " << (char) character->getType() << endl;
 		switch(cell->getType()) {
 			case(CellType::Stairs):
 			case(CellType::Gold):
@@ -89,19 +83,12 @@ bool Grid::move(Character *character, Direction direction) {
 
 		Logger::getInstance()->move(direction, getObjectsNearby(dynamic_cast<class Race*>(character)));
 	}
-	//cout << "Grid::move 3" << (char) character->getType() << endl;
 
 	character->reset();
-	//cout << "Grid::move 4" << (char) character->getType() << endl;
 
 	character->setCellCovered(cell);
 	character->setCoords(cell->getRow(), cell->getCol());
 	setCell(character);
-	//cout << "Grid::move 5" << (char) character->getType() << endl;
-	// bridge
-
-	//cout << "Grid::move 6" << (char) character->getType() << endl;
-
 	return true;
 };
 
@@ -139,11 +126,8 @@ bool Grid::action(Action action, Race* player, Direction direction) {
 
 bool Grid::usePotion(Race *player, Direction direction) {
 	Cell *cell = getCellByDirection(player, direction);
-	cout << "Grid::usePotion cell " << (char) cell->getType() << endl;
 	if (dynamic_cast<class PotionCell*>(cell)) {
-		cout << "Grid::usePotion use " << (char) cell->getType() << endl;
 		Game::getInstance()->use(dynamic_cast<class PotionCell*>(cell));
-		cout << "Grid::usePotion after use " << (char) cell->getType() << endl;
 		cell->reset();
 		return true;
 	}

@@ -29,7 +29,6 @@ Game::~Game() {
 }
 
 Game* Game::getInstance() {
-  // cout<<"RIGHT HERE RIGHT NOW"<<endl;
   if(Game::instance->floorFile == "") {
     Game::instance->floorFile = Game::DEFAULT_FLOOR_FILE;
   }
@@ -111,7 +110,6 @@ void Game::action(Action action, Direction direction) {
 }
 
 void Game::use(ActionItem* actionItem) {
-  cout << "Game::use " << (char) actionItem->getType() << endl;
   if (actionItem->getType() == CellType::Stairs) {
     nextFloor();
     return;
@@ -119,12 +117,10 @@ void Game::use(ActionItem* actionItem) {
 
   Logger::getInstance()->pickUp(actionItem);
   if (actionItem->getType() == CellType::PotionC) {
-    cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
     player->use(dynamic_cast<class PotionCell*>(actionItem)->getPotion());
     actionItem->reset();
   }
   if (actionItem->getType() == CellType::Gold) {
-     cout<<"Using Gold : "<<endl;
      player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
      actionItem->reset();
   }

@@ -20,7 +20,6 @@ int Race::getTotalGold() {
 }
 
 void Race::use(class Potion potion) {
-  cout << "Race::use" << endl;
   if (potion.getHp() != 0) {
     cout<<getHp();
     setHp(getHp() + potion.getHp());
@@ -32,7 +31,6 @@ void Race::use(class Potion potion) {
 
 void Race::use(GoldType goldType) {
   totalGold += (int) goldType;
-  cout<<"incrementing "<<totalGold<<endl;
 }
 // void use(Gold);
 int Race::getDef() {
