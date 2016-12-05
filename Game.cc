@@ -22,10 +22,11 @@ Game::Game(): toRestart{false}{
 }
 
 Game::~Game() {
-  cout<<"Game's Destructor"<<endl;
+  cout << "Game's Destructor" << endl;
   delete currentGrid;
-  delete player;
-  delete instance;
+  currentGrid = nullptr;
+  player = nullptr;
+  // delete instance;
 }
 
 Game* Game::getInstance() {
