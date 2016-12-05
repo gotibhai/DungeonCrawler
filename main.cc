@@ -128,9 +128,14 @@ int main (int argc, char* argv[]) {
           }
           cout<<game;
           cout<<"========================================="<<endl;
-          game->setQuit(false);
-          game->action(Action::RESTART);
-          delete game;
+          cout<<"Do you wish to q or r?"<<endl;
+          string ans;
+          cin >> action;
+          if(action == "r") {
+            game->setQuit(false);
+            game->action(Action::RESTART);
+          }
+          // delete game;
         }
 
       }

@@ -1,7 +1,7 @@
 #include "Dragon.h"
 #include "Enemy.h"
 
-Dragon::Dragon(class Gold* g): Character{150, 150, 20}, Cell{CellType::Dragon} {gold = g;}
+Dragon::Dragon(class Gold* g): Character{150, 20, 20}, Cell{CellType::Dragon} {gold = g;}
 
 
 void Dragon::die(){
