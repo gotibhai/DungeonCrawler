@@ -130,7 +130,7 @@ int main (int argc, char* argv[]) {
           cout<<"========================================="<<endl;
           game->setQuit(false);
           game->action(Action::RESTART);
-          delete game;
+          // delete game;
         }
 
       }
