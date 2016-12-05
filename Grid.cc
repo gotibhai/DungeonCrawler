@@ -75,6 +75,9 @@ bool Grid::move(Character *character, Direction direction) {
 		switch(cell->getType()) {
 			case(CellType::Stairs):
 			case(CellType::Gold):
+				if(cell->getType() == CellType::Gold && !(dynamic_cast<class Gold*>(cell)->getIsCollectible())) {
+						return false;
+				}
 				Game::getInstance()->use(dynamic_cast<class ActionItem*>(cell));
 				if(cell->getType() == CellType::Stairs) {
 						return true;

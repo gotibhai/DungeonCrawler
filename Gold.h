@@ -8,9 +8,9 @@
 class Gold : virtual public ActionItem {
 	GoldType goldtype;
 	bool isCollectible;
-	public: 
-		Gold(GoldType g): Cell{CellType::Gold} { 
-			goldtype = g; 
+	public:
+		Gold(GoldType g): Cell{CellType::Gold} {
+			goldtype = g;
 			if(g == GoldType::DragonGold){
 				isCollectible = false;
 			} else {
@@ -21,6 +21,7 @@ class Gold : virtual public ActionItem {
 		GoldType getGoldType();
 		bool canMoveOn();
 		void setIsCollectible(bool);
+		bool getIsCollectible();
 };
 
 #endif

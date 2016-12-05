@@ -11,6 +11,7 @@
 #include "Logger.h"
 #include "GoldType.cc"
 #include "PotionCell.h"
+#include <iomanip>
 using namespace std;
 
 bool Game::toQuit = false;
@@ -170,8 +171,7 @@ string translateRace(CellType type) {
 std::ostream &operator<<(std::ostream &out , Game *g) {
    out<<*(g->currentGrid);
    out<<"Race: " << translateRace(g->player->getType())<< " Gold: " << g->player->getTotalGold();
-   for (int i = 0; i < Grid::GRID_WIDTH - 27; i++) out<< " ";
-   out<<"Floor: "<<g->floorNum<<endl;
+   out<<setw(55)<<"Floor: "<<g->floorNum<<endl;
    out<<"HP: "<<g->player->getHp()<<endl;
    out<<"Atk: "<<g->player->getAtk()<<endl;
    out<<"Def: "<<g->player->getDef()<<endl;

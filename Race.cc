@@ -7,7 +7,9 @@
 using namespace std;
 
 
-Race::Race(int hp, int atk, int def): Character{hp, atk, def} {}
+Race::Race(int hp, int atk, int def): Character{hp, atk, def} {
+  totalGold = 0;
+}
 
 void Race::die() {
   Game::finishGame(false);
