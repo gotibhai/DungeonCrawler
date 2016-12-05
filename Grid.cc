@@ -187,7 +187,6 @@ void Grid::moveEnemy(Enemy *enemy) {
 		while (std::find(directions.begin(), directions.end(), direction) != directions.end()) {
 			direction = (Direction) (rand() % Direction::TOTAL);
 		}
-		cout << direction << endl;
 		directions.push_back(direction);
 		isMoved = move(enemy, direction);
 	}

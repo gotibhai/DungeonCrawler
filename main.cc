@@ -58,18 +58,16 @@ int main (int argc, char* argv[]) {
   cout<<"Arg Count: "<< argc<<endl;
   Game* game;
   if(argc > 1) {
-    cout<<"Arg[1]: "<< argv[1]<<endl;
     game = Game::getInstance(argv[1]);
   } else {
     game = Game::getInstance();
   }
   while(!game->isQuit()) {
-  if(argc > 1) {
-    cout<<"Arg[1]: "<< argv[1]<<endl;
-    game = Game::getInstance(argv[1]);
-  } else {
-    game = Game::getInstance();
-  }
+    if(argc > 1) {
+      game = Game::getInstance(argv[1]);
+    } else {
+      game = Game::getInstance();
+    }
     printWelcome();
 
     char race;
@@ -109,7 +107,7 @@ int main (int argc, char* argv[]) {
 
             game->action(actionType, translateDirection(direction));
 
-            if (!game->isPlayerMoved()) {
+            if (!game->isPlayerMoved() && isDirection(action)) {
               printError(actionType);
             }
             break;}
