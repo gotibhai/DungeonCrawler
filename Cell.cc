@@ -18,6 +18,7 @@ Cell::~Cell() {
 		delete cellCovered;
 	}
 	cellCovered = nullptr;
+	cout<<"Cell deleted"<<endl;
 }
 void Cell::setCoords(int row, int col) {this->row = row; this->col = col;};
 CellType Cell::getType() const { return type; };

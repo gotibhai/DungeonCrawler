@@ -10,7 +10,7 @@ private:
 public:
   Dragon(class Gold*);
   void die() override;
-  ~Dragon();
+  ~Dragon() override;
 
   // bool move(Direction) override;
 };
