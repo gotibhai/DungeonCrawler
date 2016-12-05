@@ -154,8 +154,7 @@ bool Grid::attack(Race *character, Direction direction) {
 	isFrozen = true;
 
 	if (dynamic_cast<class Enemy*>(cell)) {
-		attack(character, dynamic_cast<class Enemy*>(cell));
-		return true;
+		return attack(character, dynamic_cast<class Enemy*>(cell));
 	}
 
 	return false;
@@ -216,7 +215,7 @@ void Grid::enemiesMove() {
 	for (int i = 0; i < enemies.size(); i++) {
 		Race *player = getPlayerNearby(enemies[i]);
 
-		if (player) {
+		if (player && enemies[i]->getIsHostile()) {
 			attack(enemies[i], player);
 		}
 	}
