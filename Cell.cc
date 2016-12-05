@@ -12,6 +12,8 @@ Cell::Cell(CellType type): type{type}, cellCovered{new Cell()} {
 };
 Cell::~Cell() {
 	cout<<"Cell's destructor"<<endl;
+	cout<<getSymbol()<<endl;
+
 	if (cellCovered != NULL) {
 		delete cellCovered;
 	}
