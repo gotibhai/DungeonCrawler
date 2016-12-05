@@ -11,6 +11,7 @@ Cell::Cell(): type{CellType::Empty} {};
 Cell::Cell(CellType type): type{type}, cellCovered{new Cell()} {
 };
 Cell::~Cell() {
+	cout<<"Cell's destructor"<<endl;
 	delete cellCovered;
 }
 void Cell::setCoords(int row, int col) {this->row = row; this->col = col;};

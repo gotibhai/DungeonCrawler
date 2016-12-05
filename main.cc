@@ -129,6 +129,7 @@ int main (int argc, char* argv[]) {
             cout<<"Sorry, you lost."<<endl;
           }
           cout<<"Goodbye."<<endl;
+          delete game;
         }
 
       }

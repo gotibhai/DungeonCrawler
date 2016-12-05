@@ -21,6 +21,7 @@ Game::Game(): toRestart{false}{
 }
 
 Game::~Game() {
+  cout<<"Game's Destructor"<<endl;
   delete currentGrid;
   delete player;
   delete instance;
@@ -35,7 +36,6 @@ Game* Game::getInstance() {
 }
 
 Game* Game::getInstance(string fileName) {
-  // cout<<"RIGHT HERE RIGHT NOW"<<endl;
   Game::instance->floorFile = fileName;
   return Game::instance;
 }
@@ -59,7 +59,6 @@ void Game::start(char raceType){
 }
 void Game::nextFloor() {
   // delete currentGrid;
-  cout<<"Floor :"<<floorNum<<endl;
   if(floorNum==5) {
     Game::finishGame(true);
   }
