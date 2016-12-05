@@ -11,6 +11,7 @@ Cell::Cell(): type{CellType::Empty} {};
 Cell::Cell(CellType type): type{type}, cellCovered{new Cell()} {
 };
 Cell::~Cell() {
+	cout<<"Cell's destructor"<<endl;
 	delete cellCovered;
 }
 void Cell::setCoords(int row, int col) {this->row = row; this->col = col;};
@@ -35,7 +36,6 @@ bool Cell::canMoveOn(Character* character) {
 void Cell::reset() {
 	//cout << "Cell::reset" << endl;
 	Cell *prevCell = cellCovered;
-	cout<<"HELLO THERE MATEY: "<<prevCell->getSymbol()<<endl;
 	Game::getInstance()->getCurrentGrid()->removeEnemy(dynamic_cast<class Enemy*>(prevCell));
 	if (prevCell->getType() == CellType::Empty) {
 		//cout << "Cell::reset == NULL 1" << endl;
