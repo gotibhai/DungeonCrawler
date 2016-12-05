@@ -9,7 +9,7 @@ private:
 public:
   Merchant();
   void die();
-  bool getIsHostile();
+  bool getIsHostile() override;
   void setIsHostile(bool);
 };
 

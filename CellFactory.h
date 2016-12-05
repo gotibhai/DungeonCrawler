@@ -23,8 +23,8 @@ class CellFactory {
 	void setCellNearby(Cell* newcell);
 
 public:
-	// CellFactory();
-	// ~CellFactory();
+	//CellFactory();
+	~CellFactory();
 	Grid* GenerateGridFromFile(std::string filename , Race* player, int floor = 0);
 
 	//Race* getRace(char racetype);

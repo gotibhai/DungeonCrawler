@@ -23,6 +23,16 @@
 #include <iostream>
 using namespace std;
 
+
+// CellFactory::CellFactory() {
+// }
+
+CellFactory::~CellFactory() {
+	enemy_vector.clear();
+	chambers.clear();
+	grid = nullptr;
+}
+
 Cell* CellFactory::getCell(char symbol){
 	Cell *newcell = nullptr;
 	newcell = new Cell((CellType) (int) symbol);

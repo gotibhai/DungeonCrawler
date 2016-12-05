@@ -9,7 +9,7 @@ private:
 public:
   Enemy(bool isHostile = true);
   void setIsHostile(bool);
-  bool getIsHostile();
+  virtual bool getIsHostile();
   virtual void die() ;
 };
 
