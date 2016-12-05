@@ -25,33 +25,7 @@ using namespace std;
 
 Cell* CellFactory::getCell(char symbol){
 	Cell *newcell = nullptr;
-	if(symbol == '-'){
-		newcell = new Cell(CellType::BorderHorizontal);
-	} else if (symbol == '|'){
-		newcell = new Cell(CellType::BorderVertical);
-	} else if (symbol == '.'){
-		newcell = new Cell(CellType::Ground);
-	} else if (symbol == ' '){
-		newcell = new Cell(CellType::Empty);
-	} else if (symbol == '+'){
-		newcell = new Cell(CellType::BridgeEnter);
-	} else if (symbol == '#'){
-		newcell = new Cell(CellType::Bridge);
-	} else if (symbol == '\\'){
-		newcell = new class Stairs();
-	} else if(symbol  == 'H'){
-		newcell = new class Human();
-	} else if(symbol  == 'W'){
-		newcell = new class Dwarf();
-	} else if(symbol  == 'E'){
-		newcell = new class Elf();
-	} else if(symbol == 'O'){
-		newcell = new class Orc();
-	} else if(symbol  == 'L'){
-		newcell = new class Halfling();
-	} else if(symbol == 'M'){
-		newcell = new class Merchant();
-	}
+	newcell = new Cell((CellType) (int) symbol);
 	return newcell;
 }
 
@@ -147,15 +121,14 @@ std::vector<Enemy *> CellFactory::generateEnemies(){
 }
 
 
-Cell* CellFactory::DragonPlacer(Cell* newcell){
+void CellFactory::setCellNearby(Cell* newcell){
 	while(true){
 		Direction direction = (Direction) (rand() % Direction::TOTAL);
 		Cell *mycell = grid->getCellByDirection(newcell,direction);
 		if(mycell->getType() == CellType::Ground){
 			newcell->setCoords(mycell->getRow(),mycell->getCol());
-			//cout<<newcell->getSymbol()<<endl;
 			grid->setCell(newcell);
-			return newcell;
+			break;
 		}
 	}
 
@@ -179,17 +152,15 @@ void CellFactory::place(Cell* cell) {
 			if(cell->getType() == (char) 'G'){
 				GoldType temp = dynamic_cast<class Gold*> (cell)->getGoldType();
 				if(temp == 6){
-					//cout<<"DGOLD is at "<<row<<" "<<col<<endl;
-					Cell* newcell = new class Dragon(dynamic_cast<class Gold*> (cell));
+					Enemy* newcell = new class Dragon(dynamic_cast<class Gold*> (cell));
 					newcell->setCoords(row,col);
-					Cell* dcell = DragonPlacer(newcell);
-					//cout<<dcell->getSymbol()<<endl;
-					//cout<<"DCELL is at "<<dcell->getRow()<<" "<<dcell->getCol()<<endl;
+					setCellNearby(newcell);
 					for(int i = 0; i < chamber->size();i++){
-						if(dcell->getRow() == chamber->at(i)->getRow() && dcell->getRow() == chamber->at(i)->getCol()){
-							chamber->at(i) = dcell;
+						if(newcell->getRow() == chamber->at(i)->getRow() && newcell->getRow() == chamber->at(i)->getCol()){
+							chamber->at(i) = newcell;
 						}
 					}
+					enemy_vector.push_back(newcell);
 				}
 			}
 			return;
@@ -200,7 +171,7 @@ void CellFactory::place(Cell* cell) {
 Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int floor){
 	
 	grid = new Grid();
-	std::vector<Enemy*> enemy_vector;
+	// std::vector<Enemy*> enemy_vector;
 	if(filename == Game::DEFAULT_FLOOR_FILE){
 		std::ifstream file{filename};
 		std::string str;
@@ -270,8 +241,8 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 		std::vector<std::vector<char>> File_arr;
 		int characters;
 		int i = 0;
-		int floor_start = (floor * 25);
-		int floor_end = floor_start + 25;
+		int floor_start = (floor * Grid::GRID_HEIGHT);
+		int floor_end = floor_start + Grid::GRID_HEIGHT;
 		//cout<<"Floor Start :"<<floor_start<<" Floor End :"<<floor_end<<endl;
 		while(std::getline(file,str)) {
 			if(i>=floor_start && i<floor_end) {
@@ -284,8 +255,8 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 			i++;
 		}
 		Cell *cell = nullptr;
-		for(int k = 0; k < 25; k++){
-			for(int j = 0; j < 79; j++){
+		for(int k = 0; k < Grid::GRID_HEIGHT; k++){
+			for(int j = 0; j < Grid::GRID_WIDTH; j++){
 				if(File_arr[k][j] == 'D') continue;
 				if(isdigit(File_arr[k][j],loc)){
 					int characters = File_arr[k][j] - '0';
@@ -302,9 +273,10 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 							for(int b = j-1; b <= j+1; b++){
 								if(File_arr[a][b] == 'D'){
 									//cout<<"Dragon coords : row : "<<a<<" Col : "<<b<<endl;
-									Cell* newcell = new class Dragon(dynamic_cast<class Gold*>(cell));
+									Enemy* newcell = new class Dragon(dynamic_cast<class Gold*>(cell));
 									newcell->setCoords(a,b);
 									grid->setCell(newcell);	
+									enemy_vector.push_back(newcell);
 								}
 							}
 						}
@@ -319,12 +291,9 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 						}
 					}
 				}
-				// if(k == 3){
-				// 	cout<<"Row : "<<k<<" "<<"Col : "<<j<<cell->getSymbol()<<endl;
-				// }
+
 				cell->setCoords(k,j);
 				grid->setCell(cell);
-				//cout<<"Symbol = "<<cell->getSymbol();
 			}
 	    }
 	}
