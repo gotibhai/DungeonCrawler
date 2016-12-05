@@ -8,7 +8,7 @@ private:
 	static bool isHostile;
 public:
   Merchant();
-  void die();
+  void die() override;
   bool getIsHostile();
   void setIsHostile(bool);
 };
