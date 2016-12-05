@@ -12,18 +12,21 @@ using namespace std;
 
 Character::Character(int hp, int atk, int def): hp{hp}, atk{atk}, def{def}, Cell{CellType::Empty} { }
 
-bool Character::attack(Character* defender) {
-  int damage = ceil((100.0/(100.0+defender->getDef()))*(getAtk()));
-  defender->setHp(defender->getHp()-damage);
+void Character::attack(Character* defender) {
+  if (this->willAttackSucceed(defender)) {
+    int damage = ceil((100.0/(100.0+defender->getDef()))*(getAtk()));
+    defender->setHp(defender->getHp()-damage);
 
-  if (dynamic_cast<class Merchant*>(defender)) {
-    dynamic_cast<class Merchant*>(defender)->setIsHostile(true);
+    if (dynamic_cast<class Merchant*>(defender)) {
+        dynamic_cast<class Merchant*>(defender)->setIsHostile(true);
+    }
+
+    Logger::getInstance()->attack(this, defender, damage);
+  } else {
+    Logger::getInstance()->missAttack(this, defender);
   }
-
-  Logger::getInstance()->attack(this, defender, damage);
-
-  return true;
 }
+
 
 void Character::winBattle() {
 

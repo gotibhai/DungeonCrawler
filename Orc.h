@@ -6,7 +6,7 @@
 class Orc: public Enemy {
 public:
   Orc();
-  bool attack(Character*) override;
+  void attack(Character*) override;
 };
 
 #endif

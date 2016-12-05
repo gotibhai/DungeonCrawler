@@ -4,9 +4,13 @@
 #include "Gold.h"
 
 class Merchant: public Enemy, public Gold {
+private:
+	static bool isHostile;
 public:
   Merchant();
   void die();
+  bool getIsHostile();
+  void setIsHostile(bool);
 };
 
 #endif

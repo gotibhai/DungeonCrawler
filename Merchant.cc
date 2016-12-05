@@ -11,3 +11,13 @@ void Merchant::die() {
 	setCellCovered(gold);
 	Enemy::die();
 }
+
+bool Merchant::getIsHostile() {
+  return Merchant::isHostile;
+}
+
+void Merchant::setIsHostile(bool hostility) {
+  Merchant::isHostile = hostility;
+}
+
+bool Merchant::isHostile = false;

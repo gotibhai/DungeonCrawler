@@ -12,6 +12,7 @@ class Race: public Character {
 private:
   int totalGold;
   std::vector<class Potion> potions;
+  bool willAttackSucceed(Character*);
 public:
   Race(int, int , int);
   int getTotalGold();
@@ -21,7 +22,6 @@ public:
   int getDef() override;
   int getAtk() override;
   void resetPotions();
-  bool attack(Character*) override;
 };
 
 #endif

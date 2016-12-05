@@ -5,12 +5,12 @@
 class Enemy: virtual public Character {
 private:
   bool isHostile;
+  bool willAttackSucceed(Character* defender);
 public:
   Enemy(bool isHostile = true);
   void setIsHostile(bool);
   bool getIsHostile();
-  void die();
-  virtual bool attack(Character*) override;
+  virtual void die() ;
 };
 
 #endif

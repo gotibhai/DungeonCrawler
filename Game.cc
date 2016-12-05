@@ -59,18 +59,17 @@ void Game::start(char raceType){
 }
 void Game::nextFloor() {
   // delete currentGrid;
-  cout<<"Floor :"<<floorNum<<endl;
   if(floorNum==5) {
     Game::finishGame(true);
   }
   currentGrid = CellFactory().GenerateGridFromFile(floorFile, player, floorNum);
   player->setCellCovered(new Cell());
   player->resetPotions();
-  cout<<*currentGrid<<endl;
   floorNum++;
 }
 
 void Game::startMove() {
+  cout << this;
   isMoved = false;
   Logger::getInstance()->reset();
 }
@@ -107,7 +106,6 @@ void Game::action(Action action, Direction direction) {
 
   if (isMoved) {
     currentGrid->enemiesMove();
-    cout << this;
   }
 }
 
@@ -115,7 +113,10 @@ void Game::use(ActionItem* actionItem) {
   cout << "Game::use " << (char) actionItem->getType() << endl;
   if (actionItem->getType() == CellType::Stairs) {
     nextFloor();
+    return;
   }
+
+  Logger::getInstance()->pickUp(actionItem);
   if (actionItem->getType() == CellType::Potion) {
     cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
     player->use(dynamic_cast<class PotionCell*>(actionItem)->getPotion());
@@ -168,7 +169,9 @@ string translateRace(CellType type) {
 
 std::ostream &operator<<(std::ostream &out , Game *g) {
    out<<*(g->currentGrid);
-   out<<"Race: " << translateRace(g->player->getType())<<endl;
+   out<<"Race: " << translateRace(g->player->getType())<< " Gold: " << g->player->getTotalGold();
+   for (int i = 0; i < Grid::GRID_WIDTH - 27; i++) out<< " ";
+   out<<"Floor: "<<g->floorNum<<endl;
    out<<"HP: "<<g->player->getHp()<<endl;
    out<<"Atk: "<<g->player->getAtk()<<endl;
    out<<"Def: "<<g->player->getDef()<<endl;

@@ -1,5 +1,6 @@
 #include "Race.h"
 #include "Game.h"
+#include "Logger.h"
 #include <iostream>
 #include <stdlib.h>
 
@@ -59,11 +60,9 @@ void Race::resetPotions() {
   }
 }
 
-bool Race::attack(Character* defender) {
-  CellType defenderType = defender->getType();
-  int chance = rand() % 2;
-  if(defenderType == CellType::Halfling && chance == 0) {
-    return false;
+bool Race::willAttackSucceed(Character* defender) {
+  if(defender->getType() == CellType::Halfling && rand() % 2 == 0) {
+      return false;
   }
-  return Character::attack(defender);
+  return true;
 }

@@ -77,8 +77,6 @@ bool Grid::move(Character *character, Direction direction) {
 				Game::getInstance()->use(dynamic_cast<class ActionItem*>(cell));
 				if(cell->getType() == CellType::Stairs) {
 						return true;
-				} else if(cell->getType() == CellType::Gold) {
-					Logger::getInstance()->pickUp(dynamic_cast<class ActionItem*>(cell));
 				}
 				cell = getCellByDirection(character, direction);
 				break;
@@ -151,18 +149,17 @@ bool Grid::usePotion(Race *player, Direction direction) {
 bool Grid::attack(Race *character, Direction direction) {
 	Cell *cell = getCellByDirection(character, direction);
 
-	isFrozen = true;
-
 	if (dynamic_cast<class Enemy*>(cell)) {
-		return attack(character, dynamic_cast<class Enemy*>(cell));
+		attack(character, dynamic_cast<class Enemy*>(cell));
+		return true;
 	}
 
 	return false;
 };
 
-bool Grid::attack(Character *character1, Character *character2) {
+void Grid::attack(Character *character1, Character *character2) {
 	isFrozen = true;
-	return character1->attack(character2);
+	character1->attack(character2);
 };
 
 // void Grid::start(Race *player) {
@@ -220,6 +217,7 @@ void Grid::enemiesMove() {
 		}
 	}
 }
+
 
 std::ostream &operator<<(std::ostream &out, const Grid &g) {
 	for (int i = 0; i < Grid::GRID_HEIGHT; i++) {

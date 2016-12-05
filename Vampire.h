@@ -8,7 +8,7 @@
 class Vampire: public Race {
 public:
   Vampire();
-  bool attack(Character*) override;
+  void attack(Character*) override;
 
 };
 

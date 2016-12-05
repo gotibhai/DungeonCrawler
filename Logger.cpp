@@ -25,6 +25,23 @@ string stringDirection(Direction type) {
       else if (type ==  Direction::SW) return "South-West";
 }
 
+string getPotionTypeStr(PotionType potionType) {
+  switch (potionType) {
+    case PotionType::RH:
+      return "RH";
+    case PotionType::BA:
+      return "BA";
+    case PotionType::BD:
+      return "BD";
+    case PotionType::PH:
+      return "PH";
+    case PotionType::WA:
+      return "WA";
+    case PotionType::WD:
+      return "WD";
+  }
+}
+
 string getSymbol(Character* character) {
   stringstream streamString;
   streamString << character->getSymbol();
@@ -76,7 +93,13 @@ void Logger::move(Direction direction, std::vector<Cell*> objectsNearby) {
 }
 
 void Logger::pickUp(ActionItem* item) {
-  action << "PC picks up " << item->getSymbol() << ".";
+  action << "PC picks up " << item->getSymbol();
+  if (dynamic_cast<class PotionCell*>(item)) {
+    action << " of type "<< getPotionTypeStr(dynamic_cast<class PotionCell*>(item)->getPotion().getPotionType());
+  } else if (dynamic_cast<class Gold*>(item)) {
+    action << " which gives " << dynamic_cast<class Gold*>(item)->getGoldType() << " gold points to the PC";
+  }
+  action << ". ";
 }
 
 
