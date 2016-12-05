@@ -12,11 +12,11 @@ private:
   int atk;
   int def;
 
-  virtual bool willAttackSucceed(Character*) = 0;
+  virtual bool willAttackSucceed(Character*);
 public:
   Character(int, int, int);
   virtual void attack(Character*);
-  virtual void die() = 0;
+  virtual void die();
   virtual void winBattle();
   virtual int getAtk();
   virtual int getDef();

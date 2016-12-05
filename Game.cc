@@ -117,7 +117,7 @@ void Game::use(ActionItem* actionItem) {
   }
 
   Logger::getInstance()->pickUp(actionItem);
-  if (actionItem->getType() == CellType::Potion) {
+  if (actionItem->getType() == CellType::PotionC) {
     cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
     player->use(dynamic_cast<class PotionCell*>(actionItem)->getPotion());
     actionItem->reset();

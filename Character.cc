@@ -48,3 +48,12 @@ void Character::setHp(int newHp) {
     die();
   }
 }
+
+
+bool Character::willAttackSucceed(Character*) {
+  return true;
+}
+
+void Character::die() {
+
+}
