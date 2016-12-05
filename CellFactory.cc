@@ -23,6 +23,16 @@
 #include <iostream>
 using namespace std;
 
+
+// CellFactory::CellFactory() {
+// }
+
+CellFactory::~CellFactory() {
+	enemy_vector.clear();
+	chambers.clear();
+	grid = nullptr;
+}
+
 Cell* CellFactory::getCell(char symbol){
 	Cell *newcell = nullptr;
 	newcell = new Cell((CellType) (int) symbol);
@@ -134,10 +144,17 @@ void CellFactory::setCellNearby(Cell* newcell){
 
 }
 
-
+int player_chamber;
 
 void CellFactory::place(Cell* cell) {
 	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;
+	if(cell->getSymbol() == '@'){
+		player_chamber = chamberNum;
+	}
+	
+	while(cell->getType() == CellType::Stairs && player_chamber == chamberNum){
+		chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;
+	}
 	std::vector<Cell*> *chamber = &chambers[chamberNum];
 
 	while(true) {

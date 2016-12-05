@@ -12,12 +12,12 @@ class Race: public Character {
 private:
   int totalGold;
   std::vector<class Potion> potions;
-  bool willAttackSucceed(Character*);
+  bool willAttackSucceed(Character*) override;
 public:
   Race(int, int , int);
   int getTotalGold();
   virtual void use(class Potion);
-  void die();
+  void die() override;
   void use(GoldType);
   int getDef() override;
   int getAtk() override;

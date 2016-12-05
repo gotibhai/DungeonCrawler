@@ -7,12 +7,17 @@
 
 using namespace std;
 
-Cell::Cell(): type{CellType::Empty} {};
+Cell::Cell(): type{CellType::Empty}, cellCovered{NULL} {};
 Cell::Cell(CellType type): type{type}, cellCovered{new Cell()} {
 };
 Cell::~Cell() {
 	cout<<"Cell's destructor"<<endl;
-	delete cellCovered;
+	cout<<getSymbol()<<endl;
+
+	if (cellCovered != NULL) {
+		delete cellCovered;
+	}
+	cellCovered = nullptr;
 }
 void Cell::setCoords(int row, int col) {this->row = row; this->col = col;};
 CellType Cell::getType() const { return type; };
@@ -40,6 +45,7 @@ void Cell::reset() {
 		prevCell->setCoords(getRow(), getCol());
 	}
 	Game::getInstance()->getCurrentGrid()->setCell(prevCell);
+	prevCell = nullptr;
 }
 
 void Cell::setCellCovered(Cell* cell) { cellCovered = cell; }

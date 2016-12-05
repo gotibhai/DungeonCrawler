@@ -181,10 +181,10 @@ void Grid::moveEnemy(Enemy *enemy) {
 	bool isMoved = false;
 	vector<Direction> directions;
 	Direction direction;
-	while (!isMoved) {
+	while (!isMoved && directions.size() < Direction::TOTAL) {
 		// Question here
-		Direction direction = (Direction) (rand() % Direction::TOTAL);
-		while (std::find(directions.begin(), directions.end(), direction) != directions.end()) {
+		Direction direction = Direction::TOTAL;
+		while (direction == Direction::TOTAL || std::find(directions.begin(), directions.end(), direction) != directions.end()) {
 			direction = (Direction) (rand() % Direction::TOTAL);
 		}
 		directions.push_back(direction);

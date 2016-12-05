@@ -30,7 +30,7 @@ void Race::use(class Potion potion) {
 void Race::use(GoldType goldType) {
   totalGold += (int) goldType;
 }
-// void use(Gold);
+
 int Race::getDef() {
   int length = potions.size();
   int totalDef = Character::getDef();
