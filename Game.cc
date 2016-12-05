@@ -24,6 +24,7 @@ Game::Game(): toRestart{false}{
 Game::~Game() {
   cout << "Game's Destructor" << endl;
   delete currentGrid;
+  cout << "Grid Destructed" << endl;
   currentGrid = nullptr;
   player = nullptr;
   // delete instance;

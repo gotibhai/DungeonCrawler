@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Character::Character(int hp, int atk, int def): hp{hp}, atk{atk}, def{def}, Cell{CellType::Empty} { }
+Character::Character(int hp, int atk, int def): maxHp{hp}, hp{hp}, atk{atk}, def{def}, Cell{CellType::Empty} { }
 
 void Character::attack(Character* defender) {
   if (this->willAttackSucceed(defender)) {
