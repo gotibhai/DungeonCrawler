@@ -21,9 +21,7 @@ int Race::getTotalGold() {
 
 void Race::use(class Potion potion) {
   if (potion.getHp() != 0) {
-    cout<<getHp();
     setHp(getHp() + potion.getHp());
-    cout<<getHp();
   } else {
     potions.push_back(potion);
   }
