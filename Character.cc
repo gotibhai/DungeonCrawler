@@ -46,13 +46,13 @@ void Character::setHp(int newHp) {
 
   if(this->getType() == CellType::Vampire){
     hp = newHp;
-  } else if(hp >= maxHP){
-    hp = maxHP;
+  } else if(newHp >= this->maxHp){
+    hp = this->maxHp;
   }
-
   if (hp <= 0) {
     die();
   }
+  cout<<"HP "<<hp;
 }
 
 
