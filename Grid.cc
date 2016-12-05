@@ -194,7 +194,9 @@ void Grid::moveEnemy(Enemy *enemy) {
 void Grid::enemiesMove() {
 	if (!isFrozen) {
 		for (int i = 0; i < enemies.size(); i++) {
-			moveEnemy(enemies[i]);
+			if (enemies[i]->getType() != CellType::Dragon) {
+				moveEnemy(enemies[i]);
+			}
 		}
 	}
 	for (int i = 0; i < enemies.size(); i++) {

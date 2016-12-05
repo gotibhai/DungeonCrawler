@@ -10,6 +10,7 @@
 class CellFactory {
 	const static int TOTAL_CHAMBERS;
 	std::vector<std::vector<Cell*>> chambers;
+	std::vector<Enemy*> enemy_vector;
 	Grid* grid;
 	Cell* getCell(char);
 	Cell* getGoldCell(int);
@@ -19,7 +20,7 @@ class CellFactory {
 	std::vector<Cell> generateCells();
 	std::vector<Cell *> generateRandPotions();
 	std::vector<Cell *> getRandomGoldCell();
-	Cell* DragonPlacer(Cell* newcell);
+	void setCellNearby(Cell* newcell);
 
 public:
 	// CellFactory();
