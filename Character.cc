@@ -44,6 +44,12 @@ int Character::getDef() {
 void Character::setHp(int newHp) {
   hp = newHp;
 
+  if(this->getType() == CellType::Vampire){
+    hp = newHp;
+  } else if(hp >= maxHP){
+    hp = maxHP;
+  }
+
   if (hp <= 0) {
     die();
   }

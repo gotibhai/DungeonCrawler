@@ -21,9 +21,7 @@ int Race::getTotalGold() {
 
 void Race::use(class Potion potion) {
   if (potion.getHp() != 0) {
-    cout<<getHp();
     setHp(getHp() + potion.getHp());
-    cout<<getHp();
   } else {
     potions.push_back(potion);
   }
@@ -32,7 +30,7 @@ void Race::use(class Potion potion) {
 void Race::use(GoldType goldType) {
   totalGold += (int) goldType;
 }
-// void use(Gold);
+
 int Race::getDef() {
   int length = potions.size();
   int totalDef = Character::getDef();
