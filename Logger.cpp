@@ -65,7 +65,7 @@ void Logger::attack(Character* character1, Character* character2, int damage) {
   } else {
     action << " kills " << getSymbol(character2);
   }
-  
+
   action << ". ";
 }
 
@@ -102,10 +102,8 @@ void Logger::pickUp(ActionItem* item) {
   action << ". ";
 }
 
-
-
 void Logger::missAttack(Character* character1, Character* character2) {
-  action << getSymbol(character1) << " misses attack on "<< getSymbol(character2);
+  action << getSymbol(character1) << " misses attack on "<< getSymbol(character2)<<". ";
 }
 
 void Logger::reset() {

@@ -95,15 +95,14 @@ void Game::action(Action action) {
   this->isMoved = true;
 }
 
+void Game::setQuit(bool q) {
+  Game::toQuit = q;
+}
+
+
 
 void Game::action(Action action, Direction direction) {
-  cout << "action1 " << (char) action << "\n";
-
   isMoved = currentGrid->action(action, player, direction);
-
-
-  cout << "action2 " << action << "\n";
-  cout << "isMoved " << isMoved << "\n";
 
   if (isMoved) {
     currentGrid->enemiesMove();
