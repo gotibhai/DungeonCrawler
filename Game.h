@@ -46,6 +46,7 @@ class Game {
     bool isPlayerMoved();
     Grid* getCurrentGrid();
     void startMove();
+		void setQuit(bool);
 
   friend std::ostream &operator<<(std::ostream &out , Game *g);
 };

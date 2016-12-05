@@ -128,7 +128,9 @@ int main (int argc, char* argv[]) {
           } else {
             cout<<"Sorry, you lost."<<endl;
           }
-          cout<<"Goodbye."<<endl;
+          cout<<game;
+          cout<<"========================================="<<endl;
+          game->setQuit(false);
           game->action(Action::RESTART);
         }
 
