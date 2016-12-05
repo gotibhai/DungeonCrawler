@@ -17,7 +17,7 @@ enum CellType {
 	Merchant = (int)'M',
 	Dragon = (int)'D',
 	Player = (int)'@',
-	Potion = (int)'P',
+	PotionC = (int)'P',
 	Drow = (int)'d',
 	Vampire = (int)'v',
 	Shade = (int)'s',
@@ -27,4 +27,3 @@ enum CellType {
 };
 
 #endif
-

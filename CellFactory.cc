@@ -137,7 +137,7 @@ void CellFactory::setCellNearby(Cell* newcell){
 
 
 void CellFactory::place(Cell* cell) {
-	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;	
+	int chamberNum = rand() % CellFactory::TOTAL_CHAMBERS;
 	std::vector<Cell*> *chamber = &chambers[chamberNum];
 
 	while(true) {
@@ -169,7 +169,7 @@ void CellFactory::place(Cell* cell) {
 }
 
 Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int floor){
-	
+
 	grid = new Grid();
 	// std::vector<Enemy*> enemy_vector;
 	if(filename == Game::DEFAULT_FLOOR_FILE){
@@ -300,6 +300,6 @@ Grid* CellFactory::GenerateGridFromFile(std::string filename , Race* player, int
 	grid->setEnemies(enemy_vector);
 	return grid;
 }
-	
+
 
 const int CellFactory::TOTAL_CHAMBERS = 5;

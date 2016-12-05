@@ -11,6 +11,7 @@
 #include "Logger.h"
 #include "GoldType.cc"
 #include "PotionCell.h"
+#include <iomanip>
 using namespace std;
 
 bool Game::toQuit = false;
@@ -28,7 +29,6 @@ Game::~Game() {
 }
 
 Game* Game::getInstance() {
-  // cout<<"RIGHT HERE RIGHT NOW"<<endl;
   if(Game::instance->floorFile == "") {
     Game::instance->floorFile = Game::DEFAULT_FLOOR_FILE;
   }
@@ -110,20 +110,17 @@ void Game::action(Action action, Direction direction) {
 }
 
 void Game::use(ActionItem* actionItem) {
-  cout << "Game::use " << (char) actionItem->getType() << endl;
   if (actionItem->getType() == CellType::Stairs) {
     nextFloor();
     return;
   }
 
   Logger::getInstance()->pickUp(actionItem);
-  if (actionItem->getType() == CellType::Potion) {
-    cout << "Grid::usePotion use " << (char) actionItem->getType() << endl;
+  if (actionItem->getType() == CellType::PotionC) {
     player->use(dynamic_cast<class PotionCell*>(actionItem)->getPotion());
     actionItem->reset();
   }
   if (actionItem->getType() == CellType::Gold) {
-     cout<<"Using Gold : "<<endl;
      player->use(dynamic_cast<class Gold*>(actionItem)->getGoldType());
      actionItem->reset();
   }
@@ -170,8 +167,7 @@ string translateRace(CellType type) {
 std::ostream &operator<<(std::ostream &out , Game *g) {
    out<<*(g->currentGrid);
    out<<"Race: " << translateRace(g->player->getType())<< " Gold: " << g->player->getTotalGold();
-   for (int i = 0; i < Grid::GRID_WIDTH - 27; i++) out<< " ";
-   out<<"Floor: "<<g->floorNum<<endl;
+   out<<setw(55)<<"Floor: "<<g->floorNum<<endl;
    out<<"HP: "<<g->player->getHp()<<endl;
    out<<"Atk: "<<g->player->getAtk()<<endl;
    out<<"Def: "<<g->player->getDef()<<endl;

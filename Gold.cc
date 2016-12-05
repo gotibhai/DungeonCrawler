@@ -11,3 +11,7 @@ bool Gold::canMoveOn() {
 GoldType Gold::getGoldType(){
 	return goldtype;
 }
+
+bool Gold::getIsCollectible() {
+  return isCollectible;
+}
